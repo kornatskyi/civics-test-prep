@@ -4,7 +4,7 @@ export type Question = {
 };
 
 export const getRandomQuestion = async (): Promise<Question> => {
-  const res = await fetch("/api/questions/-1");
+  const res = await fetch("/api/questions/1");
   const j = await res.json();
   console.log(j);
 

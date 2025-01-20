@@ -71,7 +71,7 @@ def submit_answer(
     # Example: Validate answer (you can enhance this with actual validation logic)
     question = questions_service.get_question_by_id(question_id)
     prompt = f"""
-        I will provide you with a question, correct answers to that question, and user's answer to that question. You should tell if user's answer is correct. It might not match exactly the actual answers but you still should understand what the user mean form the context and be able to judge weather the answer is correct or incorrect.
+        I will provide you with a question, correct answers to that question, and user's answer to that question. You should tell if user's answer is correct. It might not match exactly the actual answers but you still should understand what the user mean form the context and be able to judge weather the answer is correct or incorrect. But be careful because some users answers might be tricky, they still should match very closely to the actual answers and can't be too wage.
         Question: {question["question"]}
         Actual answers: {question["answers"]}
         User's answer: {answer.answer}
@@ -81,4 +81,4 @@ def submit_answer(
 
     result = llama_client.completion(prompt)
 
-    return {"result": "false" if "Incorrect" in result else "true"}
+    return {"result": "true" if "Correct" in result else "false"}
