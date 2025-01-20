@@ -1,12 +1,19 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from "react";
-import "./App.css";
-import styles from "./assets/styles/Test.module.css";
 import { getRandomQuestion, Question, submitAnswer } from "./api";
+import { Button, css } from "@mui/material";
+
+const testContainer = css({
+  width: "100%",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center"
+})
 
 function App() {
   const [question, setQuestion] = useState<Question>();
   const [answer, setAnswer] = useState("")
+
+
 
   useEffect(() => {
     async function startFetching() {
@@ -45,7 +52,7 @@ function App() {
 
   return (
     <>
-      <div className={styles.testContainer}>
+      <div css={testContainer}>
         <h1>US naturalization test</h1>
         <h2>Civics Test</h2>
         <p>{question?.question}</p>
@@ -53,7 +60,7 @@ function App() {
           setAnswer(e.target.value)
         }} />
         <br />
-        <button onClick={handleSubmission}>Submit</button>
+        <Button variant="contained" onClick={handleSubmission}>Submit</Button>
         {submissionResult === "CORRECT" ? "Correct answer" : submissionResult === "INCORRECT" ? "Incorrect answer" : ""}
       </div>
     </>
