@@ -3,17 +3,19 @@ import { red } from '@mui/material/colors';
 
 // A custom theme for this app
 const theme = createTheme({
-  cssVariables: true,
   palette: {
     primary: {
-      main: '#556cd6',
+      main: "rgb(10, 49, 97)",
     },
     secondary: {
-      main: '#19857b',
+      main: '#005d8d',
     },
     error: {
       main: red.A400,
     },
+  },
+  typography: {
+    fontFamily: `'Merriweather', 'Roboto', 'Helvetica', 'Arial', sans-serif`,
   },
 });
 

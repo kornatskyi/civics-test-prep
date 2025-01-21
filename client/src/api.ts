@@ -1,16 +1,18 @@
 export type Question = {
   id: number;
   question: string;
+  answers?: string[];
 };
 
 export const getRandomQuestion = async (): Promise<Question> => {
-  const res = await fetch("/api/questions/1");
+  const res = await fetch("/api/questions/25");
   const j = await res.json();
   console.log(j);
 
   return {
     id: j["id"],
     question: j["question"],
+    answers: j["answers"],
   };
 };
 

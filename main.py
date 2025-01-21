@@ -56,7 +56,7 @@ def read_question(
             question = questions_service.get_question_by_id(random_key)
         else:
             question = questions_service.get_question_by_id(question_id)
-        return {"question": question["question"], "id": question["number"]}
+        return {"question": question["question"], "id": question["number"], "answers" : question["answers"]}
     except IndexError:
         raise HTTPException(status_code=404, detail="Question not found")
 
