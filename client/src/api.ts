@@ -4,16 +4,18 @@ export type Question = {
   answers?: string[];
 };
 
-export const getNRandomQuestion = async (n: number): Promise<Question> => {
-  const res = await fetch(`/api/questions/${parseInt(n.toString())}`);
-  const j = await res.json();
+export const getNRandomQuestion = async (n: number): Promise<Question[]> => {
+  const res = await fetch(`/api/questions?n=${parseInt(n.toString())}`);
+  const j: {
+    questions: Question[];
+  } = await res.json();
   console.log(j);
 
-  return {
-    id: j["id"],
-    question: j["question"],
-    answers: j["answers"],
-  };
+  return j["questions"].map((jq) => ({
+    id: jq["id"],
+    question: jq["question"],
+    answers: jq["answers"],
+  }));
 };
 
 export const getRandomQuestion = async (): Promise<Question> => {

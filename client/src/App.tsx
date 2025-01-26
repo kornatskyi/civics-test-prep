@@ -23,7 +23,7 @@ function App() {
       <Box
         component={"header"}
         sx={{
-          // backgroundColor: white_semi_transparent,
+          backgroundColor: theme.palette.background.paper,
           textAlign: "center",
           display: "flex",
           flexDirection: "column",

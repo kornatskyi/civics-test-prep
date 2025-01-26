@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Button,
+  ButtonBase,
   Card,
   css,
   List,
@@ -13,7 +14,12 @@ import {
 } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 import CheckIcon from "@mui/icons-material/Check";
-import { getRandomQuestion, Question, submitAnswer } from "../api";
+import {
+  getNRandomQuestion,
+  getRandomQuestion,
+  Question,
+  submitAnswer,
+} from "../api";
 import { useEffect, useState } from "react";
 
 const testContainer = css({
@@ -83,88 +89,111 @@ const TestCard = ({}: TestCardProps) => {
     }
   };
 
-  return (
-    <>
-      <Paper>Hello</Paper>
-      <Card css={testContainer}>
-        <Typography
-          align="center"
-          variant="h6"
-        >{`${question?.id}. ${question?.question}`}</Typography>
+  const [isTestStarted, setIsTestStarted] = useState(false);
 
-        <div
-          css={css({
-            margin: 30,
-            width: "100%",
-          })}
-        >
-          <TextField
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                handleSubmission();
-              }
-            }}
-            autoComplete={"off"}
-            css={css({
-              width: "100%",
-              // minWidth: 400,
-            })}
-            id="outlined-multiline-flexible"
-            label="Answer"
-            onChange={(e) => {
-              setAnswer(e.target.value);
-            }}
-          />
+  const startTestHandler = async () => {
+    const questions = await getNRandomQuestion(10);
+    console.log(questions);
+
+    setIsTestStarted(true);
+  };
+
+  return (
+    <Card css={testContainer}>
+      {isTestStarted ? (
+        <>
+          <Typography
+            align="center"
+            variant="h6"
+          >{`${question?.id}. ${question?.question}`}</Typography>
+
           <div
             css={css({
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              marginTop: 30,
-              justifyContent: "space-between",
+              margin: 30,
+              width: "100%",
             })}
           >
-            <Button
-              loading={isSubmitting}
-              disabled={!answer}
+            <TextField
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleSubmission();
+                }
+              }}
+              autoComplete={"off"}
               css={css({
-                height: 40,
+                width: "100%",
+                // minWidth: 400,
               })}
-              variant="contained"
-              onClick={handleSubmission}
-            >
-              Submit
-            </Button>
-
-            {submissionResult === "CORRECT" ? (
-              <Typography color="success" display={"flex"}>
-                <CheckIcon /> Correct answer
-              </Typography>
-            ) : submissionResult === "INCORRECT" ? (
-              <Typography color="error" display={"flex"}>
-                <ClearIcon />
-                Incorrect answer
-              </Typography>
-            ) : (
-              ""
-            )}
-          </div>
-
-          {submissionResult !== "UNKNOWN" ? (
-            <List
+              id="outlined-multiline-flexible"
+              label="Answer"
+              onChange={(e) => {
+                setAnswer(e.target.value);
+              }}
+            />
+            <div
               css={css({
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
                 marginTop: 30,
+                justifyContent: "space-between",
               })}
             >
-              <Typography color="primary">Acceptable answers:</Typography>
-              {question?.answers?.map((a, i) => {
-                return <ListItem key={i}>{a}</ListItem>;
-              })}
-            </List>
-          ) : null}
-        </div>
-      </Card>
-    </>
+              <Button
+                loading={isSubmitting}
+                disabled={!answer}
+                css={css({
+                  height: 40,
+                })}
+                variant="contained"
+                onClick={handleSubmission}
+              >
+                Submit
+              </Button>
+
+              {submissionResult === "CORRECT" ? (
+                <Typography color="success" display={"flex"}>
+                  <CheckIcon /> Correct answer
+                </Typography>
+              ) : submissionResult === "INCORRECT" ? (
+                <Typography color="error" display={"flex"}>
+                  <ClearIcon />
+                  Incorrect answer
+                </Typography>
+              ) : (
+                ""
+              )}
+            </div>
+            {submissionResult !== "UNKNOWN" ? (
+              <List
+                css={css({
+                  marginTop: 30,
+                })}
+              >
+                <Typography color="primary">Acceptable answers:</Typography>
+                {question?.answers?.map((a, i) => {
+                  return <ListItem key={i}>{a}</ListItem>;
+                })}
+              </List>
+            ) : null}{" "}
+          </div>
+        </>
+      ) : (
+        <>
+          <Typography color="primary">
+            You need to answer at least 10 questions
+          </Typography>
+
+          <Button
+            variant="contained"
+            css={css({ marginTop: 30 })}
+            onClick={startTestHandler}
+          >
+            Start Test
+          </Button>
+        </>
+      )}
+    </Card>
   );
 };
 
