@@ -1,4 +1,4 @@
-from random import randint, choice
+from random import randint, choice, sample
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -38,9 +38,10 @@ if PRODUCTION:
 
 @app.get("/api/questions")
 def read_questions(
+    n: int,
     questions_service: QuestionsService = Depends(get_questions_service),
 ):
-    return {"questions": questions_service.get_all_questions()}
+    return {"questions": sample(questions_service.get_all_questions(), n)}
 
 
 @app.get("/api/questions/{question_id}")
@@ -56,7 +57,11 @@ def read_question(
             question = questions_service.get_question_by_id(random_key)
         else:
             question = questions_service.get_question_by_id(question_id)
-        return {"question": question["question"], "id": question["number"], "answers" : question["answers"]}
+        return {
+            "question": question["question"],
+            "id": question["number"],
+            "answers": question["answers"],
+        }
     except IndexError:
         raise HTTPException(status_code=404, detail="Question not found")
 
