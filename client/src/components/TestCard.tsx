@@ -1,3 +1,5 @@
+/* eslint-disable no-empty-pattern */
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Button,
@@ -11,8 +13,8 @@ import {
 } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 import CheckIcon from "@mui/icons-material/Check";
-import { Question, submitAnswer } from "../api";
-import { useState } from "react";
+import { getRandomQuestion, Question, submitAnswer } from "../api";
+import { useEffect, useState } from "react";
 
 const testContainer = css({
   width: "100%",
@@ -27,11 +29,30 @@ const testContainer = css({
   marginTop: "10vh",
 });
 
-interface TestCardProps {
-  question: Question;
-}
+interface TestCardProps {}
 
-const TestCard = ({ question }: TestCardProps) => {
+const TestCard = ({}: TestCardProps) => {
+  const [question, setQuestion] = useState<Question>();
+
+  useEffect(() => {
+    async function startFetching() {
+      const result = await getRandomQuestion();
+      if (!ignore) {
+        setQuestion({
+          id: result.id,
+          question: result.question,
+          answers: result.answers,
+        });
+      }
+    }
+
+    let ignore = false;
+    startFetching();
+    return () => {
+      ignore = true;
+    };
+  }, []);
+
   const [answer, setAnswer] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
