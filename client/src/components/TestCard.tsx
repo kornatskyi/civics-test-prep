@@ -43,29 +43,9 @@ const NUMBER_OF_QUESTIONS = 10;
 const TestCard = ({}: TestCardProps) => {
   const [questionItr, setQuestionItr] =
     useState<ArrayIterator<[number, Question]>>();
-  const [question, setQuestion] = useState<Question>();
+  const [question, setQuestion] = useState<[number, Question]>();
   const [error, setError] = useState("");
   const [score, setScore] = useState(0);
-
-  useEffect(() => {
-    async function startFetching() {
-      const result = await getRandomQuestion();
-      if (!ignore) {
-        setQuestion({
-          id: result.id,
-          question: result.question,
-          answers: result.answers,
-        });
-      }
-    }
-
-    let ignore = false;
-    startFetching();
-    return () => {
-      ignore = true;
-    };
-  }, []);
-
   const [answer, setAnswer] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -77,7 +57,7 @@ const TestCard = ({}: TestCardProps) => {
     setIsSubmitting(true);
     try {
       if (question) {
-        switch (await submitAnswer(question?.id, answer)) {
+        switch (await submitAnswer(question[1]?.id, answer)) {
           case true:
             setSubmissionResult("CORRECT");
             setScore((prev) => prev + 1);
@@ -108,13 +88,13 @@ const TestCard = ({}: TestCardProps) => {
 
     const qItr = questions.entries();
     setQuestionItr(qItr);
-    setQuestion(qItr.next().value?.[1]);
+    setQuestion(qItr.next().value);
 
     setIsTestStarted(true);
   };
 
   const nextQuestionHandler = () => {
-    setQuestion(questionItr?.next().value?.[1]);
+    setQuestion(questionItr?.next().value);
     setAnswer("");
     setSubmissionResult("UNKNOWN");
   };
@@ -141,13 +121,13 @@ const TestCard = ({}: TestCardProps) => {
               alignSelf: "end",
             })}
           >
-            {score} / {NUMBER_OF_QUESTIONS}
+            {question?.[0]} / {NUMBER_OF_QUESTIONS}
           </Box>
           <Typography
             align="center"
             variant="h6"
             mt={2}
-          >{`${question?.id}. ${question?.question}`}</Typography>
+          >{`${question?.[1].id}. ${question?.[1].question}`}</Typography>
           <Box
             mt={4}
             css={css({
@@ -157,7 +137,9 @@ const TestCard = ({}: TestCardProps) => {
             <TextField
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
-                  handleSubmission();
+                  (submissionResult === "UNKNOWN"
+                    ? handleSubmission
+                    : nextQuestionHandler)();
                 }
               }}
               autoComplete={"off"}
@@ -182,16 +164,20 @@ const TestCard = ({}: TestCardProps) => {
             >
               <Button
                 loading={isSubmitting}
-                disabled={!answer || submissionResult != "UNKNOWN"}
+                disabled={!answer && submissionResult === "UNKNOWN"}
                 css={css({
                   height: 40,
                 })}
                 variant="contained"
-                onClick={handleSubmission}
+                onClick={
+                  submissionResult === "UNKNOWN"
+                    ? handleSubmission
+                    : nextQuestionHandler
+                }
               >
-                Submit
+                {submissionResult === "UNKNOWN" ? "Submit" : "Next question"}
               </Button>
-              
+
               {submissionResult === "CORRECT" ? (
                 <Typography color="success" display={"flex"}>
                   <CheckIcon /> Correct answer
@@ -204,17 +190,6 @@ const TestCard = ({}: TestCardProps) => {
               ) : (
                 ""
               )}
-              <Button
-                loading={isSubmitting}
-                disabled={submissionResult === "UNKNOWN"}
-                css={css({
-                  height: 40,
-                })}
-                variant="contained"
-                onClick={nextQuestionHandler}
-              >
-                Next question
-              </Button>
             </Box>
             {submissionResult !== "UNKNOWN" ? (
               <List
@@ -223,7 +198,7 @@ const TestCard = ({}: TestCardProps) => {
                 })}
               >
                 <Typography color="primary">Acceptable answers:</Typography>
-                {question?.answers?.map((a, i) => {
+                {question?.[1].answers?.map((a, i) => {
                   return <ListItem key={i}>{a}</ListItem>;
                 })}
               </List>
