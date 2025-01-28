@@ -5,24 +5,17 @@ import {
   Alert,
   Box,
   Button,
-  ButtonBase,
   Card,
   css,
   List,
   ListItem,
-  Paper,
   TextField,
   Typography,
 } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 import CheckIcon from "@mui/icons-material/Check";
-import {
-  getNRandomQuestion,
-  getRandomQuestion,
-  Question,
-  submitAnswer,
-} from "../api";
-import { useEffect, useState } from "react";
+import { getNRandomQuestion, Question, submitAnswer } from "../api";
+import { useRef, useState } from "react";
 
 const testContainer = css({
   width: "100%",
@@ -38,29 +31,54 @@ const testContainer = css({
 });
 
 interface TestCardProps {}
-const NUMBER_OF_QUESTIONS = 10;
+const NUMBER_OF_QUESTIONS = 3;
 
-const TestCard = ({}: TestCardProps) => {
+interface TestResultProps {
+  answers: Answer[];
+  totalQuestion: number;
+}
+
+function TestResult({ answers, totalQuestion }: TestResultProps) {
+  const totalCorrect = answers.reduce(
+    (prev, curr) => prev + (curr.isCorrect ? 1 : 0),
+    0
+  );
+  return (
+    <Typography>
+      Good job! You got {totalCorrect} out of {totalQuestion} right. Keep going!
+    </Typography>
+  );
+}
+
+interface Answer {
+  question: Question;
+  answer: string;
+  isCorrect: boolean;
+}
+
+function TestCard({}: TestCardProps) {
   const [questionItr, setQuestionItr] =
     useState<ArrayIterator<[number, Question]>>();
   const [question, setQuestion] = useState<[number, Question]>();
   const [error, setError] = useState("");
-  const [score, setScore] = useState(0);
   const [answer, setAnswer] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const answers = useRef<Answer[]>([]);
 
   const [submissionResult, setSubmissionResult] = useState<
     "CORRECT" | "INCORRECT" | "UNKNOWN"
   >("UNKNOWN");
 
-  const handleSubmission = async () => {
+  const submit = async () => {
     setIsSubmitting(true);
     try {
       if (question) {
+        let isCorrect = false;
+
         switch (await submitAnswer(question[1]?.id, answer)) {
           case true:
             setSubmissionResult("CORRECT");
-            setScore((prev) => prev + 1);
+            isCorrect = true;
             break;
           case false:
             setSubmissionResult("INCORRECT");
@@ -69,6 +87,11 @@ const TestCard = ({}: TestCardProps) => {
             setSubmissionResult("UNKNOWN");
             break;
         }
+        answers.current.push({
+          answer,
+          isCorrect,
+          question: question[1],
+        });
       }
     } catch {
       console.log("Error occurred while submitting answer!");
@@ -77,9 +100,11 @@ const TestCard = ({}: TestCardProps) => {
     }
   };
 
-  const [isTestStarted, setIsTestStarted] = useState(false);
+  const [testState, setTestState] = useState<
+    "INITIAL" | "RUNNING" | "FINISHED"
+  >("INITIAL");
 
-  const startTestHandler = async () => {
+  const startTest = async () => {
     const questions = await getNRandomQuestion(NUMBER_OF_QUESTIONS);
 
     if (questions.length != NUMBER_OF_QUESTIONS) {
@@ -89,14 +114,25 @@ const TestCard = ({}: TestCardProps) => {
     const qItr = questions.entries();
     setQuestionItr(qItr);
     setQuestion(qItr.next().value);
-
-    setIsTestStarted(true);
+    setTestState("RUNNING");
   };
 
-  const nextQuestionHandler = () => {
-    setQuestion(questionItr?.next().value);
+  const nextQuestion = () => {
+    const nextQuestion = questionItr?.next().value;
+    if (!nextQuestion) {
+      setTestState("FINISHED");
+      return;
+    }
+    setQuestion(nextQuestion);
     setAnswer("");
     setSubmissionResult("UNKNOWN");
+  };
+
+  const restartTest = () => {
+    setAnswer("");
+    setSubmissionResult("UNKNOWN");
+    startTest();
+    answers.current = [];
   };
 
   return error ? (
@@ -114,114 +150,144 @@ const TestCard = ({}: TestCardProps) => {
     </Alert>
   ) : (
     <Card css={testContainer}>
-      {isTestStarted ? (
-        <>
-          <Box
-            css={css({
-              alignSelf: "end",
-            })}
-          >
-            {question?.[0]} / {NUMBER_OF_QUESTIONS}
-          </Box>
-          <Typography
-            align="center"
-            variant="h6"
-            mt={2}
-          >{`${question?.[1].id}. ${question?.[1].question}`}</Typography>
-          <Box
-            mt={4}
-            css={css({
-              width: "100%",
-            })}
-          >
-            <TextField
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  (submissionResult === "UNKNOWN"
-                    ? handleSubmission
-                    : nextQuestionHandler)();
-                }
-              }}
-              autoComplete={"off"}
-              css={css({
-                width: "100%",
-              })}
-              id="outlined-multiline-flexible"
-              label="Answer"
-              value={answer}
-              onChange={(e) => {
-                setAnswer(e.target.value);
-              }}
-            />
-            <Box
-              css={css({
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                marginTop: 30,
-                justifyContent: "space-between",
-              })}
-            >
-              <Button
-                loading={isSubmitting}
-                disabled={!answer && submissionResult === "UNKNOWN"}
-                css={css({
-                  height: 40,
-                })}
-                variant="contained"
-                onClick={
-                  submissionResult === "UNKNOWN"
-                    ? handleSubmission
-                    : nextQuestionHandler
-                }
-              >
-                {submissionResult === "UNKNOWN" ? "Submit" : "Next question"}
-              </Button>
-
-              {submissionResult === "CORRECT" ? (
-                <Typography color="success" display={"flex"}>
-                  <CheckIcon /> Correct answer
+      {(() => {
+        switch (testState) {
+          case "INITIAL":
+            return (
+              <>
+                <Typography color="primary">
+                  You need to answer at least 10 questions
                 </Typography>
-              ) : submissionResult === "INCORRECT" ? (
-                <Typography color="error" display={"flex"}>
-                  <ClearIcon />
-                  Incorrect answer
-                </Typography>
-              ) : (
-                ""
-              )}
-            </Box>
-            {submissionResult !== "UNKNOWN" ? (
-              <List
-                css={css({
-                  marginTop: 30,
-                })}
-              >
-                <Typography color="primary">Acceptable answers:</Typography>
-                {question?.[1].answers?.map((a, i) => {
-                  return <ListItem key={i}>{a}</ListItem>;
-                })}
-              </List>
-            ) : null}{" "}
-          </Box>
-        </>
-      ) : (
-        <>
-          <Typography color="primary">
-            You need to answer at least 10 questions
-          </Typography>
 
-          <Button
-            variant="contained"
-            css={css({ marginTop: 30 })}
-            onClick={startTestHandler}
-          >
-            Start Test
-          </Button>
-        </>
-      )}
+                <Button
+                  variant="contained"
+                  css={css({ marginTop: 30 })}
+                  onClick={startTest}
+                >
+                  Start Test
+                </Button>
+              </>
+            );
+          case "RUNNING":
+            return (
+              <>
+                {" "}
+                <Box
+                  css={css({
+                    alignSelf: "end",
+                  })}
+                >
+                  {question?.[0] !== undefined &&
+                    question?.[0] + "/" + NUMBER_OF_QUESTIONS}
+                </Box>
+                <Typography
+                  align="center"
+                  variant="h6"
+                  mt={2}
+                >{`${question?.[1].id}. ${question?.[1].question}`}</Typography>
+                <Box
+                  mt={4}
+                  css={css({
+                    width: "100%",
+                  })}
+                >
+                  <TextField
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        (submissionResult === "UNKNOWN"
+                          ? submit
+                          : nextQuestion)();
+                      }
+                    }}
+                    autoComplete={"off"}
+                    css={css({
+                      width: "100%",
+                    })}
+                    id="outlined-multiline-flexible"
+                    label="Answer"
+                    value={answer}
+                    onChange={(e) => {
+                      setAnswer(e.target.value);
+                    }}
+                  />
+                  <Box
+                    css={css({
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      marginTop: 30,
+                      justifyContent: "space-between",
+                    })}
+                  >
+                    <Button
+                      loading={isSubmitting}
+                      disabled={!answer && submissionResult === "UNKNOWN"}
+                      css={css({
+                        height: 40,
+                      })}
+                      variant="contained"
+                      onClick={
+                        submissionResult === "UNKNOWN" ? submit : nextQuestion
+                      }
+                    >
+                      {submissionResult === "UNKNOWN"
+                        ? "Submit"
+                        : "Next question"}
+                    </Button>
+
+                    {submissionResult === "CORRECT" ? (
+                      <Typography color="success" display={"flex"}>
+                        <CheckIcon /> Correct answer
+                      </Typography>
+                    ) : submissionResult === "INCORRECT" ? (
+                      <Typography color="error" display={"flex"}>
+                        <ClearIcon />
+                        Incorrect answer
+                      </Typography>
+                    ) : (
+                      ""
+                    )}
+                  </Box>
+                  {submissionResult !== "UNKNOWN" ? (
+                    <List
+                      css={css({
+                        marginTop: 30,
+                      })}
+                    >
+                      <Typography color="primary">
+                        Acceptable answers:
+                      </Typography>
+                      {question?.[1].answers?.map((a, i) => {
+                        return <ListItem key={i}>{a}</ListItem>;
+                      })}
+                    </List>
+                  ) : null}
+                </Box>
+              </>
+            );
+          case "FINISHED":
+            return (
+              <>
+                <TestResult
+                  answers={answers.current}
+                  totalQuestion={NUMBER_OF_QUESTIONS}
+                />
+
+                <Button
+                  variant="contained"
+                  css={css({ marginTop: 30 })}
+                  onClick={restartTest}
+                >
+                  Try again
+                </Button>
+              </>
+            );
+          default:
+            return <></>;
+        }
+      })()}
     </Card>
   );
-};
+}
 
 export default TestCard;
