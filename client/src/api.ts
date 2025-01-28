@@ -6,11 +6,12 @@ export type Question = {
 
 export const getNRandomQuestion = async (n: number): Promise<Question[]> => {
   const res = await fetch(`/api/questions?n=${parseInt(n.toString())}`);
+  
   const j: {
     questions: Question[];
   } = await res.json();
   console.log(j);
-
+  
   return j["questions"].map((jq) => ({
     id: jq["id"],
     question: jq["question"],

@@ -2,6 +2,8 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
+  Alert,
+  Box,
   Button,
   ButtonBase,
   Card,
@@ -36,9 +38,14 @@ const testContainer = css({
 });
 
 interface TestCardProps {}
+const NUMBER_OF_QUESTIONS = 10;
 
 const TestCard = ({}: TestCardProps) => {
+  const [questionItr, setQuestionItr] =
+    useState<ArrayIterator<[number, Question]>>();
   const [question, setQuestion] = useState<Question>();
+  const [error, setError] = useState("");
+  const [score, setScore] = useState(0);
 
   useEffect(() => {
     async function startFetching() {
@@ -73,6 +80,7 @@ const TestCard = ({}: TestCardProps) => {
         switch (await submitAnswer(question?.id, answer)) {
           case true:
             setSubmissionResult("CORRECT");
+            setScore((prev) => prev + 1);
             break;
           case false:
             setSubmissionResult("INCORRECT");
@@ -92,24 +100,57 @@ const TestCard = ({}: TestCardProps) => {
   const [isTestStarted, setIsTestStarted] = useState(false);
 
   const startTestHandler = async () => {
-    const questions = await getNRandomQuestion(10);
-    console.log(questions);
+    const questions = await getNRandomQuestion(NUMBER_OF_QUESTIONS);
+
+    if (questions.length != NUMBER_OF_QUESTIONS) {
+      setError("Expect 10 questions but got " + NUMBER_OF_QUESTIONS);
+    }
+
+    const qItr = questions.entries();
+    setQuestionItr(qItr);
+    setQuestion(qItr.next().value?.[1]);
 
     setIsTestStarted(true);
   };
 
-  return (
+  const nextQuestionHandler = () => {
+    setQuestion(questionItr?.next().value?.[1]);
+    setAnswer("");
+    setSubmissionResult("UNKNOWN");
+  };
+
+  return error ? (
+    <Alert
+      variant="filled"
+      severity="error"
+      css={css({
+        marginTop: 30,
+        maxWidth: 800,
+        width: "100%",
+        alignSelf: "center",
+      })}
+    >
+      {error}
+    </Alert>
+  ) : (
     <Card css={testContainer}>
       {isTestStarted ? (
         <>
+          <Box
+            css={css({
+              alignSelf: "end",
+            })}
+          >
+            {score} / {NUMBER_OF_QUESTIONS}
+          </Box>
           <Typography
             align="center"
             variant="h6"
+            mt={2}
           >{`${question?.id}. ${question?.question}`}</Typography>
-
-          <div
+          <Box
+            mt={4}
             css={css({
-              margin: 30,
               width: "100%",
             })}
           >
@@ -122,15 +163,15 @@ const TestCard = ({}: TestCardProps) => {
               autoComplete={"off"}
               css={css({
                 width: "100%",
-                // minWidth: 400,
               })}
               id="outlined-multiline-flexible"
               label="Answer"
+              value={answer}
               onChange={(e) => {
                 setAnswer(e.target.value);
               }}
             />
-            <div
+            <Box
               css={css({
                 display: "flex",
                 flexDirection: "row",
@@ -141,7 +182,7 @@ const TestCard = ({}: TestCardProps) => {
             >
               <Button
                 loading={isSubmitting}
-                disabled={!answer}
+                disabled={!answer || submissionResult != "UNKNOWN"}
                 css={css({
                   height: 40,
                 })}
@@ -150,7 +191,7 @@ const TestCard = ({}: TestCardProps) => {
               >
                 Submit
               </Button>
-
+              
               {submissionResult === "CORRECT" ? (
                 <Typography color="success" display={"flex"}>
                   <CheckIcon /> Correct answer
@@ -163,7 +204,18 @@ const TestCard = ({}: TestCardProps) => {
               ) : (
                 ""
               )}
-            </div>
+              <Button
+                loading={isSubmitting}
+                disabled={submissionResult === "UNKNOWN"}
+                css={css({
+                  height: 40,
+                })}
+                variant="contained"
+                onClick={nextQuestionHandler}
+              >
+                Next question
+              </Button>
+            </Box>
             {submissionResult !== "UNKNOWN" ? (
               <List
                 css={css({
@@ -176,7 +228,7 @@ const TestCard = ({}: TestCardProps) => {
                 })}
               </List>
             ) : null}{" "}
-          </div>
+          </Box>
         </>
       ) : (
         <>

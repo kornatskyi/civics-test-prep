@@ -17,7 +17,7 @@ const theme = createTheme({
       main: "#005d8d",
     },
     error: {
-      main: red.A400,
+      main: american_red
     },
     background: {
       paper: white_semi_transparent,

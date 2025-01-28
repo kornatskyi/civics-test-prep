@@ -25,17 +25,16 @@ function Footer({}: FooterProps) {
           This application is not an official test, just a preparation tool.
         </Typography>
         <Typography variant="body2" css={css({ maxWidth: 800 })}>
-          Please refer to the official U.S. government website for the latest
-          and most accurate information on the U.S. Naturalization test.
-        </Typography>
-        <Typography variant="body2" sx={{ mt: 1 }} css={css({ maxWidth: 800 })}>
+          Please refer to the{" "}
           <Link
             href="https://www.uscis.gov/"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Official USCIS Website
+            official U.S. government website
           </Link>
+          for the latest and most accurate information on the U.S.
+          Naturalization test.
         </Typography>
       </Box>
     </>
