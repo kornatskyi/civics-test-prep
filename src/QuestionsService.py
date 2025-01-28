@@ -8,7 +8,7 @@ class QuestionsService:
             data = json.load(file)
             self.questions = data["questions"]
             self.question_by_ids = {
-                question["number"]: question for question in self.questions
+                question["id"]: question for question in self.questions
             }
 
     def get_all_questions(self):

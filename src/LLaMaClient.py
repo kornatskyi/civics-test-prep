@@ -3,9 +3,9 @@ from groq import Groq
 from dotenv import load_dotenv
 import os
 
-LLAMA3_405B_INSTRUCT = "llama-3.1-405b-reasoning"  # Note: Groq currently only gives access here to paying customers for 405B model
-LLAMA3_70B_INSTRUCT = "llama-3.1-70b-versatile"
-LLAMA3_8B_INSTRUCT = "llama3.1-8b-instant"
+LLAMA3_405B_INSTRUCT = "llama-3.3-405b-reasoning"  # Note: Groq currently only gives access here to paying customers for 405B model
+LLAMA3_70B_INSTRUCT = "llama-3.3-70b-versatile"
+LLAMA3_8B_INSTRUCT = "llama3.3-8b-instant"
 
 DEFAULT_MODEL = LLAMA3_70B_INSTRUCT
 

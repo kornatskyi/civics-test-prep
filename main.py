@@ -59,7 +59,7 @@ def read_question(
             question = questions_service.get_question_by_id(question_id)
         return {
             "question": question["question"],
-            "id": question["number"],
+            "id": question["id"],
             "answers": question["answers"],
         }
     except IndexError:
