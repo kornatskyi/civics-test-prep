@@ -275,7 +275,7 @@
             "section": "AMERICAN GOVERNMENT - System of Government",
             "question": "What is the name of the President of the United States now?",
             "answers": [
-                "Visit uscis.gov/citizenship/testupdates for the name of the President of the United States."
+                "Donald Trump"
             ],
             "isRequiredFor65Plus": true,
             "isDynamicAnswer": true
@@ -285,7 +285,8 @@
             "section": "AMERICAN GOVERNMENT - System of Government",
             "question": "What is the name of the Vice President of the United States now?",
             "answers": [
-                "Visit uscis.gov/citizenship/testupdates for the name of the Vice President of the United States."
+                "JD Vance",
+                "James David Vance"
             ],
             "isRequiredFor65Plus": false,
             "isDynamicAnswer": true
@@ -394,7 +395,10 @@
             "section": "AMERICAN GOVERNMENT - System of Government",
             "question": "How many justices are on the Supreme Court?",
             "answers": [
-                "Visit uscis.gov/citizenship/testupdates for the number of justices on the Supreme Court."
+                "9",
+                "nine",
+                "Nine",
+                "Nine Justices"
             ],
             "isRequiredFor65Plus": false,
             "isDynamicAnswer": true
@@ -404,7 +408,8 @@
             "section": "AMERICAN GOVERNMENT - System of Government",
             "question": "Who is the Chief Justice of the United States now?",
             "answers": [
-                "Visit uscis.gov/citizenship/testupdates for the name of the Chief Justice of the United States."
+                "John Roberts",
+                "John Glover Roberts Jr."
             ],
             "isRequiredFor65Plus": false,
             "isDynamicAnswer": true
@@ -468,7 +473,8 @@
             "section": "AMERICAN GOVERNMENT - System of Government",
             "question": "What is the political party of the President now?",
             "answers": [
-                "Visit uscis.gov/citizenship/testupdates for the political party of the President."
+                "Republican Party",
+                "Republican"
             ],
             "isRequiredFor65Plus": false,
             "isDynamicAnswer": true
@@ -478,7 +484,8 @@
             "section": "AMERICAN GOVERNMENT - System of Government",
             "question": "What is the name of the Speaker of the House of Representatives now?",
             "answers": [
-                "Visit uscis.gov/citizenship/testupdates for the name of the Speaker of the House of Representatives."
+                "Mike Johnson",
+                "James Michael Johnson "
             ],
             "isRequiredFor65Plus": false,
             "isDynamicAnswer": true
