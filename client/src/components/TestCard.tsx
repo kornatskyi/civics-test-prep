@@ -6,7 +6,6 @@ import {
   Box,
   Button,
   Card,
-  css,
   List,
   ListItem,
   TextField,
@@ -16,18 +15,6 @@ import ClearIcon from "@mui/icons-material/Clear";
 import CheckIcon from "@mui/icons-material/Check";
 import { getNRandomQuestion, Question, submitAnswer } from "../api";
 import { useRef, useState } from "react";
-
-const testContainer = css({
-  width: "100%",
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  alignSelf: "center",
-  // backgroundColor: white_semi_transparent, // Semi-transparent background
-  backdropFilter: "blur(2px)", // Apply blur effect,
-  padding: "30px",
-  marginTop: "10vh",
-});
 
 interface TestCardProps {}
 const NUMBER_OF_QUESTIONS = 3;
@@ -96,8 +83,8 @@ function TestCard({}: TestCardProps) {
           question: question[1],
         });
       }
-    } catch {
-      console.log("Error occurred while submitting answer!");
+    } catch (error) {
+      console.error("Error occurred while submitting answer:", error);
     } finally {
       setIsSubmitting(false);
     }
@@ -111,7 +98,13 @@ function TestCard({}: TestCardProps) {
     const questions = await getNRandomQuestion(NUMBER_OF_QUESTIONS);
 
     if (questions.length != NUMBER_OF_QUESTIONS) {
-      setError("Expect 10 questions but got " + NUMBER_OF_QUESTIONS);
+      // Set error if the number of questions received is not equal to the expected number
+      setError(
+        "Expect " +
+          NUMBER_OF_QUESTIONS +
+          " questions but got " +
+          questions.length
+      );
     }
 
     const qItr = questions.entries();
@@ -134,6 +127,7 @@ function TestCard({}: TestCardProps) {
   const restartTest = () => {
     setAnswer("");
     setSubmissionResult("UNKNOWN");
+    setTestState("INITIAL");
     startTest();
     answers.current = [];
   };
@@ -142,16 +136,28 @@ function TestCard({}: TestCardProps) {
     <Alert
       variant="filled"
       severity="error"
-      css={css({
+      sx={{
         marginTop: 30,
         width: "100%",
         alignSelf: "center",
-      })}
+      }}
     >
       {error}
     </Alert>
   ) : (
-    <Card css={testContainer}>
+    <Card
+      
+      sx={{
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        alignSelf: "center",
+        backdropFilter: "blur(2px)",
+        padding: "30px",
+        mt: 10
+      }}
+    >
       {(() => {
         switch (testState) {
           case "INITIAL":
@@ -170,7 +176,7 @@ function TestCard({}: TestCardProps) {
 
                 <Button
                   variant="contained"
-                  css={css({ marginTop: 30 })}
+                  sx={{ marginTop: 30 }}
                   onClick={startTest}
                 >
                   Start Test
@@ -182,9 +188,9 @@ function TestCard({}: TestCardProps) {
               <>
                 {" "}
                 <Box
-                  css={css({
+                  sx={{
                     alignSelf: "end",
-                  })}
+                  }}
                 >
                   {question?.[0] !== undefined &&
                     `Question ${
@@ -198,9 +204,9 @@ function TestCard({}: TestCardProps) {
                 >{`${question?.[1].id}. ${question?.[1].question}`}</Typography>
                 <Box
                   mt={4}
-                  css={css({
+                  sx={{
                     width: "100%",
-                  })}
+                  }}
                 >
                   <TextField
                     onKeyDown={(e) => {
@@ -211,9 +217,9 @@ function TestCard({}: TestCardProps) {
                       }
                     }}
                     autoComplete={"off"}
-                    css={css({
+                    sx={{
                       width: "100%",
-                    })}
+                    }}
                     id="outlined-multiline-flexible"
                     label="Answer"
                     value={answer}
@@ -223,20 +229,20 @@ function TestCard({}: TestCardProps) {
                     placeholder="Type your answer here"
                   />
                   <Box
-                    css={css({
+                    sx={{
                       display: "flex",
                       flexDirection: "row",
                       alignItems: "center",
                       marginTop: 30,
                       justifyContent: "space-between",
-                    })}
+                    }}
                   >
                     <Button
                       loading={isSubmitting}
                       disabled={!answer && submissionResult === "UNKNOWN"}
-                      css={css({
+                      sx={{
                         height: 40,
-                      })}
+                      }}
                       variant="contained"
                       onClick={
                         submissionResult === "UNKNOWN" ? submit : nextQuestion
@@ -262,9 +268,9 @@ function TestCard({}: TestCardProps) {
                   </Box>
                   {submissionResult !== "UNKNOWN" ? (
                     <List
-                      css={css({
+                      sx={{
                         marginTop: 30,
-                      })}
+                      }}
                     >
                       <Typography color="primary">
                         Acceptable answers:
@@ -287,7 +293,7 @@ function TestCard({}: TestCardProps) {
 
                 <Button
                   variant="contained"
-                  css={css({ marginTop: 30 })}
+                  sx={{ marginTop: 30 }}
                   onClick={restartTest}
                 >
                   Try again
