@@ -44,3 +44,5 @@ export const submitAnswer = async (questionId: number, answer: string) => {
   const j = await res.json();
   return j["result"] === "true";
 };
+
+

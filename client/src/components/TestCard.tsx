@@ -19,7 +19,6 @@ import { useRef, useState } from "react";
 
 const testContainer = css({
   width: "100%",
-  maxWidth: 800,
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
@@ -45,7 +44,11 @@ function TestResult({ answers, totalQuestion }: TestResultProps) {
   );
   return (
     <Typography>
-      Good job! You got {totalCorrect} out of {totalQuestion} right. Keep going!
+      Nice Work! You’ve completed the practice test and answered {totalCorrect}{" "}
+      out of {totalQuestion} questions correctly. Keep practicing to improve
+      your score and strengthen your knowledge of U.S. history, government, and
+      civics. <br /> Want to try again? Click Try Again to restart with a new
+      set of questions.
     </Typography>
   );
 }
@@ -141,7 +144,6 @@ function TestCard({}: TestCardProps) {
       severity="error"
       css={css({
         marginTop: 30,
-        maxWidth: 800,
         width: "100%",
         alignSelf: "center",
       })}
@@ -155,8 +157,15 @@ function TestCard({}: TestCardProps) {
           case "INITIAL":
             return (
               <>
-                <Typography color="primary">
-                  You need to answer at least 10 questions
+                <Typography color="primary" sx={{ textAlign: "center" }}>
+                  Ready to Test Your Knowledge? <br />
+                  <br />
+                  You will receive a set of randomized questions similar to
+                  those on the official U.S. Naturalization civics test. Answer
+                  carefully, and remember that practice makes perfect!
+                  <br />
+                  <br />
+                  Click Start Test to begin.
                 </Typography>
 
                 <Button
@@ -178,7 +187,9 @@ function TestCard({}: TestCardProps) {
                   })}
                 >
                   {question?.[0] !== undefined &&
-                    question?.[0] + "/" + NUMBER_OF_QUESTIONS}
+                    `Question ${
+                      question?.[0] + 1
+                    } out of ${NUMBER_OF_QUESTIONS}`}
                 </Box>
                 <Typography
                   align="center"
@@ -209,6 +220,7 @@ function TestCard({}: TestCardProps) {
                     onChange={(e) => {
                       setAnswer(e.target.value);
                     }}
+                    placeholder="Type your answer here"
                   />
                   <Box
                     css={css({

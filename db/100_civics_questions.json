@@ -197,8 +197,9 @@
         {
             "id": 20,
             "section": "AMERICAN GOVERNMENT - System of Government",
-            "question": "Who is one of your state's U.S. Senators now?",
+            "question": "Who is one of your state's U.S. Senators now? (Please specify your state name in the answer)",
             "answers": [
+                
                 "Answers will vary. [District of Columbia residents and residents of U.S. territories should answer that D.C. (or the territory where the applicant lives) has no U.S. Senators.]"
             ],
             "isRequiredFor65Plus": true,
@@ -225,7 +226,7 @@
         {
             "id": 23,
             "section": "AMERICAN GOVERNMENT - System of Government",
-            "question": "Name your U.S. Representative.",
+            "question": "Name your U.S. Representative. (Please specify your state name in the answer)",
             "answers": [
                 "Answers will vary. [Residents of territories with nonvoting Delegates or Resident Commissioners may provide the name of that Delegate or Commissioner. Also acceptable is any statement that the territory has no (voting) Representatives in Congress.]"
             ],
@@ -444,7 +445,7 @@
             "section": "AMERICAN GOVERNMENT - System of Government",
             "question": "Who is the Governor of your state now?",
             "answers": [
-                "Answers will vary. [District of Columbia residents should answer that D.C. does not have a Governor.]"
+                "Answers will vary. [District of Columbia residents should answer that D.C. does not have a Governor.] (Please specify your state name in the answer)"
             ],
             "isRequiredFor65Plus": false,
             "isDynamicAnswer": true
@@ -452,7 +453,7 @@
         {
             "id": 44,
             "section": "AMERICAN GOVERNMENT - System of Government",
-            "question": "What is the capital of your state?",
+            "question": "What is the capital of your state? (Please specify your state name in the answer)",
             "answers": [
                 "Answers will vary. [District of Columbia residents should answer that D.C. is not a state and does not have a capital. Residents of U.S. territories should name the capital of the territory.]"
             ],
