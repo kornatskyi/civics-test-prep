@@ -31,7 +31,7 @@ function TestResult({ answers, totalQuestion }: TestResultProps) {
   );
   return (
     <Typography>
-      Nice Work! You’ve completed the practice test and answered {totalCorrect}{" "}
+      Nice Work! You’ve completed the practice test and answered {totalCorrect}
       out of {totalQuestion} questions correctly. Keep practicing to improve
       your score and strengthen your knowledge of U.S. history, government, and
       civics. <br /> Want to try again? Click Try Again to restart with a new
@@ -137,7 +137,7 @@ function TestCard({}: TestCardProps) {
       variant="filled"
       severity="error"
       sx={{
-        marginTop: 30,
+        mt: 4,
         width: "100%",
         alignSelf: "center",
       }}
@@ -146,7 +146,6 @@ function TestCard({}: TestCardProps) {
     </Alert>
   ) : (
     <Card
-      
       sx={{
         width: "100%",
         display: "flex",
@@ -155,7 +154,7 @@ function TestCard({}: TestCardProps) {
         alignSelf: "center",
         backdropFilter: "blur(2px)",
         padding: "30px",
-        mt: 10
+        mt: 10,
       }}
     >
       {(() => {
@@ -174,11 +173,7 @@ function TestCard({}: TestCardProps) {
                   Click Start Test to begin.
                 </Typography>
 
-                <Button
-                  variant="contained"
-                  sx={{ marginTop: 30 }}
-                  onClick={startTest}
-                >
+                <Button variant="contained" sx={{ mt: 2 }} onClick={startTest}>
                   Start Test
                 </Button>
               </>
@@ -233,7 +228,7 @@ function TestCard({}: TestCardProps) {
                       display: "flex",
                       flexDirection: "row",
                       alignItems: "center",
-                      marginTop: 30,
+                      mt: 4,
                       justifyContent: "space-between",
                     }}
                   >
@@ -269,7 +264,7 @@ function TestCard({}: TestCardProps) {
                   {submissionResult !== "UNKNOWN" ? (
                     <List
                       sx={{
-                        marginTop: 30,
+                        mt: 4,
                       }}
                     >
                       <Typography color="primary">
@@ -293,7 +288,7 @@ function TestCard({}: TestCardProps) {
 
                 <Button
                   variant="contained"
-                  sx={{ marginTop: 30 }}
+                  sx={{ mt: 4 }}
                   onClick={restartTest}
                 >
                   Try again
