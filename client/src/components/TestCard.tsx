@@ -13,32 +13,10 @@ import {
 } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 import CheckIcon from "@mui/icons-material/Check";
-import { getNRandomQuestion, Question, submitAnswer } from "../api";
-import { useRef, useState } from "react";
+import { Question } from "../api";
+import { useTest } from "./useTest.ts";
 
-interface TestCardProps {}
 const NUMBER_OF_QUESTIONS = 3;
-
-interface TestResultProps {
-  answers: Answer[];
-  totalQuestion: number;
-}
-
-function TestResult({ answers, totalQuestion }: TestResultProps) {
-  const totalCorrect = answers.reduce(
-    (prev, curr) => prev + (curr.isCorrect ? 1 : 0),
-    0
-  );
-  return (
-    <Typography>
-      Nice Work! You’ve completed the practice test and answered {totalCorrect}
-      out of {totalQuestion} questions correctly. Keep practicing to improve
-      your score and strengthen your knowledge of U.S. history, government, and
-      civics. <br /> Want to try again? Click Try Again to restart with a new
-      set of questions.
-    </Typography>
-  );
-}
 
 interface Answer {
   question: Question;
@@ -46,91 +24,40 @@ interface Answer {
   isCorrect: boolean;
 }
 
-function TestCard({}: TestCardProps) {
-  const [questionItr, setQuestionItr] =
-    useState<ArrayIterator<[number, Question]>>();
-  const [question, setQuestion] = useState<[number, Question]>();
-  const [error, setError] = useState("");
-  const [answer, setAnswer] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const answers = useRef<Answer[]>([]);
+interface TestResultProps {
+  answers: Answer[];
+  numberOfQuestions: number;
+}
 
-  const [submissionResult, setSubmissionResult] = useState<
-    "CORRECT" | "INCORRECT" | "UNKNOWN"
-  >("UNKNOWN");
+function TestResult({ answers, numberOfQuestions }: TestResultProps) {
+  const totalCorrect = answers.reduce(
+    (prev, curr) => prev + (curr.isCorrect ? 1 : 0),
+    0
+  );
+  return (
+    <Typography>
+      {`Nice Work! You’ve completed the practice test and answered ${totalCorrect} out of ${numberOfQuestions} questions correctly. Keep practicing to improve your score and strengthen your knowledge of U.S. history, government, and civics.`}
+      <br />
+      {`Want to try again? Click Try Again to restart with a new set of questions.`}
+    </Typography>
+  );
+}
 
-  const submit = async () => {
-    setIsSubmitting(true);
-    try {
-      if (question) {
-        let isCorrect = false;
-
-        switch (await submitAnswer(question[1]?.id, answer)) {
-          case true:
-            setSubmissionResult("CORRECT");
-            isCorrect = true;
-            break;
-          case false:
-            setSubmissionResult("INCORRECT");
-            break;
-          default:
-            setSubmissionResult("UNKNOWN");
-            break;
-        }
-        answers.current.push({
-          answer,
-          isCorrect,
-          question: question[1],
-        });
-      }
-    } catch (error) {
-      console.error("Error occurred while submitting answer:", error);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const [testState, setTestState] = useState<
-    "INITIAL" | "RUNNING" | "FINISHED"
-  >("INITIAL");
-
-  const startTest = async () => {
-    const questions = await getNRandomQuestion(NUMBER_OF_QUESTIONS);
-
-    if (questions.length != NUMBER_OF_QUESTIONS) {
-      // Set error if the number of questions received is not equal to the expected number
-      setError(
-        "Expect " +
-          NUMBER_OF_QUESTIONS +
-          " questions but got " +
-          questions.length
-      );
-    }
-
-    const qItr = questions.entries();
-    setQuestionItr(qItr);
-    setQuestion(qItr.next().value);
-    setTestState("RUNNING");
-  };
-
-  const nextQuestion = () => {
-    const nextQuestion = questionItr?.next().value;
-    if (!nextQuestion) {
-      setTestState("FINISHED");
-      return;
-    }
-    setQuestion(nextQuestion);
-    setAnswer("");
-    setSubmissionResult("UNKNOWN");
-  };
-
-  const restartTest = () => {
-    setAnswer("");
-    setSubmissionResult("UNKNOWN");
-    setTestState("INITIAL");
-    startTest();
-    answers.current = [];
-  };
+function TestCard() {
+  const {
+    testState,
+    error,
+    answer,
+    submissionResult,
+    isSubmitting,
+    question,
+    answers,
+    startTest,
+    submit,
+    nextQuestion,
+    restartTest,
+    setAnswer,
+  } = useTest(NUMBER_OF_QUESTIONS);
 
   return error ? (
     <Alert
@@ -172,7 +99,6 @@ function TestCard({}: TestCardProps) {
                   <br />
                   Click Start Test to begin.
                 </Typography>
-
                 <Button variant="contained" sx={{ mt: 2 }} onClick={startTest}>
                   Start Test
                 </Button>
@@ -181,46 +107,30 @@ function TestCard({}: TestCardProps) {
           case "RUNNING":
             return (
               <>
-                {" "}
-                <Box
-                  sx={{
-                    alignSelf: "end",
-                  }}
-                >
+                <Box sx={{ alignSelf: "end" }}>
                   {question?.[0] !== undefined &&
-                    `Question ${
-                      question?.[0] + 1
-                    } out of ${NUMBER_OF_QUESTIONS}`}
+                    `Question ${question[0] + 1} out of ${NUMBER_OF_QUESTIONS}`}
                 </Box>
-                <Typography
-                  align="center"
-                  variant="h6"
-                  mt={2}
-                >{`${question?.[1].id}. ${question?.[1].question}`}</Typography>
-                <Box
-                  mt={4}
-                  sx={{
-                    width: "100%",
-                  }}
-                >
+                <Typography align="center" variant="h6" mt={2}>
+                  {question && `${question[1].id}. ${question[1].question}`}
+                </Typography>
+                <Box mt={4} sx={{ width: "100%" }}>
                   <TextField
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
-                        (submissionResult === "UNKNOWN"
-                          ? submit
-                          : nextQuestion)();
+                        if (submissionResult === "UNKNOWN") {
+                          submit();
+                        } else {
+                          nextQuestion();
+                        }
                       }
                     }}
-                    autoComplete={"off"}
-                    sx={{
-                      width: "100%",
-                    }}
+                    autoComplete="off"
+                    sx={{ width: "100%" }}
                     id="outlined-multiline-flexible"
                     label="Answer"
                     value={answer}
-                    onChange={(e) => {
-                      setAnswer(e.target.value);
-                    }}
+                    onChange={(e) => setAnswer(e.target.value)}
                     placeholder="Type your answer here"
                   />
                   <Box
@@ -235,9 +145,7 @@ function TestCard({}: TestCardProps) {
                     <Button
                       loading={isSubmitting}
                       disabled={!answer && submissionResult === "UNKNOWN"}
-                      sx={{
-                        height: 40,
-                      }}
+                      sx={{ height: 40 }}
                       variant="contained"
                       onClick={
                         submissionResult === "UNKNOWN" ? submit : nextQuestion
@@ -249,32 +157,26 @@ function TestCard({}: TestCardProps) {
                     </Button>
 
                     {submissionResult === "CORRECT" ? (
-                      <Typography color="success" display={"flex"}>
+                      <Typography color="success.main" display="flex">
                         <CheckIcon /> Correct answer
                       </Typography>
                     ) : submissionResult === "INCORRECT" ? (
-                      <Typography color="error" display={"flex"}>
+                      <Typography color="error" display="flex">
                         <ClearIcon />
                         Incorrect answer
                       </Typography>
-                    ) : (
-                      ""
-                    )}
+                    ) : null}
                   </Box>
-                  {submissionResult !== "UNKNOWN" ? (
-                    <List
-                      sx={{
-                        mt: 4,
-                      }}
-                    >
+                  {submissionResult !== "UNKNOWN" && question && (
+                    <List sx={{ mt: 4 }}>
                       <Typography color="primary">
                         Acceptable answers:
                       </Typography>
-                      {question?.[1].answers?.map((a, i) => {
-                        return <ListItem key={i}>{a}</ListItem>;
-                      })}
+                      {question[1].answers?.map((a, i) => (
+                        <ListItem key={i}>{a}</ListItem>
+                      ))}
                     </List>
-                  ) : null}
+                  )}
                 </Box>
               </>
             );
@@ -283,9 +185,8 @@ function TestCard({}: TestCardProps) {
               <>
                 <TestResult
                   answers={answers.current}
-                  totalQuestion={NUMBER_OF_QUESTIONS}
+                  numberOfQuestions={NUMBER_OF_QUESTIONS}
                 />
-
                 <Button
                   variant="contained"
                   sx={{ mt: 4 }}
@@ -296,7 +197,7 @@ function TestCard({}: TestCardProps) {
               </>
             );
           default:
-            return <></>;
+            return null;
         }
       })()}
     </Card>
