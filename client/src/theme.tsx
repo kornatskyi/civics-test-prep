@@ -14,17 +14,31 @@ const theme = createTheme({
       main: "rgb(10, 49, 97)",
     },
     secondary: {
-      main: "#005d8d",
+      main: "rgb(10, 49, 97)",
     },
     error: {
-      main: american_red
+      main: american_red,
     },
     background: {
       paper: white_semi_transparent,
+
     },
   },
   typography: {
     fontFamily: `'Merriweather', 'Roboto', 'Helvetica', 'Arial', sans-serif`,
+  },
+  components: {
+    MuiSvgIcon: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          color: theme.palette.primary.main, // Default color for icons
+          "&:hover": {
+            color: theme.palette.primary.main, // Change color on hover
+            cursor: "help",
+          },
+        }),
+      },
+    },
   },
 });
 
