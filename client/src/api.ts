@@ -45,4 +45,18 @@ export const submitAnswer = async (questionId: number, answer: string) => {
   return j["result"] === "true";
 };
 
+export const getDynamicQuestions = async (): Promise<Question[]> => {
+  const res = await fetch("/api/dynamic-questions");
+  const j: {
+    questions: Question[];
+  } = await res.json();
+  console.log(j);
+
+  return j["questions"].map((jq) => ({
+    id: jq["id"],
+    question: jq["question"],
+    answers: jq["answers"],
+  }));
+};
+
 

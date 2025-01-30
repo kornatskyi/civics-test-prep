@@ -9,13 +9,14 @@ LLAMA3_8B_INSTRUCT = "llama3.3-8b-instant"
 
 DEFAULT_MODEL = LLAMA3_70B_INSTRUCT
 
+load_dotenv()
+
 
 class LLaMaClient:
     pass
 
     def __init__(self):
         GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
-        
         self.groq_client = Groq(api_key=GROQ_API_KEY)
 
     def assistant(self, content: str):

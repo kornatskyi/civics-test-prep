@@ -8,7 +8,7 @@ import os
 from pydantic import BaseModel
 from src.Dependencies import get_LLaMaClient_service, get_questions_service
 from src.LLaMaClient import LLaMaClient
-from src.QuestionsService import QuestionsService
+from src.QuestionsService import Question, QuestionsService
 
 
 # Define a Pydantic model for the request body
@@ -50,18 +50,12 @@ def read_question(
     questions_service: QuestionsService = Depends(get_questions_service),
 ):
     try:
-        question = {}
+        question = Question()
         if question_id == -1:
-            random_key = choice(list(questions_service.question_by_ids.keys()))
-            print(random_key)
-            question = questions_service.get_question_by_id(random_key)
+            question = sample(questions_service.get_all_questions(), 1)[0]
         else:
             question = questions_service.get_question_by_id(question_id)
-        return {
-            "question": question["question"],
-            "id": question["id"],
-            "answers": question["answers"],
-        }
+        return question
     except IndexError:
         raise HTTPException(status_code=404, detail="Question not found")
 
@@ -77,8 +71,8 @@ def submit_answer(
     question = questions_service.get_question_by_id(question_id)
     prompt = f"""
         I will provide you with a question, correct answers to that question, and user's answer to that question. You should tell if user's answer is correct. It might not match exactly the actual answers but you still should understand what the user mean form the context and be able to judge weather the answer is correct or incorrect. But be careful because some users answers might be tricky, they still should match very closely to the actual answers and can't be too wage.
-        Question: {question["question"]}
-        Actual answers: {question["answers"]}
+        Question: {question.question}
+        Actual answers: {question.answers}
         User's answer: {answer.answer}
         
         Reply only with the word "Correct" for a correct user's answer or the word "Incorrect" for an incorrect user's answer.
@@ -87,3 +81,10 @@ def submit_answer(
     result = llama_client.completion(prompt)
 
     return {"result": "true" if "Correct" in result else "false"}
+
+
+@app.get("/api/dynamic-questions")
+def get_dynamic_questions(
+    questions_service: QuestionsService = Depends(get_questions_service),
+):
+    return {"questions": questions_service.get_dynamic_questions()}
