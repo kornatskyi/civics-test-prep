@@ -33,7 +33,7 @@ app.add_middleware(
 PRODUCTION = os.getenv("PRODUCTION", "False").lower() == "true"
 
 if PRODUCTION:
-    app.mount("/", StaticFiles(directory="client/dist", html=True), name="static")
+    app.mount("/static", StaticFiles(directory="client/dist", html=True), name="static")
 
 
 @app.get("/api/questions")

@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { createTheme } from "@mui/material/styles";
-import { red } from "@mui/material/colors";
+// import { red } from "@mui/material/colors";
 
-const american_blue = "rgba(10, 49, 97, 1.0)";
-const american_blue_semi_transparent = "rgba(10, 49, 97, 0.2)";
+// const american_blue = "rgba(10, 49, 97, 1.0)";
+// const american_blue_semi_transparent = "rgba(10, 49, 97, 0.2)";
 const white_semi_transparent = "rgba(255,255,255, 0.6)";
 const american_red = "rgb(191,10,48, 1.0)";
 
