@@ -41,3 +41,4 @@ Thumbs.db
 # Project specific
 client/node_modules/
 client/dist/
+digitalocean_creds.txt
