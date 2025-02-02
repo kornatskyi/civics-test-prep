@@ -21,14 +21,10 @@ function Header({}: HeaderProps) {
         borderRadius: theme.shape.borderRadius,
       }}
     >
-      <Typography
-        align="center"
-        color="primary"
-        variant="h4"
-        sx={{ mb: 4 }} // margin bottom
-      >
+      <Typography align="center" color="primary" variant="h4">
         U.S. NATURALIZATION TEST PRACTICE
       </Typography>
+      <Typography variant="h5">Civics test</Typography>
     </Box>
   );
 }

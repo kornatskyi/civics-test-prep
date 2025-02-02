@@ -134,11 +134,11 @@ function TestCard() {
                     }}
                     autoComplete="off"
                     sx={{ width: "100%" }}
-                    id="outlined-multiline-flexible"
                     label="Answer"
                     value={answer}
                     onChange={(e) => setAnswer(e.target.value)}
                     placeholder="Type your answer here"
+                    disabled={submissionResult !== "UNKNOWN"}
                   />
                   <Box
                     sx={{
@@ -161,11 +161,7 @@ function TestCard() {
                       {submissionResult === "UNKNOWN" ? "Submit" : "Next"}
                     </Button>
 
-                    <Box
-                      sx={{
-                        maxWidth: 100,
-                      }}
-                    >
+                    <Box sx={{}}>
                       {submissionResult === "CORRECT" ? (
                         <Typography
                           sx={{
@@ -203,19 +199,32 @@ function TestCard() {
                   </Box>
                   <Box
                     sx={{
+                      mt: 2,
                       maxHeight: 300,
-                      overflowY: "scroll",
                     }}
                   >
                     {submissionResult !== "UNKNOWN" && question && (
-                      <List sx={{ mt: 4 }}>
-                        <Typography color="primary">
-                          Acceptable answers:
-                        </Typography>
-                        {question[1].answers?.map((a, i) => (
-                          <ListItem key={i}>{a}</ListItem>
-                        ))}
-                      </List>
+                      <>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "row",
+                          }}
+                        >
+                          <Typography color="primary">Your answer:</Typography>{" "}
+                          &nbsp;
+                          <Typography>{answer}</Typography>
+                        </Box>
+
+                        <List sx={{ overflowY: "scroll" }}>
+                          <Typography color="primary">
+                            Acceptable answers:
+                          </Typography>
+                          {question[1].answers?.map((a, i) => (
+                            <ListItem key={i}>{a}</ListItem>
+                          ))}
+                        </List>
+                      </>
                     )}
                   </Box>
                 </Box>
