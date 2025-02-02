@@ -9,6 +9,9 @@ const american_red = "rgb(191,10,48, 1.0)";
 
 // A custom theme for this app
 const theme = createTheme({
+  shape: {
+    borderRadius: 10,
+  },
   palette: {
     primary: {
       main: "rgb(10, 49, 97)",
@@ -21,7 +24,6 @@ const theme = createTheme({
     },
     background: {
       paper: white_semi_transparent,
-
     },
   },
   typography: {

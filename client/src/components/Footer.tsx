@@ -15,7 +15,6 @@ function Footer({}: FooterProps) {
         backgroundColor: "rgba(0,0,0,0.2)",
         textAlign: "center",
         color: "rgb(209, 209, 209)",
-        borderRadius: 1,
       }}
     >
       <Typography variant="body2" sx={{ maxWidth: 800, mx: "auto" }}>
