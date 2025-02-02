@@ -9,7 +9,7 @@ function Header({}: HeaderProps) {
     <Box
       component="header"
       sx={{
-        backgroundColor: theme.palette.background.paper,
+        backgroundColor: theme.palette.background.default,
         textAlign: "center",
         display: "flex",
         flexDirection: "column",
@@ -18,6 +18,7 @@ function Header({}: HeaderProps) {
         py: 3, // vertical padding on the header
         px: 2, // optional horizontal padding
         width: "100%",
+        borderRadius: theme.shape.borderRadius,
       }}
     >
       <Typography

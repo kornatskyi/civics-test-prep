@@ -9,9 +9,6 @@ const american_red = "rgb(191,10,48, 1.0)";
 
 // A custom theme for this app
 const theme = createTheme({
-  shape: {
-    borderRadius: 10,
-  },
   palette: {
     primary: {
       main: "rgb(10, 49, 97)",
@@ -24,18 +21,29 @@ const theme = createTheme({
     },
     background: {
       paper: white_semi_transparent,
+      default: white_semi_transparent,
     },
+  },
+  shape: {
+    borderRadius: 2,
   },
   typography: {
     fontFamily: `'Merriweather', 'Roboto', 'Helvetica', 'Arial', sans-serif`,
   },
   components: {
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          borderRadius: 10,
+        },
+      },
+    },
     MuiSvgIcon: {
       styleOverrides: {
         root: ({ theme }) => ({
-          color: theme.palette.primary.main, // Default color for icons
+          color: theme.palette.primary.main,
           "&:hover": {
-            color: theme.palette.primary.main, // Change color on hover
+            color: theme.palette.primary.main,
             cursor: "help",
           },
         }),

@@ -5,7 +5,7 @@ import {
   Alert,
   Box,
   Button,
-  Card,
+  Container,
   Link,
   List,
   ListItem,
@@ -71,13 +71,15 @@ function TestCard() {
         mt: 4,
         width: "100%",
         alignSelf: "center",
+        borderRadius: theme.shape.borderRadius,
       }}
     >
       {error}
     </Alert>
   ) : (
-    <Card
+    <Container
       sx={{
+        backgroundColor: theme.palette.background.default,
         width: "100%",
         display: "flex",
         flexDirection: "column",
@@ -86,6 +88,7 @@ function TestCard() {
         backdropFilter: "blur(2px)",
         padding: "30px",
         mt: 10,
+        borderRadius: theme.shape.borderRadius,
       }}
     >
       {(() => {
@@ -201,7 +204,7 @@ function TestCard() {
                   <Box
                     sx={{
                       maxHeight: 300,
-                      overflow: "scroll",
+                      overflowY: "scroll",
                     }}
                   >
                     {submissionResult !== "UNKNOWN" && question && (
@@ -272,7 +275,7 @@ function TestCard() {
           sx={{ alignSelf: "end", cursor: "pointer", color: "primary.main" }}
         />
       </Tooltip>
-    </Card>
+    </Container>
   );
 }
 

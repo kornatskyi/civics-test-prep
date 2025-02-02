@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 /* eslint-disable no-empty-pattern */
-import { Box, Link, Typography } from "@mui/material";
+import { Box, Link, Typography, useTheme } from "@mui/material";
 
 type FooterProps = {};
 
 function Footer({}: FooterProps) {
+  const theme = useTheme();
   return (
     <Box
       component="footer"
@@ -15,6 +16,7 @@ function Footer({}: FooterProps) {
         backgroundColor: "rgba(0,0,0,0.2)",
         textAlign: "center",
         color: "rgb(209, 209, 209)",
+        borderRadius: theme.shape.borderRadius,
       }}
     >
       <Typography variant="body2" sx={{ maxWidth: 800, mx: "auto" }}>
