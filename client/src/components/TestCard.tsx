@@ -5,20 +5,18 @@ import {
   Box,
   Button,
   Container,
-  Link,
   List,
   ListItem,
   TextField,
-  Tooltip,
   Typography,
 } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 import CheckIcon from "@mui/icons-material/Check";
 import { Question } from "../api";
 import { SubmissionResult, useTest } from "./useTest.ts";
-import InfoIcon from "@mui/icons-material/Info";
 import theme from "../theme.tsx";
 import ErrorAlert from "./ErrorAlert.tsx";
+import TestInfo from "./TestInfo.tsx";
 
 const NUMBER_OF_QUESTIONS = 3;
 
@@ -204,6 +202,7 @@ interface FinishedStageProps {
   answers: React.MutableRefObject<Answer[]>;
   restartTest: () => void;
 }
+
 function FinishedStage({ answers, restartTest }: FinishedStageProps) {
   return (
     <>
@@ -275,41 +274,7 @@ function TestCard() {
             return null;
         }
       })()}
-
-      <Tooltip
-        slotProps={{
-          tooltip: {
-            sx: {
-              backgroundColor: "white",
-              color: theme.palette.primary.main,
-            },
-          },
-        }}
-        title={
-          <Typography variant="body2">
-            Some questions, such as those about current government officials,
-            are <strong>not included</strong> in this practice test because they
-            change over time.
-            <br />
-            <br />
-            Visit the
-            <Link
-              href="https://www.uscis.gov/citizenship"
-              target="_blank"
-              rel="noopener noreferrer"
-              underline="hover"
-            >
-              {" USCIS Citizenship Test page "}
-            </Link>
-            for the latest information.
-          </Typography>
-        }
-        arrow
-      >
-        <InfoIcon
-          sx={{ alignSelf: "end", cursor: "pointer", color: "primary.main" }}
-        />
-      </Tooltip>
+      <TestInfo />
     </Container>
   );
 }

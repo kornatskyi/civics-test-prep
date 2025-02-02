@@ -38,17 +38,6 @@ const theme = createTheme({
         },
       },
     },
-    MuiSvgIcon: {
-      styleOverrides: {
-        root: ({ theme }) => ({
-          color: theme.palette.primary.main,
-          "&:hover": {
-            color: theme.palette.primary.main,
-            cursor: "help",
-          },
-        }),
-      },
-    },
   },
 });
 
