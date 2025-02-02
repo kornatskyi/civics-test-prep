@@ -2,7 +2,6 @@ import { useState, useRef } from "react";
 import { getNRandomQuestion, Question, submitAnswer } from "../api";
 
 type TestState = "INITIAL" | "RUNNING" | "FINISHED";
-type SubmissionResult = "CORRECT" | "INCORRECT" | "UNKNOWN";
 
 interface Answer {
   question: Question;
@@ -10,11 +9,19 @@ interface Answer {
   isCorrect: boolean;
 }
 
+export enum SubmissionResult {
+  UNKNOWN,
+  CORRECT,
+  INCORRECT,
+}
+
 export function useTest(NUMBER_OF_QUESTIONS: number) {
   const [testState, setTestState] = useState<TestState>("INITIAL");
   const [error, setError] = useState("");
   const [answer, setAnswer] = useState("");
-  const [submissionResult, setSubmissionResult] = useState<SubmissionResult>("UNKNOWN");
+  const [submissionResult, setSubmissionResult] = useState<SubmissionResult>(
+    SubmissionResult.UNKNOWN
+  );
   const [isSubmitting, setIsSubmitting] = useState(false);
   const answers = useRef<Answer[]>([]);
 
@@ -48,7 +55,9 @@ export function useTest(NUMBER_OF_QUESTIONS: number) {
     setIsSubmitting(true);
     try {
       const correct = await submitAnswer(question[1].id, answer);
-      setSubmissionResult(correct === true ? "CORRECT" : "INCORRECT");
+      setSubmissionResult(
+        correct === true ? SubmissionResult.CORRECT : SubmissionResult.INCORRECT
+      );
 
       answers.current.push({
         question: question[1],
@@ -57,7 +66,7 @@ export function useTest(NUMBER_OF_QUESTIONS: number) {
       });
     } catch (err) {
       console.error("Error submitting answer:", err);
-      setSubmissionResult("UNKNOWN");
+      setSubmissionResult(SubmissionResult.UNKNOWN);
     } finally {
       setIsSubmitting(false);
     }
@@ -73,14 +82,14 @@ export function useTest(NUMBER_OF_QUESTIONS: number) {
     }
     setQuestion(nextQ);
     setAnswer("");
-    setSubmissionResult("UNKNOWN");
+    setSubmissionResult(SubmissionResult.UNKNOWN);
   }
 
   function restartTest() {
     answers.current = [];
     setTestState("INITIAL");
     setAnswer("");
-    setSubmissionResult("UNKNOWN");
+    setSubmissionResult(SubmissionResult.UNKNOWN);
     startTest();
   }
 

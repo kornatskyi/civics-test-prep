@@ -16,9 +16,10 @@ import {
 import ClearIcon from "@mui/icons-material/Clear";
 import CheckIcon from "@mui/icons-material/Check";
 import { Question } from "../api";
-import { useTest } from "./useTest.ts";
+import { SubmissionResult, useTest } from "./useTest.ts";
 import InfoIcon from "@mui/icons-material/Info";
 import theme from "../theme.tsx";
+import { ErrorOutlineRounded } from "@mui/icons-material";
 
 const NUMBER_OF_QUESTIONS = 3;
 
@@ -44,6 +45,177 @@ function TestResult({ answers, numberOfQuestions }: TestResultProps) {
       <br />
       {`Want to try again? Click Try Again to restart with a new set of questions.`}
     </Typography>
+  );
+}
+
+interface InitialStageProps {
+  startTest: () => Promise<void>;
+}
+
+function InitialStage({ startTest }: InitialStageProps) {
+  return (
+    <>
+      <Typography color="primary" sx={{ textAlign: "center" }}>
+        Ready to Test Your Knowledge? <br />
+        Click Start Test to begin.
+      </Typography>
+      <Button variant="contained" sx={{ mt: 2 }} onClick={startTest}>
+        Start Test
+      </Button>
+    </>
+  );
+}
+
+interface RunningStageProps {
+  answer: string;
+  submissionResult: SubmissionResult;
+  isSubmitting: boolean;
+  question: [number, Question] | undefined;
+  submit: () => Promise<void>;
+  nextQuestion: () => void;
+  setAnswer: React.Dispatch<React.SetStateAction<string>>;
+}
+
+function RunningStage({
+  answer,
+  submissionResult,
+  isSubmitting,
+  question,
+  submit,
+  nextQuestion,
+  setAnswer,
+}: RunningStageProps) {
+  return (
+    <>
+      <Box sx={{ alignSelf: "end" }}>
+        {question?.[0] !== undefined &&
+          `Question ${question[0] + 1} out of ${NUMBER_OF_QUESTIONS}`}
+      </Box>
+      <Typography align="center" variant="h6" mt={2}>
+        {question && `${question[1].id}. ${question[1].question}`}
+      </Typography>
+      <Box mt={4} sx={{ width: "100%" }}>
+        <TextField
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              if (submissionResult === SubmissionResult.UNKNOWN) {
+                submit();
+              } else {
+                nextQuestion();
+              }
+            }
+          }}
+          autoComplete="off"
+          sx={{ width: "100%" }}
+          label="Answer"
+          value={answer}
+          onChange={(e) => setAnswer(e.target.value)}
+          placeholder="Type your answer here"
+          disabled={submissionResult !== SubmissionResult.UNKNOWN}
+        />
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            mt: 4,
+            justifyContent: "space-between",
+          }}
+        >
+          <Button
+            loading={isSubmitting}
+            disabled={!answer && submissionResult === SubmissionResult.UNKNOWN}
+            sx={{ height: 40, width: 100 }}
+            variant="contained"
+            onClick={
+              submissionResult === SubmissionResult.UNKNOWN
+                ? submit
+                : nextQuestion
+            }
+          >
+            {submissionResult === SubmissionResult.UNKNOWN ? "Submit" : "Next"}
+          </Button>
+
+          <Box>
+            {submissionResult === SubmissionResult.CORRECT ? (
+              <Typography
+                sx={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                color="success"
+                display="flex"
+              >
+                <CheckIcon
+                  style={{
+                    color: theme.palette.success.main,
+                  }}
+                />{" "}
+                Correct answer
+              </Typography>
+            ) : submissionResult === SubmissionResult.INCORRECT ? (
+              <Typography
+                sx={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                color="error"
+                display="flex"
+              >
+                <ClearIcon
+                  style={{
+                    color: theme.palette.error.main,
+                  }}
+                />
+                Incorrect answer
+              </Typography>
+            ) : null}
+          </Box>
+        </Box>
+        <Box
+          sx={{
+            mt: 2,
+            maxHeight: 300,
+            overflowY: "auto",
+          }}
+        >
+          {submissionResult !== SubmissionResult.UNKNOWN && question && (
+            <>
+              <Box>
+                <Typography color="primary">Your answer:</Typography>
+                &nbsp;
+                <Typography>{answer}</Typography>
+              </Box>
+
+              <List>
+                <Typography color="primary">Acceptable answers:</Typography>
+                {question[1].answers?.map((a, i) => (
+                  <ListItem key={i}>{a}</ListItem>
+                ))}
+              </List>
+            </>
+          )}
+        </Box>
+      </Box>
+    </>
+  );
+}
+
+interface FinishedStageProps {
+  answers: React.MutableRefObject<Answer[]>;
+  restartTest: () => void;
+}
+function FinishedStage({ answers, restartTest }: FinishedStageProps) {
+  return (
+    <>
+      <TestResult
+        answers={answers.current}
+        numberOfQuestions={NUMBER_OF_QUESTIONS}
+      />
+      <Button variant="contained" sx={{ mt: 4 }} onClick={restartTest}>
+        Try again
+      </Button>
+    </>
   );
 }
 
@@ -94,158 +266,28 @@ function TestCard() {
       {(() => {
         switch (testState) {
           case "INITIAL":
-            return (
-              <>
-                <Typography color="primary" sx={{ textAlign: "center" }}>
-                  Ready to Test Your Knowledge? <br />
-                  <br />
-                  You will receive a set of randomized questions similar to
-                  those on the official U.S. Naturalization civics test. Answer
-                  carefully, and remember that practice makes perfect!
-                  <br />
-                  <br />
-                  Click Start Test to begin.
-                </Typography>
-                <Button variant="contained" sx={{ mt: 2 }} onClick={startTest}>
-                  Start Test
-                </Button>
-              </>
-            );
+            return <InitialStage startTest={startTest} />;
           case "RUNNING":
             return (
-              <>
-                <Box sx={{ alignSelf: "end" }}>
-                  {question?.[0] !== undefined &&
-                    `Question ${question[0] + 1} out of ${NUMBER_OF_QUESTIONS}`}
-                </Box>
-                <Typography align="center" variant="h6" mt={2}>
-                  {question && `${question[1].id}. ${question[1].question}`}
-                </Typography>
-                <Box mt={4} sx={{ width: "100%" }}>
-                  <TextField
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        if (submissionResult === "UNKNOWN") {
-                          submit();
-                        } else {
-                          nextQuestion();
-                        }
-                      }
-                    }}
-                    autoComplete="off"
-                    sx={{ width: "100%" }}
-                    label="Answer"
-                    value={answer}
-                    onChange={(e) => setAnswer(e.target.value)}
-                    placeholder="Type your answer here"
-                    disabled={submissionResult !== "UNKNOWN"}
-                  />
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                      mt: 4,
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <Button
-                      loading={isSubmitting}
-                      disabled={!answer && submissionResult === "UNKNOWN"}
-                      sx={{ height: 40, width: 100 }}
-                      variant="contained"
-                      onClick={
-                        submissionResult === "UNKNOWN" ? submit : nextQuestion
-                      }
-                    >
-                      {submissionResult === "UNKNOWN" ? "Submit" : "Next"}
-                    </Button>
-
-                    <Box>
-                      {submissionResult === "CORRECT" ? (
-                        <Typography
-                          sx={{
-                            justifyContent: "center",
-                            alignItems: "center",
-                          }}
-                          color="success"
-                          display="flex"
-                        >
-                          <CheckIcon
-                            style={{
-                              color: theme.palette.success.main,
-                            }}
-                          />{" "}
-                          Correct answer
-                        </Typography>
-                      ) : submissionResult === "INCORRECT" ? (
-                        <Typography
-                          sx={{
-                            justifyContent: "center",
-                            alignItems: "center",
-                          }}
-                          color="error"
-                          display="flex"
-                        >
-                          <ClearIcon
-                            style={{
-                              color: theme.palette.error.main,
-                            }}
-                          />
-                          Incorrect answer
-                        </Typography>
-                      ) : null}
-                    </Box>
-                  </Box>
-                  <Box
-                    sx={{
-                      mt: 2,
-                      maxHeight: 300,
-                      overflowY: "auto",
-                    }}
-                  >
-                    {submissionResult !== "UNKNOWN" && question && (
-                      <>
-                        <Box>
-                          <Typography color="primary">Your answer:</Typography>
-                          &nbsp;
-                          <Typography>{answer}</Typography>
-                        </Box>
-
-                        <List>
-                          <Typography color="primary">
-                            Acceptable answers:
-                          </Typography>
-                          {question[1].answers?.map((a, i) => (
-                            <ListItem key={i}>{a}</ListItem>
-                          ))}
-                        </List>
-                      </>
-                    )}
-                  </Box>
-                </Box>
-              </>
+              <RunningStage
+                answer={answer}
+                submissionResult={submissionResult}
+                isSubmitting={isSubmitting}
+                question={question}
+                submit={submit}
+                nextQuestion={nextQuestion}
+                setAnswer={setAnswer}
+              />
             );
           case "FINISHED":
             return (
-              <>
-                <TestResult
-                  answers={answers.current}
-                  numberOfQuestions={NUMBER_OF_QUESTIONS}
-                />
-                <Button
-                  variant="contained"
-                  sx={{ mt: 4 }}
-                  onClick={restartTest}
-                >
-                  Try again
-                </Button>
-              </>
+              <FinishedStage answers={answers} restartTest={restartTest} />
             );
           default:
             return null;
         }
       })()}
+
       <Tooltip
         slotProps={{
           tooltip: {
