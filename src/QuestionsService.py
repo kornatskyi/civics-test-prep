@@ -55,8 +55,8 @@ class QuestionsService:
             ]
             self.question_by_ids = {q.id: q for q in self.questions}
 
-    def get_all_questions(self, areDynamicQuestionsIncluded=True) -> list[Question]:
-        if areDynamicQuestionsIncluded:
+    def get_all_questions(self, are_dynamic_questions_included=True) -> list[Question]:
+        if are_dynamic_questions_included:
             return self.questions
         else:
             return [q for q in self.questions if not q.is_dynamic_answer]

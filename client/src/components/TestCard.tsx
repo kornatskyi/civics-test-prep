@@ -149,38 +149,72 @@ function TestCard() {
                     <Button
                       loading={isSubmitting}
                       disabled={!answer && submissionResult === "UNKNOWN"}
-                      sx={{ height: 40 }}
+                      sx={{ height: 40, width: 100 }}
                       variant="contained"
                       onClick={
                         submissionResult === "UNKNOWN" ? submit : nextQuestion
                       }
                     >
-                      {submissionResult === "UNKNOWN"
-                        ? "Submit"
-                        : "Next question"}
+                      {submissionResult === "UNKNOWN" ? "Submit" : "Next"}
                     </Button>
 
-                    {submissionResult === "CORRECT" ? (
-                      <Typography color="success.main" display="flex">
-                        <CheckIcon /> Correct answer
-                      </Typography>
-                    ) : submissionResult === "INCORRECT" ? (
-                      <Typography color="error" display="flex">
-                        <ClearIcon />
-                        Incorrect answer
-                      </Typography>
-                    ) : null}
+                    <Box
+                      sx={{
+                        maxWidth: 100,
+                      }}
+                    >
+                      {submissionResult === "CORRECT" ? (
+                        <Typography
+                          sx={{
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                          color="success"
+                          display="flex"
+                        >
+                          <CheckIcon
+                            style={{
+                              color: theme.palette.success.main,
+                            }}
+                          />{" "}
+                          Correct answer
+                        </Typography>
+                      ) : submissionResult === "INCORRECT" ? (
+                        <Typography
+                          sx={{
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                          color="error"
+                          display="flex"
+                        >
+                          <ClearIcon
+                            style={{
+                              color: theme.palette.error.main,
+                            }}
+                          />
+                          Incorrect answer
+                        </Typography>
+                      ) : null}
+                    </Box>
                   </Box>
-                  {submissionResult !== "UNKNOWN" && question && (
-                    <List sx={{ mt: 4 }}>
-                      <Typography color="primary">
-                        Acceptable answers:
-                      </Typography>
-                      {question[1].answers?.map((a, i) => (
-                        <ListItem key={i}>{a}</ListItem>
-                      ))}
-                    </List>
-                  )}
+                  <Box
+                    sx={{
+                      maxHeight: 300,
+                      overflow: "scroll",
+                    }}
+                  >
+                    {submissionResult !== "UNKNOWN" && question && (
+                      <List sx={{ mt: 4 }}>
+                        <Typography color="primary">
+                          Acceptable answers:
+                        </Typography>
+                        {question[1].answers?.map((a, i) => (
+                          <ListItem key={i}>{a}</ListItem>
+                        ))}
+                      </List>
+                    )}
+                  </Box>
                 </Box>
               </>
             );
