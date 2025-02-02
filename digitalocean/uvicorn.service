@@ -1,0 +1,15 @@
+[Unit]
+Description=Uvicorn FastAPI Server
+After=network.target
+
+[Service]
+User=root
+Group=root
+WorkingDirectory=/root/civics-test-prep 
+ExecStart=/root/civics-test-prep/.venv/bin/python -m uvicorn main:app --host 0.0.0.0 --port 8000 --workers 4
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
+# paste this configs in /etc/systemd/system/uvicorn.service
