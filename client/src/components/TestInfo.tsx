@@ -1,24 +1,5 @@
-/* eslint-disable no-empty-pattern */
-/* eslint-disable @typescript-eslint/no-empty-object-type */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import {
-  Box,
-  Button,
-  Container,
-  Link,
-  List,
-  ListItem,
-  TextField,
-  Tooltip,
-  Typography,
-} from "@mui/material";
-import ClearIcon from "@mui/icons-material/Clear";
-import CheckIcon from "@mui/icons-material/Check";
-import { Question } from "../api";
-import { SubmissionResult, useTest } from "./useTest.ts";
+import { Box, Link, Typography } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
-import theme from "../theme.tsx";
-import ErrorAlert from "./ErrorAlert.tsx";
 import { useState } from "react";
 
 export default function TestInfo() {

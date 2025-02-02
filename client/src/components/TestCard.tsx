@@ -1,6 +1,3 @@
-/* eslint-disable no-empty-pattern */
-/* eslint-disable @typescript-eslint/no-empty-object-type */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Box,
   Button,
