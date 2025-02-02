@@ -161,7 +161,7 @@ function TestCard() {
                       {submissionResult === "UNKNOWN" ? "Submit" : "Next"}
                     </Button>
 
-                    <Box sx={{}}>
+                    <Box>
                       {submissionResult === "CORRECT" ? (
                         <Typography
                           sx={{
@@ -201,22 +201,18 @@ function TestCard() {
                     sx={{
                       mt: 2,
                       maxHeight: 300,
+                      overflowY: "auto",
                     }}
                   >
                     {submissionResult !== "UNKNOWN" && question && (
                       <>
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "row",
-                          }}
-                        >
-                          <Typography color="primary">Your answer:</Typography>{" "}
+                        <Box>
+                          <Typography color="primary">Your answer:</Typography>
                           &nbsp;
                           <Typography>{answer}</Typography>
                         </Box>
 
-                        <List sx={{ overflowY: "scroll" }}>
+                        <List>
                           <Typography color="primary">
                             Acceptable answers:
                           </Typography>
