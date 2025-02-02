@@ -219,6 +219,23 @@ function FinishedStage({ answers, restartTest }: FinishedStageProps) {
   );
 }
 
+function ErrorAlert({ error }: { error: string }) {
+  return (
+    <Alert
+      variant="filled"
+      severity="error"
+      sx={{
+        mt: 4,
+        width: "100%",
+        alignSelf: "center",
+        borderRadius: theme.shape.borderRadius,
+      }}
+    >
+      {error}
+    </Alert>
+  );
+}
+
 function TestCard() {
   const {
     testState,
@@ -236,18 +253,7 @@ function TestCard() {
   } = useTest(NUMBER_OF_QUESTIONS);
 
   return error ? (
-    <Alert
-      variant="filled"
-      severity="error"
-      sx={{
-        mt: 4,
-        width: "100%",
-        alignSelf: "center",
-        borderRadius: theme.shape.borderRadius,
-      }}
-    >
-      {error}
-    </Alert>
+    <ErrorAlert error={error} />
   ) : (
     <Container
       sx={{
