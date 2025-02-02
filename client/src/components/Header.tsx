@@ -15,8 +15,7 @@ function Header({}: HeaderProps) {
         flexDirection: "column",
         alignItems: "center",
         color: theme.palette.primary.dark,
-        py: 3, // vertical padding on the header
-        px: 2, // optional horizontal padding
+        py: 2,
         width: "100%",
         borderRadius: theme.shape.borderRadius,
       }}
@@ -24,7 +23,9 @@ function Header({}: HeaderProps) {
       <Typography align="center" color="primary" variant="h4">
         U.S. NATURALIZATION TEST PRACTICE
       </Typography>
-      <Typography variant="h5">Civics test</Typography>
+      <Typography sx={{ typography: { sm: "h5", xs: "h6" } }}>
+        Civics test
+      </Typography>
     </Box>
   );
 }

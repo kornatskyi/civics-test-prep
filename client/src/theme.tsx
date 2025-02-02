@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material/styles";
+import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 // import { red } from "@mui/material/colors";
 
 // const american_blue = "rgba(10, 49, 97, 1.0)";
@@ -7,7 +7,7 @@ const white_semi_transparent = "rgba(255,255,255, 0.6)";
 const american_red = "rgb(191,10,48, 1.0)";
 
 // A custom theme for this app
-const theme = createTheme({
+const t = createTheme({
   palette: {
     primary: {
       main: "rgb(10, 49, 97)",
@@ -39,5 +39,7 @@ const theme = createTheme({
     },
   },
 });
+
+const theme = responsiveFontSizes(t);
 
 export default theme;

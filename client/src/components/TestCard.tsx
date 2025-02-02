@@ -243,8 +243,9 @@ function TestCard() {
         alignSelf: "center",
         backdropFilter: "blur(2px)",
         padding: "30px",
-        mt: 10,
+        mt: { xs: 5, sm: 8, md: 10, lg: 12, xl: 15 }, // Responsive margin-top
         borderRadius: theme.shape.borderRadius,
+        mb: { xs: 5, sm: 8, md: 10, lg: 12, xl: 15 }, // Responsive margin-top
       }}
     >
       {(() => {
