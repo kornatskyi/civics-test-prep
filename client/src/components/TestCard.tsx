@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
-  Alert,
   Box,
   Button,
   Container,
@@ -19,7 +18,7 @@ import { Question } from "../api";
 import { SubmissionResult, useTest } from "./useTest.ts";
 import InfoIcon from "@mui/icons-material/Info";
 import theme from "../theme.tsx";
-import { ErrorOutlineRounded } from "@mui/icons-material";
+import ErrorAlert from "./ErrorAlert.tsx";
 
 const NUMBER_OF_QUESTIONS = 3;
 
@@ -216,23 +215,6 @@ function FinishedStage({ answers, restartTest }: FinishedStageProps) {
         Try again
       </Button>
     </>
-  );
-}
-
-function ErrorAlert({ error }: { error: string }) {
-  return (
-    <Alert
-      variant="filled"
-      severity="error"
-      sx={{
-        mt: 4,
-        width: "100%",
-        alignSelf: "center",
-        borderRadius: theme.shape.borderRadius,
-      }}
-    >
-      {error}
-    </Alert>
   );
 }
 
