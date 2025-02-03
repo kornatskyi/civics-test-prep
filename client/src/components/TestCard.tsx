@@ -401,9 +401,9 @@ const TestCard: React.FC = () => {
         alignSelf: "center",
         backdropFilter: "blur(2px)",
         padding: "30px",
-        mt: { xs: 5, sm: 8, md: 10, lg: 12, xl: 15 }, // Responsive margin-top
+        mt: { xs: 5, sm: 8, md: 10, lg: 12, xl: 15 },
         borderRadius: theme.shape.borderRadius,
-        mb: { xs: 5, sm: 8, md: 10, lg: 12, xl: 15 }, // Responsive margin-top
+        mb: { xs: 5, sm: 8, md: 10, lg: 12, xl: 15 },
       }}
     >
       {renderStage()}
