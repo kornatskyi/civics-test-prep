@@ -6,6 +6,7 @@ import {
   ListItem,
   TextField,
   Typography,
+  useMediaQuery,
 } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 import CheckIcon from "@mui/icons-material/Check";
@@ -50,14 +51,18 @@ interface InitialStageProps {
 function InitialStage({ startTest }: InitialStageProps) {
   return (
     <>
-      <Typography color="primary" sx={{ textAlign: "center" }}>
+      <Typography
+        color="primary"
+        sx={{ textAlign: "center", mt: { xs: 2, sm: 2, md: 2, lg: 4, xl: 4 } }}
+      >
         Ready to Test Your Knowledge? <br />
-        The test consists of 10 random questions from the list of 100 questions
-        asked during the interview.
-        <br />
         Click Start Test to begin.
       </Typography>
-      <Button variant="contained" sx={{ mt: 2 }} onClick={startTest}>
+      <Button
+        variant="contained"
+        sx={{ mt: { xs: 2, sm: 2, md: 2, lg: 4, xl: 4 } }}
+        onClick={startTest}
+      >
         Start Test
       </Button>
     </>
@@ -94,7 +99,7 @@ function RunningStage({
       <Typography align="center" variant="h6" mt={2}>
         {question && `${question[1].id}. ${question[1].question}`}
       </Typography>
-      <Box mt={4} sx={{ width: "100%" }}>
+      <Box sx={{ width: "100%", mt: { xs: 4, sm: 4, md: 4, lg: 6, xl: 6 } }}>
         <TextField
           onKeyDown={(e) => {
             if (e.key === "Enter") {
@@ -107,6 +112,9 @@ function RunningStage({
           }}
           autoComplete="off"
           sx={{ width: "100%" }}
+          size={
+            useMediaQuery(theme.breakpoints.down("md")) ? "small" : "medium"
+          }
           label="Answer"
           value={answer}
           onChange={(e) => setAnswer(e.target.value)}
@@ -118,7 +126,7 @@ function RunningStage({
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
-            mt: 4,
+            mt: { xs: 2, sm: 2, md: 2, lg: 4, xl: 4 },
             justifyContent: "space-between",
           }}
         >
@@ -127,6 +135,9 @@ function RunningStage({
             disabled={!answer && submissionResult === SubmissionResult.UNKNOWN}
             sx={{ height: 40, width: 100 }}
             variant="contained"
+            size={
+              useMediaQuery(theme.breakpoints.down("md")) ? "small" : "medium"
+            }
             onClick={
               submissionResult === SubmissionResult.UNKNOWN
                 ? submit
