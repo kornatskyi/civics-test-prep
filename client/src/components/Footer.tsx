@@ -21,7 +21,7 @@ function Footer({}: FooterProps) {
     >
       <Typography variant="body2" sx={{ maxWidth: 800, mx: "auto" }}>
         {
-          "This website is an unofficial resource for practice and study. For the most up-to-date and accurate information on the U.S. Naturalization process and test, please visit the official "
+          "This website is an unofficial resource for practice and study. For accurate and up-to-date information on the U.S. Naturalization process and test, please visit the official "
         }
         <Link
           href="https://www.uscis.gov/"

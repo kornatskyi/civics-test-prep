@@ -52,6 +52,9 @@ function InitialStage({ startTest }: InitialStageProps) {
     <>
       <Typography color="primary" sx={{ textAlign: "center" }}>
         Ready to Test Your Knowledge? <br />
+        The test consists of 10 random questions from the list of 100 questions
+        asked during the interview.
+        <br />
         Click Start Test to begin.
       </Typography>
       <Button variant="contained" sx={{ mt: 2 }} onClick={startTest}>
