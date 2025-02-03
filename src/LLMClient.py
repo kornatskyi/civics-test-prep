@@ -12,7 +12,7 @@ DEFAULT_MODEL = LLAMA3_70B_INSTRUCT
 load_dotenv()
 
 
-class LLaMaClient:
+class LLMClient:
     pass
 
     def __init__(self):
@@ -37,6 +37,7 @@ class LLaMaClient:
             model=model,
             temperature=temperature,
             top_p=top_p,
+            max_tokens=10000,
         )
         return response.choices[0].message.content
 

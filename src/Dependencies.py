@@ -1,4 +1,4 @@
-from src.LLaMaClient import LLaMaClient
+from src.LLMClient import LLMClient
 from src.QuestionsService import QuestionsService
 
 
@@ -9,8 +9,8 @@ def get_questions_service():
     return questions_service
 
 
-llama_client = LLaMaClient()
+llama_client = LLMClient()
 
-def get_LLaMaClient_service():
+def get_LLMClient_service():
   return llama_client
   

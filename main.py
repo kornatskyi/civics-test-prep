@@ -6,8 +6,8 @@ from dotenv import load_dotenv
 import os
 
 from pydantic import BaseModel
-from src.Dependencies import get_LLaMaClient_service, get_questions_service
-from src.LLaMaClient import LLaMaClient
+from src.Dependencies import get_LLMClient_service, get_questions_service
+from src.LLMClient import LLMClient
 from src.QuestionsService import Question, QuestionsService
 
 
@@ -69,7 +69,7 @@ def submit_answer(
     question_id: int,
     answer: Answer,
     questions_service: QuestionsService = Depends(get_questions_service),
-    llama_client: LLaMaClient = Depends(get_LLaMaClient_service),
+    llama_client: LLMClient = Depends(get_LLMClient_service),
 ):
     # Example: Validate answer (you can enhance this with actual validation logic)
     question = questions_service.get_question_by_id(question_id)
