@@ -36,11 +36,19 @@ function TestResult({ answers, numberOfQuestions }: TestResultProps) {
     0
   );
   return (
-    <Typography>
-      {`Nice Work! You’ve completed the practice test and answered ${totalCorrect} out of ${numberOfQuestions} questions correctly. Keep practicing to improve your score and strengthen your knowledge of U.S. history, government, and civics.`}
-      <br />
-      {`Want to try again? Click Try Again to restart with a new set of questions.`}
-    </Typography>
+    <Box sx={{ textAlign: "center" }}>
+      <Typography variant="h5" color="primary" gutterBottom>
+        Test Complete!
+      </Typography>
+      <Typography variant="h6" gutterBottom>
+        Score: {totalCorrect}/{numberOfQuestions}
+      </Typography>
+      <Typography variant="body1" sx={{ mt: 2 }}>
+        Ready for another round?
+        <br />
+        Click Try Again for new questions.
+      </Typography>
+    </Box>
   );
 }
 
