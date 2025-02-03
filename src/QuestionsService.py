@@ -2,6 +2,8 @@ import json
 
 from typing import List
 
+from LLMClient import LLMClient
+
 
 class Question:
     def __init__(
@@ -19,6 +21,8 @@ class Question:
         self.answers = answers
         self.is_required_for_65_plus = is_required_for_65_plus
         self.is_dynamic_answer = is_dynamic_answer
+
+        self.llm_client = LLMClient()
 
     def __repr__(self):
         return (
