@@ -1,9 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
-import json
-from LLMClient import LLMClient, GEMINI1_5_FLASH
+from src.LLMClient import LLMClient, GEMINI1_5_FLASH
 import requests
-import json
 
 
 def get_governor_by_state(llm_client):
@@ -26,13 +24,11 @@ def get_governor_by_state(llm_client):
     prompt = f"""Here is the Wikipedia page with the current state and territories governors:
 {clean_html}
 
-Please read through it and compose a JSON dictionary mapping each U.S. state or territory
+Please read through it and compose a list of mapping each U.S. state or territory
 to the name of its current governor, in the format:
-{{
-  "Alabama": "Kay Ivey",
-  "Alaska": "Mike Dunleavy",
+  Alabama: Kay Ivey
+  Alaska: Mike Dunleavy
   ...
-}}
 If a territory does not have a governor or is not listed, omit it or note "N/A".
 """
 
@@ -45,14 +41,12 @@ def get_senators_by_state(llm_client):
     Retrieves the names of the U.S. Senators for each state.
     Uses en.wikipedia.org as a reference for the current listing.
     For territories that do not have U.S. senators, mark them as 'No Senators' or omit.
-    Returns a JSON-like string or dict with structure:
-    {
-      "Alabama": ["Senator Name 1", "Senator Name 2"],
-      "Alaska": ["Senator Name 1", "Senator Name 2"],
+    Returns a list of mapping between the state/territory and senators names:
+      Alabama: [Senator Name 1, Senator Name 2]
+      Alaska: [Senator Name 1, Senator Name 2]
       ...
-    }
     """
-    url = "https://en.wikipedia.org/wiki/List_of_current_United_States_senators"
+    url = "https://www.britannica.com/topic/United-States-senators-2236815"
 
     # Attempt to fetch the page
     try:
@@ -71,23 +65,25 @@ def get_senators_by_state(llm_client):
 
     # Parse the HTML
     soup = BeautifulSoup(response.text, "html.parser")
-    for tag in soup(["script", "style"]):
-        tag.extract()
+    for script in soup(["script", "style", "noscript", "meta"]):
+        script.decompose()  # Remove scripts and styles
+
     clean_html = soup.prettify()
 
     # Send to LLM
     prompt = f"""Below is the Wikipedia page listing all current U.S. Senators:
 {clean_html}
 
-Using the information, produce a JSON dictionary of the form:
-{{
-  "State Name": ["Senator 1", "Senator 2"],
-  ...
-}}
+Using the information, produce a list of mapping of the form e.g.:
+    Alabama: [Senator Name 1, Senator Name 2]
+    Alaska: [Senator Name 1, Senator Name 2]
+    ...
 For territories (or areas without senators), either exclude them or set their value to "No Senators".
+Output only the list of mappings nothing else, no formatting except new line character after each entry
 """
     senators = llm_client.completion(prompt=prompt, model=GEMINI1_5_FLASH)
     return senators
+
 
 
 def get_representative(llm_client) -> str:
@@ -95,13 +91,8 @@ def get_representative(llm_client) -> str:
     Retrieves the names of all U.S. Representatives, grouped by state (and district if applicable).
     Uses house.gov as a reliable source (via https://www.house.gov/representatives).
 
-    Returns a JSON-like string or a Python dictionary in the format:
-    {
-        "Alabama": ["Representative Name (District #)", ...],
-        "Alaska": ["Representative Name (At Large)", ...],
-        ...
-    }
-    or however you prefer to structure it.
+    Returns a list of mappings in the format:
+    State Name: Representative Name (District #), Representative Name (District #), ...
     """
     url = "https://www.house.gov/representatives"
     try:
@@ -124,26 +115,17 @@ def get_representative(llm_client) -> str:
     prompt = f"""Below is HTML content from {url} listing current U.S. Representatives:
 {clean_html}
 
-Please parse the list of U.S. Representatives by state. 
-Return your answer in valid JSON format, mapping each state to a list of representatives, like:
-{{
-  "Alabama": [
-    "Rep Name (District 1)",
-    "Rep Name (District 2)",
-    ...
-  ],
-  "Alaska": [
-    "Rep Name (At Large)"
-  ],
-  ...
-}}
+Please parse the list of U.S. Representatives by state.
+Return your answer as a plain text list, mapping each state to its representatives in this format:
 
-If a territory or district (like D.C.) appears, include that as well.
-If there is no representative for a territory, you can mark it as an empty list or "None".
+State Name: Representative Name (District #), Representative Name (District #), ...
+
+If a state has only one representative, label it as "At Large" instead of a district number.
+Include U.S. territories and D.C. if applicable. If a territory has no representative, return it with "None".
 """
 
-    representatives_json = llm_client.completion(prompt=prompt, model=GEMINI1_5_FLASH)
-    return representatives_json
+    representatives_list = llm_client.completion(prompt=prompt, model=GEMINI1_5_FLASH)
+    return representatives_list
 
 
 def get_president(llm_client) -> str:
@@ -279,12 +261,8 @@ def get_state_capital(llm_client) -> str:
     Retrieves the capital cities of all U.S. states.
     Uses https://simple.wikipedia.org/wiki/List_of_U.S._state_capitals as the data source.
 
-    Returns a JSON-like string (or Python dictionary) in the format:
-    {
-      "Alabama": "Montgomery",
-      "Alaska": "Juneau",
-      ...
-    }
+    Returns a list of mappings in the format:
+    State Name: Capital City
     """
     url = "https://simple.wikipedia.org/wiki/List_of_U.S._state_capitals"
     try:
@@ -304,17 +282,15 @@ def get_state_capital(llm_client) -> str:
     prompt = f"""Below is the HTML from {url} listing all U.S. state capitals:
 {clean_html}
 
-Please produce a JSON dictionary mapping each U.S. state to the name of its capital city, for example:
-{{
-  "Alabama": "Montgomery",
-  "Alaska": "Juneau",
-  ...
-}}
-If you see extra data for territories, you may include them as well (e.g., "Puerto Rico": "San Juan").
+Please return a plain-text list mapping each U.S. state to its capital city in this format:
+
+State Name: Capital City
+
+Include U.S. territories if they are listed (e.g., "Puerto Rico: San Juan").
 """
 
-    capitals_json = llm_client.completion(prompt=prompt, model=GEMINI1_5_FLASH)
-    return capitals_json
+    capitals_list = llm_client.completion(prompt=prompt, model=GEMINI1_5_FLASH)
+    return capitals_list
 
 
 def get_president_party(llm_client) -> str:

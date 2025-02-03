@@ -155,7 +155,15 @@ const AnswerDetails: React.FC<{
         <List>
           <Typography color="primary">Acceptable answers:</Typography>
           {question[1].answers?.map((a, i) => (
-            <ListItem key={i}>{a}</ListItem>
+            <ListItem key={i}>
+              <Typography
+                sx={{
+                  whiteSpace: "break-spaces",
+                }}
+              >
+                {a}
+              </Typography>
+            </ListItem>
           ))}
         </List>
       </>

@@ -1,10 +1,9 @@
-from random import randint, choice, sample
+from random import sample
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from dotenv import load_dotenv
 import os
-
 from pydantic import BaseModel
 from src.Dependencies import get_LLMClient_service, get_questions_service
 from src.LLMClient import LLMClient
@@ -41,11 +40,7 @@ def read_questions(
     n: int,
     questions_service: QuestionsService = Depends(get_questions_service),
 ):
-    return {
-        "questions": sample(
-            questions_service.get_all_questions(are_dynamic_questions_included=False), n
-        )
-    }
+    return {"questions": sample(questions_service.get_dynamic_questions(), n)}
 
 
 @app.get("/api/questions/{question_id}")
@@ -92,3 +87,12 @@ def get_dynamic_questions(
     questions_service: QuestionsService = Depends(get_questions_service),
 ):
     return {"questions": questions_service.get_dynamic_questions()}
+
+
+# @app.get("/api/update-dynamic-questions")
+# def update_dynamic_questions(
+#     questions_service: QuestionsService = Depends(get_questions_service),
+# ):
+#     !TODO: remove this endpoint and make a job that will update dynamic questions periodically
+#     questions_service.update_dynamic_questions()
+#     return {"questions": questions_service.get_dynamic_questions()}
