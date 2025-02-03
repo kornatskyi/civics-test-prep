@@ -15,7 +15,7 @@ import { SubmissionResult, useTest } from "./useTest.ts";
 import theme from "../theme.tsx";
 import ErrorAlert from "./ErrorAlert.tsx";
 import TestInfo from "./TestInfo.tsx";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 const NUMBER_OF_QUESTIONS = 3;
 
@@ -30,7 +30,10 @@ interface TestResultProps {
   numberOfQuestions: number;
 }
 
-function TestResult({ answers, numberOfQuestions }: TestResultProps) {
+const TestResult: React.FC<TestResultProps> = ({
+  answers,
+  numberOfQuestions,
+}) => {
   const totalCorrect = answers.reduce(
     (prev, curr) => prev + (curr.isCorrect ? 1 : 0),
     0
@@ -50,18 +53,21 @@ function TestResult({ answers, numberOfQuestions }: TestResultProps) {
       </Typography>
     </Box>
   );
-}
+};
 
 interface InitialStageProps {
   startTest: () => Promise<void>;
 }
 
-function InitialStage({ startTest }: InitialStageProps) {
+const InitialStage: React.FC<InitialStageProps> = ({ startTest }) => {
   return (
-    <>
+    <Box
+      sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
       <Typography
         color="primary"
-        sx={{ textAlign: "center", mt: { xs: 2, sm: 2, md: 2, lg: 4, xl: 4 } }}
+        align="center"
+        sx={{ mt: { xs: 2, sm: 2, md: 2, lg: 4, xl: 4 } }}
       >
         Ready to Test Your Knowledge? <br />
         Click Start Test to begin.
@@ -73,9 +79,9 @@ function InitialStage({ startTest }: InitialStageProps) {
       >
         Start Test
       </Button>
-    </>
+    </Box>
   );
-}
+};
 
 interface RunningStageProps {
   answer: string;
@@ -87,7 +93,77 @@ interface RunningStageProps {
   setAnswer: React.Dispatch<React.SetStateAction<string>>;
 }
 
-function RunningStage({
+const AnswerFeedback: React.FC<{ submissionResult: SubmissionResult }> = ({
+  submissionResult,
+}) => {
+  switch (submissionResult) {
+    case SubmissionResult.CORRECT:
+      return (
+        <Typography
+          sx={{
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          color="success"
+          display="flex"
+        >
+          <CheckIcon style={{ color: theme.palette.success.main }} />
+          Correct answer
+        </Typography>
+      );
+    case SubmissionResult.INCORRECT:
+      return (
+        <Typography
+          sx={{
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          color="error"
+          display="flex"
+        >
+          <ClearIcon style={{ color: theme.palette.error.main }} />
+          Incorrect answer
+        </Typography>
+      );
+    default:
+      return null;
+  }
+};
+
+const AnswerDetails: React.FC<{
+  submissionResult: SubmissionResult;
+  question: [number, Question] | undefined;
+  answer: string;
+}> = ({ submissionResult, question, answer }) => {
+  if (submissionResult === SubmissionResult.UNKNOWN || !question) {
+    return null;
+  }
+
+  return (
+    <Box
+      sx={{
+        mt: 2,
+        maxHeight: 300,
+        overflowY: "auto",
+      }}
+    >
+      <>
+        <Typography display={"inline"} color="primary">
+          Your answer:
+        </Typography>
+         <Typography display={"inline"}>{answer}</Typography>
+        <List>
+          <Typography color="primary">Acceptable answers:</Typography>
+          {question[1].answers?.map((a, i) => (
+            <ListItem key={i}>{a}</ListItem>
+          ))}
+        </List>
+      </>
+    </Box>
+  );
+};
+
+const RunningStage: React.FC<RunningStageProps> = ({
   answer,
   submissionResult,
   isSubmitting,
@@ -95,7 +171,34 @@ function RunningStage({
   submit,
   nextQuestion,
   setAnswer,
-}: RunningStageProps) {
+}) => {
+  const isMdDown = useMediaQuery(theme.breakpoints.down("md"));
+  const inputSize = isMdDown ? "small" : "medium";
+
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === "Enter") {
+        if (submissionResult === SubmissionResult.UNKNOWN) {
+          submit();
+        } else {
+          nextQuestion();
+        }
+      }
+    },
+    [submissionResult, submit, nextQuestion]
+  );
+
+  const handleSubmitOrNext = useCallback(() => {
+    if (submissionResult === SubmissionResult.UNKNOWN) {
+      submit();
+    } else {
+      nextQuestion();
+    }
+  }, [submissionResult, submit, nextQuestion]);
+
+  const buttonText =
+    submissionResult === SubmissionResult.UNKNOWN ? "Submit" : "Next";
+
   return (
     <>
       <Box sx={{ alignSelf: "end" }}>
@@ -109,20 +212,10 @@ function RunningStage({
       </Typography>
       <Box sx={{ width: "100%", mt: { xs: 4, sm: 4, md: 4, lg: 6, xl: 6 } }}>
         <TextField
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              if (submissionResult === SubmissionResult.UNKNOWN) {
-                submit();
-              } else {
-                nextQuestion();
-              }
-            }
-          }}
+          onKeyDown={handleKeyDown}
           autoComplete="off"
           sx={{ width: "100%" }}
-          size={
-            useMediaQuery(theme.breakpoints.down("md")) ? "small" : "medium"
-          }
+          size={inputSize}
           label="Answer"
           value={answer}
           onChange={(e) => setAnswer(e.target.value)}
@@ -143,106 +236,85 @@ function RunningStage({
             disabled={!answer && submissionResult === SubmissionResult.UNKNOWN}
             sx={{ height: 40, width: 100 }}
             variant="contained"
-            size={
-              useMediaQuery(theme.breakpoints.down("md")) ? "small" : "medium"
-            }
-            onClick={
-              submissionResult === SubmissionResult.UNKNOWN
-                ? submit
-                : nextQuestion
-            }
+            size={inputSize}
+            onClick={handleSubmitOrNext}
           >
-            {submissionResult === SubmissionResult.UNKNOWN ? "Submit" : "Next"}
+            {buttonText}
           </Button>
 
-          <Box>
-            {submissionResult === SubmissionResult.CORRECT ? (
-              <Typography
-                sx={{
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                color="success"
-                display="flex"
-              >
-                <CheckIcon
-                  style={{
-                    color: theme.palette.success.main,
-                  }}
-                />
-                Correct answer
-              </Typography>
-            ) : submissionResult === SubmissionResult.INCORRECT ? (
-              <Typography
-                sx={{
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                color="error"
-                display="flex"
-              >
-                <ClearIcon
-                  style={{
-                    color: theme.palette.error.main,
-                  }}
-                />
-                Incorrect answer
-              </Typography>
-            ) : null}
-          </Box>
+          <AnswerFeedback submissionResult={submissionResult} />
         </Box>
-        <Box
-          sx={{
-            mt: 2,
-            maxHeight: 300,
-            overflowY: "auto",
-          }}
-        >
-          {submissionResult !== SubmissionResult.UNKNOWN && question && (
-            <>
-              <Typography display={"inline"} color="primary">
-                Your answer:
-              </Typography>
-              &nbsp;
-              <Typography display={"inline"}>{answer}</Typography>
-              <List>
-                <Typography color="primary">Acceptable answers:</Typography>
-                {question[1].answers?.map((a, i) => (
-                  <ListItem key={i}>{a}</ListItem>
-                ))}
-              </List>
-            </>
-          )}
-        </Box>
+        <AnswerDetails
+          submissionResult={submissionResult}
+          question={question}
+          answer={answer}
+        />
       </Box>
     </>
   );
-}
+};
 
 interface FinishedStageProps {
   answers: React.MutableRefObject<Answer[]>;
   restartTest: () => void;
 }
 
-function FinishedStage({ answers, restartTest }: FinishedStageProps) {
+const QuestionResult: React.FC<{ answerData: Answer }> = ({ answerData }) => (
+  <Box sx={{ width: "100%", mb: 2 }}>
+    <Typography color="primary" variant="body2">
+      {`${answerData.question.id}. ${answerData.question.question}`}
+    </Typography>
+    <Box sx={{ ml: 2 }}>
+      <Box sx={{ display: "flex", flexDirection: "row", mt: 1 }}>
+        <Typography variant="body2" color="primary">
+          Your answer:
+        </Typography>
+         
+        <Typography
+          variant="body2"
+          color={answerData.isCorrect ? "success" : "error"}
+        >
+          {answerData.answer}
+        </Typography>
+      </Box>
+      <List>
+        <Typography variant="body2" color="primary">
+          Acceptable answers:
+        </Typography>
+        {answerData.question.answers?.map((ans, i) => (
+          <ListItem key={i}>
+            <Typography variant="body2">{ans}</Typography>
+          </ListItem>
+        ))}
+      </List>
+    </Box>
+  </Box>
+);
+
+const FinishedStage: React.FC<FinishedStageProps> = ({
+  answers,
+  restartTest,
+}) => {
   const [showResults, setShowResults] = useState(false);
 
+  const toggleResults = useCallback(() => {
+    setShowResults((prev) => !prev);
+  }, []);
+
   return (
-    <>
+    <Box
+      sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
       <TestResult
         answers={answers.current}
         numberOfQuestions={NUMBER_OF_QUESTIONS}
       />
-      <Box sx={{ display: "flex", gap: 2 }}>
-        <Button variant="contained" sx={{ mt: 4 }} onClick={restartTest}>
+      <Box sx={{ display: "flex", gap: 2, mt: 2, justifyContent: "center" }}>
+        <Button variant="contained" onClick={restartTest}>
           Try again
         </Button>
-        <Button
-          variant="outlined"
-          sx={{ mt: 4 }}
-          onClick={() => setShowResults((prev) => !prev)}
-        >
-          See results
+        <Button variant="outlined" onClick={toggleResults}>
+          {showResults ? "Hide results" : "See results"}
         </Button>
       </Box>
       <Box
@@ -253,50 +325,19 @@ function FinishedStage({ answers, restartTest }: FinishedStageProps) {
           mt: 4,
         }}
       >
-        {showResults ? (
+        {showResults && (
           <>
-            {answers.current.map((a, i) => (
-              <>
-                <Box key={i} sx={{ width: "100%" }}>
-                  <Typography
-                    color="primary"
-                    variant="body2"
-                  >{`${a.question.id}. ${a.question.question}`}</Typography>
-                  <Box sx={{ ml: 2 }}>
-                    <Box sx={{ display: "flex", flexDirection: "row", mt: 1 }}>
-                      <Typography variant="body2" color="primary">
-                        Your answer:
-                      </Typography>
-                      &nbsp;
-                      <Typography
-                        variant="body2"
-                        color={a.isCorrect ? "success" : "error"}
-                      >
-                        {a.answer}
-                      </Typography>
-                    </Box>
-                    <List>
-                      <Typography variant="body2" color="primary">
-                        Acceptable answers:
-                      </Typography>
-                      {a.question.answers?.map((a, i) => (
-                        <ListItem key={i}>
-                          <Typography variant="body2">{a}</Typography>
-                        </ListItem>
-                      ))}
-                    </List>
-                  </Box>
-                </Box>
-              </>
+            {answers.current.map((answerData, index) => (
+              <QuestionResult key={index} answerData={answerData} />
             ))}
           </>
-        ) : null}
+        )}
       </Box>
-    </>
+    </Box>
   );
-}
+};
 
-function TestCard() {
+const TestCard: React.FC = () => {
   const {
     testState,
     error,
@@ -311,6 +352,41 @@ function TestCard() {
     restartTest,
     setAnswer,
   } = useTest(NUMBER_OF_QUESTIONS);
+
+  const renderStage = useCallback(() => {
+    switch (testState) {
+      case "INITIAL":
+        return <InitialStage startTest={startTest} />;
+      case "RUNNING":
+        return (
+          <RunningStage
+            answer={answer}
+            submissionResult={submissionResult}
+            isSubmitting={isSubmitting}
+            question={question}
+            submit={submit}
+            nextQuestion={nextQuestion}
+            setAnswer={setAnswer}
+          />
+        );
+      case "FINISHED":
+        return <FinishedStage answers={answers} restartTest={restartTest} />;
+      default:
+        return null;
+    }
+  }, [
+    testState,
+    startTest,
+    answer,
+    submissionResult,
+    isSubmitting,
+    question,
+    submit,
+    nextQuestion,
+    answers,
+    restartTest,
+    setAnswer,
+  ]);
 
   return error ? (
     <ErrorAlert error={error} />
@@ -330,33 +406,10 @@ function TestCard() {
         mb: { xs: 5, sm: 8, md: 10, lg: 12, xl: 15 }, // Responsive margin-top
       }}
     >
-      {(() => {
-        switch (testState) {
-          case "INITIAL":
-            return <InitialStage startTest={startTest} />;
-          case "RUNNING":
-            return (
-              <RunningStage
-                answer={answer}
-                submissionResult={submissionResult}
-                isSubmitting={isSubmitting}
-                question={question}
-                submit={submit}
-                nextQuestion={nextQuestion}
-                setAnswer={setAnswer}
-              />
-            );
-          case "FINISHED":
-            return (
-              <FinishedStage answers={answers} restartTest={restartTest} />
-            );
-          default:
-            return null;
-        }
-      })()}
+      {renderStage()}
       <TestInfo />
     </Container>
   );
-}
+};
 
 export default TestCard;
