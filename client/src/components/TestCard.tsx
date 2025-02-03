@@ -210,8 +210,15 @@ const RunningStage: React.FC<RunningStageProps> = ({
       <Typography align="center" variant="h6" mt={2}>
         {question && `${question[1].id}. ${question[1].question}`}
       </Typography>
-      <Box sx={{ width: "100%", mt: { xs: 4, sm: 4, md: 4, lg: 6, xl: 6 } }}>
+      <Box
+        sx={{
+          width: "100%",
+          mt: { xs: 4, sm: 4, md: 4, lg: 6, xl: 6 },
+          outline: "none",
+        }}
+      >
         <TextField
+          autoFocus={true}
           onKeyDown={handleKeyDown}
           autoComplete="off"
           sx={{ width: "100%" }}
@@ -220,7 +227,11 @@ const RunningStage: React.FC<RunningStageProps> = ({
           value={answer}
           onChange={(e) => setAnswer(e.target.value)}
           placeholder="Type your answer here"
-          disabled={submissionResult !== SubmissionResult.UNKNOWN}
+          slotProps={{
+            input: {
+              readOnly: submissionResult !== SubmissionResult.UNKNOWN,
+            },
+          }}
         />
         <Box
           sx={{
