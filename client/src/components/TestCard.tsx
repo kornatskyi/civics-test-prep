@@ -17,7 +17,7 @@ import ErrorAlert from "./ErrorAlert.tsx";
 import TestInfo from "./TestInfo.tsx";
 import { useState, useCallback } from "react";
 
-const NUMBER_OF_QUESTIONS = 3;
+const NUMBER_OF_QUESTIONS = 10;
 
 interface Answer {
   question: Question;

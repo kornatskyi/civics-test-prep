@@ -40,7 +40,7 @@ def read_questions(
     n: int,
     questions_service: QuestionsService = Depends(get_questions_service),
 ):
-    return {"questions": sample(questions_service.get_dynamic_questions(), n)}
+    return {"questions": sample(questions_service.get_all_questions(), n)}
 
 
 @app.get("/api/questions/{question_id}")
