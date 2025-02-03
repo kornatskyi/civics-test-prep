@@ -14,6 +14,7 @@ import { SubmissionResult, useTest } from "./useTest.ts";
 import theme from "../theme.tsx";
 import ErrorAlert from "./ErrorAlert.tsx";
 import TestInfo from "./TestInfo.tsx";
+import { useState } from "react";
 
 const NUMBER_OF_QUESTIONS = 3;
 
@@ -82,8 +83,10 @@ function RunningStage({
   return (
     <>
       <Box sx={{ alignSelf: "end" }}>
-        {question?.[0] !== undefined &&
-          `Question ${question[0] + 1} out of ${NUMBER_OF_QUESTIONS}`}
+        <Typography variant="body2" color="textSecondary">
+          {question?.[0] !== undefined &&
+            `Question ${question[0] + 1} out of ${NUMBER_OF_QUESTIONS}`}
+        </Typography>
       </Box>
       <Typography align="center" variant="h6" mt={2}>
         {question && `${question[1].id}. ${question[1].question}`}
@@ -144,7 +147,7 @@ function RunningStage({
                   style={{
                     color: theme.palette.success.main,
                   }}
-                />{" "}
+                />
                 Correct answer
               </Typography>
             ) : submissionResult === SubmissionResult.INCORRECT ? (
@@ -175,12 +178,11 @@ function RunningStage({
         >
           {submissionResult !== SubmissionResult.UNKNOWN && question && (
             <>
-              <Box>
-                <Typography color="primary">Your answer:</Typography>
-                &nbsp;
-                <Typography>{answer}</Typography>
-              </Box>
-
+              <Typography display={"inline"} color="primary">
+                Your answer:
+              </Typography>
+              &nbsp;
+              <Typography display={"inline"}>{answer}</Typography>
               <List>
                 <Typography color="primary">Acceptable answers:</Typography>
                 {question[1].answers?.map((a, i) => (
@@ -201,15 +203,73 @@ interface FinishedStageProps {
 }
 
 function FinishedStage({ answers, restartTest }: FinishedStageProps) {
+  const [showResults, setShowResults] = useState(false);
+
   return (
     <>
       <TestResult
         answers={answers.current}
         numberOfQuestions={NUMBER_OF_QUESTIONS}
       />
-      <Button variant="contained" sx={{ mt: 4 }} onClick={restartTest}>
-        Try again
-      </Button>
+      <Box sx={{ display: "flex", gap: 2 }}>
+        <Button variant="contained" sx={{ mt: 4 }} onClick={restartTest}>
+          Try again
+        </Button>
+        <Button
+          variant="outlined"
+          sx={{ mt: 4 }}
+          onClick={() => setShowResults((prev) => !prev)}
+        >
+          See results
+        </Button>
+      </Box>
+      <Box
+        sx={{
+          width: "100%",
+          maxHeight: 300,
+          overflow: "auto",
+          mt: 4,
+        }}
+      >
+        {showResults ? (
+          <>
+            {answers.current.map((a, i) => (
+              <>
+                <Box key={i} sx={{ width: "100%" }}>
+                  <Typography
+                    color="primary"
+                    variant="body2"
+                  >{`${a.question.id}. ${a.question.question}`}</Typography>
+                  <Box sx={{ ml: 2 }}>
+                    <Box sx={{ display: "flex", flexDirection: "row", mt: 1 }}>
+                      <Typography variant="body2" color="primary">
+                        Your answer:
+                      </Typography>
+                      &nbsp;
+                      <Typography
+                        variant="body2"
+                        color={a.isCorrect ? "success" : "error"}
+                      >
+                        {a.answer}
+                      </Typography>
+                    </Box>
+                    <List>
+                      <Typography variant="body2" color="primary">
+                        Acceptable answers:
+                      </Typography>
+                      {a.question.answers?.map((a, i) => (
+                        <ListItem key={i}>
+                          <Typography variant="body2">{a}</Typography>
+                        </ListItem>
+                      ))}
+                    </List>
+                  </Box>
+                </Box>
+              </>
+            ))}
+          </>
+        ) : null}
+      </Box>
     </>
   );
 }

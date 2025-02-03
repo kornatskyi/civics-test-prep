@@ -1,10 +1,10 @@
-import { Box, Link, Typography } from "@mui/material";
+import { Box, Link, Typography, useTheme } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import { useState } from "react";
 
 export default function TestInfo() {
   const [showInfo, setShowInfo] = useState(false);
-
+  const theme = useTheme();
   return (
     <>
       <Box
@@ -24,11 +24,15 @@ export default function TestInfo() {
             setShowInfo((prev) => !prev);
           }}
           variant="body2"
+          color="textSecondary"
         >
           Learn about the test
         </Typography>
         &nbsp;
-        <InfoIcon fontSize="inherit" sx={{ color: "primary.main" }} />
+        <InfoIcon
+          fontSize="inherit"
+          sx={{ color: theme.palette.text.secondary }}
+        />
       </Box>
       {showInfo ? (
         <Box
