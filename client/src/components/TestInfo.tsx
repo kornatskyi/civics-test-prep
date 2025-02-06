@@ -48,43 +48,23 @@ export default function TestInfo() {
             The test consists of 10 random questions from the list of 100
             questions asked during the interview.
           </Typography>
-
-          <Typography variant="body2">
-            Some questions, such as those about current government officials,
-            are <strong>not included</strong> in this practice test because they
-            change over time. Visit the{" "}
-            <Link
-              href="https://www.uscis.gov/citizenship"
-              target="_blank"
-              rel="noopener noreferrer"
-              underline="hover"
-            >
-              USCIS Citizenship Test page
-            </Link>{" "}
-            for the latest information.
-          </Typography>
-
           <Typography variant="body2">
             The answers are evaluated by a Large Language Model (LLM), so they
             don't need to be exact matches. The LLM assesses the answers with
             high precision, similar to a real-world test.
           </Typography>
-
           <Typography variant="body2">
-            If you encounter any issues, please email me at{" "}
-            <Link href="mailto:bohdan.kornatskyi@gmail.com" underline="hover">
-              bohdan.kornatskyi@gmail.com
-            </Link>{" "}
-            or create an issue on the{" "}
+            If you encounter any issues or you want to learn more about the
+            project, please visit the{" "}
             <Link
-              href="https://github.com/kornatskyi/civics-test-prep"
+              href="https://github.com/kornatskyi/civics-test-prep/"
               target="_blank"
               rel="noopener noreferrer"
               underline="hover"
             >
-              GitHub repository
+              GitHub repository{" "}
             </Link>
-            .
+            where you can create a new issue or start a discussion.
           </Typography>
         </Box>
       ) : null}
