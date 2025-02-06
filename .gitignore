@@ -42,3 +42,4 @@ Thumbs.db
 client/node_modules/
 client/dist/
 digitalocean_creds.txt
+app.log
