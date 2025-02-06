@@ -156,22 +156,9 @@ class QuestionsService:
                     print(f"No function mapped for question {question.id}. Skipping.")
                     continue
 
-                # 1) Call the function
-                # 2) The function will typically return text or JSON.
-                #    Decide how you want to store it in 'answers'.
                 try:
                     raw_result = func(self.llm_client)
 
-                    # Here we expect either a single string or JSON; adapt as needed.
-                    # If you expect valid JSON, you could do:
-                    # import json
-                    # data_dict = json.loads(raw_result)
-                    # Then parse it, store a short string, or multiple strings.
-
-                    # For demonstration, let's assume we want to store the raw_result
-                    # as a single string in 'answers'.
-                    # (If it's large JSON, you might want to parse & store just a few fields.)
-                    # We'll convert it to string if it's not already.
                     if isinstance(raw_result, str):
                         updated_answer = raw_result.strip()
                     else:
@@ -184,10 +171,8 @@ class QuestionsService:
 
                 except Exception as e:
                     print(f"Failed to update question {question.id}: {e}")
-                    # You might choose to keep the old answers or wipe them, etc.
                     continue
 
-        # Once all dynamic questions are updated, save the entire list back to JSON
         self._save_questions_to_json()
 
     def _save_questions_to_json(self) -> None:

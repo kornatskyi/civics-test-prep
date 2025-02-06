@@ -92,12 +92,3 @@ def get_dynamic_questions(
     questions_service: Annotated[QuestionsService, Depends(get_questions_service)],
 ):
     return {"questions": questions_service.get_dynamic_questions()}
-
-
-# @app.get("/api/update-dynamic-questions")
-# def update_dynamic_questions(
-#     questions_service: QuestionsService = Depends(get_questions_service),
-# ):
-#     !TODO: remove this endpoint and make a job that will update dynamic questions periodically
-#     questions_service.update_dynamic_questions()
-#     return {"questions": questions_service.get_dynamic_questions()}

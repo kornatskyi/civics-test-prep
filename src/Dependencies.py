@@ -11,6 +11,6 @@ def get_questions_service():
 
 llama_client = LLMClient()
 
+
 def get_LLMClient_service():
-  return llama_client
-  
+    return llama_client
