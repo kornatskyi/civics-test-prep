@@ -28,11 +28,11 @@ class LLMClient:
     def assistant(self, content: str):
         return {"role": "assistant", "content": content}
 
-    def gemini_completion(self, prompt: str):
-        response = self.gemini_client.generate_content(prompt)  # type: ignore
+    async def gemini_completion(self, prompt: str):
+        response = await self.gemini_client.generate_content_async(prompt)  # type: ignore
         return response.text
 
-    def completion(
+    async def completion(
         self,
         prompt: str,
         model: str = DEFAULT_MODEL,
@@ -40,7 +40,7 @@ class LLMClient:
         top_p: float = 0.9,
     ) -> str:
         if model == GEMINI1_5_FLASH:
-            return self.gemini_completion(prompt=prompt)
+            return await self.gemini_completion(prompt=prompt)
         else:
             response = self.groq_client.chat.completions.create(
                 messages=[{"role": "user", "content": prompt}],

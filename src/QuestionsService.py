@@ -117,7 +117,7 @@ class QuestionsService:
     def get_dynamic_questions(self) -> List[Question]:
         return [q for q in self.questions if q.is_dynamic_answer]
 
-    def update_dynamic_questions(self, update_interval_days: int = 1) -> None:
+    async def update_dynamic_questions(self, update_interval_days: int = 1) -> None:
         """
         Updates answers for all dynamic questions if their 'lastTimeUpdated'
         is older than 'update_interval_days', or if it doesn't exist at all.
@@ -157,7 +157,7 @@ class QuestionsService:
                     continue
 
                 try:
-                    raw_result = func(self.llm_client)
+                    raw_result = await func(self.llm_client)
 
                     if isinstance(raw_result, str):
                         updated_answer = raw_result.strip()

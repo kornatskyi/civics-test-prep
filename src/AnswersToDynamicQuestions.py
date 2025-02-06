@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 from src.LLMClient import LLMClient, GEMINI1_5_FLASH
 
 
-def get_governor_by_state(llm_client: LLMClient):
+async def get_governor_by_state(llm_client: LLMClient):
     """
     Who is the Governor of your state now?
     """
@@ -31,11 +31,11 @@ to the name of its current governor, in the format:
 If a territory does not have a governor or is not listed, omit it or note "N/A".
 """
 
-    governors = llm_client.completion(prompt=prompt, model=GEMINI1_5_FLASH)
+    governors = await llm_client.completion(prompt=prompt, model=GEMINI1_5_FLASH)
     return governors
 
 
-def get_senators_by_state(llm_client: LLMClient):
+async def get_senators_by_state(llm_client: LLMClient):
     """
     Retrieves the names of the U.S. Senators for each state.
     Uses en.wikipedia.org as a reference for the current listing.
@@ -80,11 +80,11 @@ Using the information, produce a list of mapping of the form e.g.:
 For territories (or areas without senators), either exclude them or set their value to "No Senators".
 Output only the list of mappings nothing else, no formatting except new line character after each entry
 """
-    senators = llm_client.completion(prompt=prompt, model=GEMINI1_5_FLASH)
+    senators = await llm_client.completion(prompt=prompt, model=GEMINI1_5_FLASH)
     return senators
 
 
-def get_representative(llm_client: LLMClient):
+async def get_representative(llm_client: LLMClient):
     """
     Retrieves the names of all U.S. Representatives, grouped by state (and district if applicable).
     Uses house.gov as a reliable source (via https://www.house.gov/representatives).
@@ -122,11 +122,13 @@ If a state has only one representative, label it as "At Large" instead of a dist
 Include U.S. territories and D.C. if applicable. If a territory has no representative, return it with "None".
 """
 
-    representatives_list = llm_client.completion(prompt=prompt, model=GEMINI1_5_FLASH)
+    representatives_list = await llm_client.completion(
+        prompt=prompt, model=GEMINI1_5_FLASH
+    )
     return representatives_list
 
 
-def get_president(llm_client: LLMClient):
+async def get_president(llm_client: LLMClient):
     """
     Retrieves the name of the current U.S. President.
     Uses https://www.whitehouse.gov/administration/ as the data source.
@@ -152,11 +154,11 @@ def get_president(llm_client: LLMClient):
 Identify the current President of the United States by name only (e.g. "Joe Biden").
 Return just the name as plain text.
 """
-    president_name = llm_client.completion(prompt=prompt, model=GEMINI1_5_FLASH)
+    president_name = await llm_client.completion(prompt=prompt, model=GEMINI1_5_FLASH)
     return president_name
 
 
-def get_vice_president(llm_client: LLMClient):
+async def get_vice_president(llm_client: LLMClient):
     """
     Retrieves the name of the current U.S. Vice President.
     Uses https://www.whitehouse.gov/administration/ as the data source.
@@ -182,11 +184,13 @@ def get_vice_president(llm_client: LLMClient):
 Identify the current Vice President of the United States by name only (e.g. "Kamala Harris").
 Return just the name as plain text.
 """
-    vice_president_name = llm_client.completion(prompt=prompt, model=GEMINI1_5_FLASH)
+    vice_president_name = await llm_client.completion(
+        prompt=prompt, model=GEMINI1_5_FLASH
+    )
     return vice_president_name
 
 
-def get_supreme_court_justice_count(llm_client: LLMClient) -> int:
+async def get_supreme_court_justice_count(llm_client: LLMClient) -> int:
     """
     Retrieves the current number of justices on the Supreme Court
     from https://simple.wikipedia.org/wiki/Supreme_Court_of_the_United_States.
@@ -213,7 +217,7 @@ def get_supreme_court_justice_count(llm_client: LLMClient) -> int:
 Based on the page content, how many justices currently serve on the Supreme Court?
 Return only the integer count.
 """
-    result_str = llm_client.completion(prompt=prompt, model=GEMINI1_5_FLASH)
+    result_str = await llm_client.completion(prompt=prompt, model=GEMINI1_5_FLASH)
 
     # You might want to convert the result to an integer carefully:
     try:
@@ -223,7 +227,7 @@ Return only the integer count.
     return justice_count
 
 
-def get_chief_justice(llm_client: LLMClient):
+async def get_chief_justice(llm_client: LLMClient):
     """
     Retrieves the name of the current Chief Justice of the Supreme Court
     from https://simple.wikipedia.org/wiki/Supreme_Court_of_the_United_States.
@@ -250,11 +254,13 @@ def get_chief_justice(llm_client: LLMClient):
 Please find the name of the current Chief Justice of the United States Supreme Court.
 Return just the name as plain text.
 """
-    chief_justice_name = llm_client.completion(prompt=prompt, model=GEMINI1_5_FLASH)
+    chief_justice_name = await llm_client.completion(
+        prompt=prompt, model=GEMINI1_5_FLASH
+    )
     return chief_justice_name
 
 
-def get_state_capital(llm_client: LLMClient):
+async def get_state_capital(llm_client: LLMClient):
     """
     Retrieves the capital cities of all U.S. states.
     Uses https://simple.wikipedia.org/wiki/List_of_U.S._state_capitals as the data source.
@@ -287,11 +293,11 @@ State Name: Capital City
 Include U.S. territories if they are listed (e.g., "Puerto Rico: San Juan").
 """
 
-    capitals_list = llm_client.completion(prompt=prompt, model=GEMINI1_5_FLASH)
+    capitals_list = await llm_client.completion(prompt=prompt, model=GEMINI1_5_FLASH)
     return capitals_list
 
 
-def get_president_party(llm_client: LLMClient):
+async def get_president_party(llm_client: LLMClient):
     """
     Retrieves the political party of the current U.S. President using
     https://www.whitehouse.gov/administration/ as the data source.
@@ -319,11 +325,11 @@ def get_president_party(llm_client: LLMClient):
 Identify the current President's political party (e.g. "Democratic Party" or "Republican Party").
 Return just the party name as plain text, like "Democratic" or "Republican".
 """
-    party = llm_client.completion(prompt=prompt, model=GEMINI1_5_FLASH)
+    party = await llm_client.completion(prompt=prompt, model=GEMINI1_5_FLASH)
     return party
 
 
-def get_speaker_of_the_house(llm_client: LLMClient):
+async def get_speaker_of_the_house(llm_client: LLMClient):
     """
     Retrieves the name of the current Speaker of the House from:
     https://simple.wikipedia.org/wiki/Speaker_of_the_United_States_House_of_Representatives
@@ -349,5 +355,5 @@ def get_speaker_of_the_house(llm_client: LLMClient):
 Identify the current Speaker of the United States House of Representatives.
 Return only the name as plain text.
 """
-    speaker = llm_client.completion(prompt=prompt, model=GEMINI1_5_FLASH)
+    speaker = await llm_client.completion(prompt=prompt, model=GEMINI1_5_FLASH)
     return speaker
