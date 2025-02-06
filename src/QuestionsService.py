@@ -1,4 +1,5 @@
 import json
+import logging
 from datetime import datetime, timedelta
 from typing import List, Dict, Any
 from src.LLMClient import LLMClient
@@ -14,6 +15,9 @@ from src.AnswersToDynamicQuestions import (
     get_president_party,
     get_speaker_of_the_house,
 )
+
+# Create a module-level logger.
+logger = logging.getLogger(__name__)
 
 
 class Question:
@@ -33,8 +37,6 @@ class Question:
         self.answers = answers
         self.is_required_for_65_plus = is_required_for_65_plus
         self.is_dynamic_answer = is_dynamic_answer
-
-        # If the JSON field doesn't exist, last_time_updated might be None
         self.last_time_updated = last_time_updated
 
     def __repr__(self):
@@ -52,7 +54,6 @@ class Question:
             "answers": self.answers,
             "isRequiredFor65Plus": self.is_required_for_65_plus,
             "isDynamicAnswer": self.is_dynamic_answer,
-            # We’ll store the datetime as an ISO string
             "lastTimeUpdated": self.last_time_updated,
         }
 
@@ -62,10 +63,11 @@ class QuestionsService:
         self.questions_file_path = questions_file_path
         self.llm_client = LLMClient()
 
+        logger.info("Loading questions from %s", self.questions_file_path)
         # Load questions from the JSON file
         with open(self.questions_file_path, "r") as file:
             data = json.load(file)
-            self.questions: list[Question] = []
+            self.questions: List[Question] = []
             for q in data["questions"]:
                 # Safely retrieve "lastTimeUpdated"
                 last_time_updated = q.get("lastTimeUpdated", None)
@@ -84,9 +86,9 @@ class QuestionsService:
             # Create a dictionary for quick lookups
             self.question_by_ids = {q.id: q for q in self.questions}
 
-        # For convenience, define a mapping from question ID (or question text)
-        # to the function that retrieves the latest data from LLM or websites.
-        # Adjust these IDs as they appear in your JSON.
+        logger.info("Loaded %d questions.", len(self.questions))
+
+        # Mapping from question ID to the function that retrieves the latest data.
         self.dynamic_question_map = {
             43: get_governor_by_state,  # "Who is the Governor of your state now?"
             20: get_senators_by_state,  # "Who is one of your state's U.S. Senators now?"
@@ -121,56 +123,60 @@ class QuestionsService:
         """
         Updates answers for all dynamic questions if their 'lastTimeUpdated'
         is older than 'update_interval_days', or if it doesn't exist at all.
-
-        The updated data is stored as plain text in the 'answers' field.
-        After updating, we save to the JSON file.
         """
         now = datetime.now()
+        logger.info(
+            "Starting update of dynamic questions with an interval of %d day(s).",
+            update_interval_days,
+        )
 
         for question in self.get_dynamic_questions():
-            # Decide if we need to update based on the 'lastTimeUpdated' field
             last_updated = None
             if question.last_time_updated:
                 try:
                     last_updated = datetime.fromisoformat(question.last_time_updated)
                 except ValueError:
-                    # If parsing fails, we assume we need to update
+                    logger.warning(
+                        "Could not parse lastTimeUpdated for question %d; updating anyway.",
+                        question.id,
+                    )
                     last_updated = None
 
             needs_update = False
             if last_updated is None:
                 needs_update = True
             else:
-                # Compare with current time
                 delta = now - last_updated
                 if delta > timedelta(days=update_interval_days):
                     needs_update = True
 
             if needs_update:
-                print(f"Updating question {question.id} - {question.question}")
+                logger.info("Updating question %d - %s", question.id, question.question)
 
-                # Call the appropriate function if we have it
                 func = self.dynamic_question_map.get(question.id, None)
                 if func is None:
-                    # Not mapped or not implemented; skip
-                    print(f"No function mapped for question {question.id}. Skipping.")
+                    logger.warning(
+                        "No function mapped for question %d. Skipping update.",
+                        question.id,
+                    )
                     continue
 
                 try:
                     raw_result = await func(self.llm_client)
-
-                    if isinstance(raw_result, str):
-                        updated_answer = raw_result.strip()
-                    else:
-                        updated_answer = str(raw_result)
-
+                    updated_answer = (
+                        raw_result.strip()
+                        if isinstance(raw_result, str)
+                        else str(raw_result)
+                    )
                     question.answers = [updated_answer]
-
-                    # Update the timestamp
                     question.last_time_updated = now.isoformat()
-
+                    logger.info(
+                        "Updated question %d with new answer: %s",
+                        question.id,
+                        updated_answer,
+                    )
                 except Exception as e:
-                    print(f"Failed to update question {question.id}: {e}")
+                    logger.exception("Failed to update question %d: %s", question.id, e)
                     continue
 
         self._save_questions_to_json()
@@ -181,5 +187,11 @@ class QuestionsService:
         including the updated answers and timestamps.
         """
         data_to_save = {"questions": [q.to_dict() for q in self.questions]}
-        with open(self.questions_file_path, "w") as f:
-            json.dump(data_to_save, f, indent=2)
+        try:
+            with open(self.questions_file_path, "w") as f:
+                json.dump(data_to_save, f, indent=2)
+            logger.info("Saved updated questions to %s", self.questions_file_path)
+        except Exception as e:
+            logger.exception(
+                "Failed to save questions to %s: %s", self.questions_file_path, e
+            )
