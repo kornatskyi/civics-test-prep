@@ -29,14 +29,15 @@ logging.basicConfig(
 load_dotenv()
 
 
-async def scheduled_task(questions_service: QuestionsService):
+# Task do update questions periodically
+async def scheduled_dynamic_questions_update_task(questions_service: QuestionsService):
     while True:
         logging.info("Running scheduled task to update dynamic questions")
         try:
             await questions_service.update_dynamic_questions()
         except Exception as e:
             logging.exception(f"Error updating dynamic questions. Error message: {e}")
-        await asyncio.sleep(5)  # Wait for 5 seconds (adjust as needed for 24 hours)
+        await asyncio.sleep(7 * 24 * 60 * 60)  # run this task every 7 days
 
 
 class Answer(BaseModel):
@@ -47,7 +48,9 @@ class Answer(BaseModel):
 async def lifespan(app: FastAPI):
     logging.info("Application startup: initializing services")
     questions_service: QuestionsService = get_questions_service()
-    background_task = asyncio.create_task(scheduled_task(questions_service))
+    background_task = asyncio.create_task(
+        scheduled_dynamic_questions_update_task(questions_service)
+    )
     try:
         yield
     finally:
