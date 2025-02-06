@@ -1,10 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
 from src.LLMClient import LLMClient, GEMINI1_5_FLASH
-import requests
 
 
-def get_governor_by_state(llm_client):
+def get_governor_by_state(llm_client: LLMClient):
     """
     Who is the Governor of your state now?
     """
@@ -36,7 +35,7 @@ If a territory does not have a governor or is not listed, omit it or note "N/A".
     return governors
 
 
-def get_senators_by_state(llm_client):
+def get_senators_by_state(llm_client: LLMClient):
     """
     Retrieves the names of the U.S. Senators for each state.
     Uses en.wikipedia.org as a reference for the current listing.
@@ -85,8 +84,7 @@ Output only the list of mappings nothing else, no formatting except new line cha
     return senators
 
 
-
-def get_representative(llm_client) -> str:
+def get_representative(llm_client: LLMClient):
     """
     Retrieves the names of all U.S. Representatives, grouped by state (and district if applicable).
     Uses house.gov as a reliable source (via https://www.house.gov/representatives).
@@ -128,7 +126,7 @@ Include U.S. territories and D.C. if applicable. If a territory has no represent
     return representatives_list
 
 
-def get_president(llm_client) -> str:
+def get_president(llm_client: LLMClient):
     """
     Retrieves the name of the current U.S. President.
     Uses https://www.whitehouse.gov/administration/ as the data source.
@@ -158,7 +156,7 @@ Return just the name as plain text.
     return president_name
 
 
-def get_vice_president(llm_client) -> str:
+def get_vice_president(llm_client: LLMClient):
     """
     Retrieves the name of the current U.S. Vice President.
     Uses https://www.whitehouse.gov/administration/ as the data source.
@@ -188,7 +186,7 @@ Return just the name as plain text.
     return vice_president_name
 
 
-def get_supreme_court_justice_count(llm_client) -> int:
+def get_supreme_court_justice_count(llm_client: LLMClient) -> int:
     """
     Retrieves the current number of justices on the Supreme Court
     from https://simple.wikipedia.org/wiki/Supreme_Court_of_the_United_States.
@@ -225,7 +223,7 @@ Return only the integer count.
     return justice_count
 
 
-def get_chief_justice(llm_client) -> str:
+def get_chief_justice(llm_client: LLMClient):
     """
     Retrieves the name of the current Chief Justice of the Supreme Court
     from https://simple.wikipedia.org/wiki/Supreme_Court_of_the_United_States.
@@ -256,7 +254,7 @@ Return just the name as plain text.
     return chief_justice_name
 
 
-def get_state_capital(llm_client) -> str:
+def get_state_capital(llm_client: LLMClient):
     """
     Retrieves the capital cities of all U.S. states.
     Uses https://simple.wikipedia.org/wiki/List_of_U.S._state_capitals as the data source.
@@ -293,7 +291,7 @@ Include U.S. territories if they are listed (e.g., "Puerto Rico: San Juan").
     return capitals_list
 
 
-def get_president_party(llm_client) -> str:
+def get_president_party(llm_client: LLMClient):
     """
     Retrieves the political party of the current U.S. President using
     https://www.whitehouse.gov/administration/ as the data source.
@@ -325,7 +323,7 @@ Return just the party name as plain text, like "Democratic" or "Republican".
     return party
 
 
-def get_speaker_of_the_house(llm_client) -> str:
+def get_speaker_of_the_house(llm_client: LLMClient):
     """
     Retrieves the name of the current Speaker of the House from:
     https://simple.wikipedia.org/wiki/Speaker_of_the_United_States_House_of_Representatives

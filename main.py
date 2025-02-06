@@ -7,7 +7,8 @@ import os
 from pydantic import BaseModel
 from src.Dependencies import get_LLMClient_service, get_questions_service
 from src.LLMClient import LLMClient
-from src.QuestionsService import Question, QuestionsService
+from src.QuestionsService import QuestionsService
+from typing import Annotated
 
 
 # Define a Pydantic model for the request body
@@ -38,7 +39,7 @@ if PRODUCTION:
 @app.get("/api/questions")
 def read_questions(
     n: int,
-    questions_service: QuestionsService = Depends(get_questions_service),
+    questions_service: Annotated[QuestionsService, Depends(get_questions_service)],
 ):
     return {"questions": sample(questions_service.get_all_questions(), n)}
 
@@ -46,25 +47,29 @@ def read_questions(
 @app.get("/api/questions/{question_id}")
 def read_question(
     question_id: int,
-    questions_service: QuestionsService = Depends(get_questions_service),
+    questions_service: Annotated[QuestionsService, Depends(get_questions_service)],
 ):
     try:
-        question = Question()
         if question_id == -1:
-            question = sample(questions_service.get_all_questions(), 1)[0]
+            all_questions = questions_service.get_all_questions()
+            if not all_questions:
+                raise HTTPException(status_code=404, detail="No questions available")
+            question = sample(all_questions, 1)[0]
         else:
             question = questions_service.get_question_by_id(question_id)
         return question
-    except IndexError:
-        raise HTTPException(status_code=404, detail="Question not found")
+    except Exception as e:
+        if isinstance(e, HTTPException):
+            raise e
+        raise HTTPException(status_code=500, detail="Error retrieving question")
 
 
 @app.post("/api/submit-answer/{question_id}")
 def submit_answer(
     question_id: int,
     answer: Answer,
-    questions_service: QuestionsService = Depends(get_questions_service),
-    llama_client: LLMClient = Depends(get_LLMClient_service),
+    questions_service: Annotated[QuestionsService, Depends(get_questions_service)],
+    llama_client: Annotated[LLMClient, Depends(get_LLMClient_service)],
 ):
     # Example: Validate answer (you can enhance this with actual validation logic)
     question = questions_service.get_question_by_id(question_id)
@@ -84,7 +89,7 @@ def submit_answer(
 
 @app.get("/api/dynamic-questions")
 def get_dynamic_questions(
-    questions_service: QuestionsService = Depends(get_questions_service),
+    questions_service: Annotated[QuestionsService, Depends(get_questions_service)],
 ):
     return {"questions": questions_service.get_dynamic_questions()}
 

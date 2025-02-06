@@ -1,5 +1,4 @@
 import json
-import os
 from datetime import datetime, timedelta
 from typing import List, Dict, Any
 from src.LLMClient import LLMClient
@@ -15,7 +14,6 @@ from src.AnswersToDynamicQuestions import (
     get_president_party,
     get_speaker_of_the_house,
 )
-from bs4 import BeautifulSoup  # if needed for extra parsing
 
 
 class Question:
@@ -27,7 +25,7 @@ class Question:
         answers: List[str],
         is_required_for_65_plus: bool,
         is_dynamic_answer: bool,
-        last_time_updated: str = None,  # Optional
+        last_time_updated: str,  # Optional
     ):
         self.id = id
         self.section = section
@@ -67,7 +65,7 @@ class QuestionsService:
         # Load questions from the JSON file
         with open(self.questions_file_path, "r") as file:
             data = json.load(file)
-            self.questions = []
+            self.questions: list[Question] = []
             for q in data["questions"]:
                 # Safely retrieve "lastTimeUpdated"
                 last_time_updated = q.get("lastTimeUpdated", None)
@@ -102,7 +100,9 @@ class QuestionsService:
             47: get_speaker_of_the_house,  # "What is the name of the Speaker of the House of Representatives now?"
         }
 
-    def get_all_questions(self, are_dynamic_questions_included=True) -> List[Question]:
+    def get_all_questions(
+        self, are_dynamic_questions_included: bool = True
+    ) -> List[Question]:
         if are_dynamic_questions_included:
             return self.questions
         else:

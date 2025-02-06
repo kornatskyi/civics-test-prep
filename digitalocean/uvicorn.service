@@ -6,7 +6,7 @@ After=network.target
 User=root
 Group=root
 WorkingDirectory=/root/civics-test-prep 
-ExecStart=/root/civics-test-prep/.venv/bin/python -m uvicorn main:app --host 0.0.0.0 --port 8000 --workers 4
+ExecStart=/root/civics-test-prep/.venv/bin/python -m uvicorn main:app --host 0.0.0.0 --port 8000
 Restart=always
 
 [Install]

@@ -1,0 +1,22 @@
+{
+  "typeCheckingMode": "strict",
+  "reportMissingTypeStubs": true,
+  "reportUnknownVariableType": "error",
+  "reportUnknownMemberType": "error",
+  "reportUnknownParameterType": "error",
+  "reportUnknownArgumentType": "error",
+  "reportUnknownLambdaType": "error",
+  "reportUnknownTypeArguments": "error",
+  "strictListInference": true,
+  "strictDictionaryInference": true,
+  "strictSetInference": true,
+  "python.analysis.autoSearchPaths": true,
+  "python.analysis.useLibraryCodeForTypes": true,
+  "python.analysis.typeEvaluation.enableReachabilityAnalysis": true,
+  "python.analysis.reportConstantRedefinition": "error",
+  "python.analysis.indexing": true,
+  "python.analysis.userFileIndexingLimit": -1,
+  "python.analysis.autoImportCompletions": true,
+  "reportCallInDefaultInitializer": "error",
+  "python.analysis.reportUnknownMemberType": "none"
+}
