@@ -114,12 +114,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## 📬 Contact
-
-Your Name - [@yourtwitter](https://twitter.com/yourtwitter)
-
-Project Link: [https://github.com/yourusername/citizenship-test-app](https://github.com/yourusername/citizenship-test-app)
-
 ## 🙏 Acknowledgments
 
 - USCIS for providing the official citizenship test questions
