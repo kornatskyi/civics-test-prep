@@ -1,17 +1,38 @@
+export type TestType = "2008" | "2025";
+
+export interface TestConfig {
+  testType: TestType;
+  totalQuestions: number;
+  questionsAsked: number;
+  passThreshold: number;
+  description: string;
+  filingDateInfo: string;
+}
+
 export type Question = {
   id: number;
   question: string;
   answers?: string[];
 };
 
-export const getNRandomQuestion = async (n: number): Promise<Question[]> => {
-  const res = await fetch(`/api/questions?n=${parseInt(n.toString())}`);
-  
+export const getTestConfigs = async (): Promise<TestConfig[]> => {
+  const res = await fetch("/api/test-configs");
+  const j: { configs: TestConfig[] } = await res.json();
+  return j.configs;
+};
+
+export const getNRandomQuestion = async (
+  n: number,
+  testType: TestType = "2008"
+): Promise<Question[]> => {
+  const res = await fetch(
+    `/api/questions?n=${parseInt(n.toString())}&testType=${testType}`
+  );
+
   const j: {
     questions: Question[];
   } = await res.json();
-  console.log(j);
-  
+
   return j["questions"].map((jq) => ({
     id: jq["id"],
     question: jq["question"],
@@ -19,10 +40,11 @@ export const getNRandomQuestion = async (n: number): Promise<Question[]> => {
   }));
 };
 
-export const getRandomQuestion = async (): Promise<Question> => {
-  const res = await fetch("/api/questions/25");
+export const getRandomQuestion = async (
+  testType: TestType = "2008"
+): Promise<Question> => {
+  const res = await fetch(`/api/questions/-1?testType=${testType}`);
   const j = await res.json();
-  console.log(j);
 
   return {
     id: j["id"],
@@ -31,8 +53,12 @@ export const getRandomQuestion = async (): Promise<Question> => {
   };
 };
 
-export const submitAnswer = async (questionId: number, answer: string) => {
-  const res = await fetch(`/api/submit-answer/${questionId}`, {
+export const submitAnswer = async (
+  questionId: number,
+  answer: string,
+  testType: TestType = "2008"
+) => {
+  const res = await fetch(`/api/submit-answer/${questionId}?testType=${testType}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -45,12 +71,13 @@ export const submitAnswer = async (questionId: number, answer: string) => {
   return j["result"] === "true";
 };
 
-export const getDynamicQuestions = async (): Promise<Question[]> => {
-  const res = await fetch("/api/dynamic-questions");
+export const getDynamicQuestions = async (
+  testType: TestType = "2008"
+): Promise<Question[]> => {
+  const res = await fetch(`/api/dynamic-questions?testType=${testType}`);
   const j: {
     questions: Question[];
   } = await res.json();
-  console.log(j);
 
   return j["questions"].map((jq) => ({
     id: jq["id"],
@@ -58,5 +85,3 @@ export const getDynamicQuestions = async (): Promise<Question[]> => {
     answers: jq["answers"],
   }));
 };
-
-

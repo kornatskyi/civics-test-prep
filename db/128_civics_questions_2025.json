@@ -1,0 +1,1691 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "section": "AMERICAN GOVERNMENT - Principles of American Government",
+      "question": "What is the form of government of the United States?",
+      "answers": [
+        "Republic",
+        "Constitution-based federal republic",
+        "Representative democracy"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 2,
+      "section": "AMERICAN GOVERNMENT - Principles of American Government",
+      "question": "What is the supreme law of the land?",
+      "answers": [
+        "(U.S.) Constitution"
+      ],
+      "isRequiredFor65Plus": true,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 3,
+      "section": "AMERICAN GOVERNMENT - Principles of American Government",
+      "question": "Name one thing the U.S. Constitution does.",
+      "answers": [
+        "Forms the government",
+        "Defines powers of government",
+        "Defines the parts of government",
+        "Protects the rights of the people"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 4,
+      "section": "AMERICAN GOVERNMENT - Principles of American Government",
+      "question": "The U.S. Constitution starts with the words \"We the People.\" What does \"We the People\" mean?",
+      "answers": [
+        "Self-government",
+        "Popular sovereignty",
+        "Consent of the governed",
+        "People should govern themselves",
+        "(Example of) social contract"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 5,
+      "section": "AMERICAN GOVERNMENT - Principles of American Government",
+      "question": "How are changes made to the U.S. Constitution?",
+      "answers": [
+        "Amendments",
+        "The amendment process"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 6,
+      "section": "AMERICAN GOVERNMENT - Principles of American Government",
+      "question": "What does the Bill of Rights protect?",
+      "answers": [
+        "(The basic) rights of Americans",
+        "(The basic) rights of people living in the United States"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 7,
+      "section": "AMERICAN GOVERNMENT - Principles of American Government",
+      "question": "How many amendments does the U.S. Constitution have?",
+      "answers": [
+        "Twenty-seven (27)"
+      ],
+      "isRequiredFor65Plus": true,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 8,
+      "section": "AMERICAN GOVERNMENT - Principles of American Government",
+      "question": "Why is the Declaration of Independence important?",
+      "answers": [
+        "It says America is free from British control.",
+        "It says all people are created equal.",
+        "It identifies inherent rights.",
+        "It identifies individual freedoms."
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 9,
+      "section": "AMERICAN GOVERNMENT - Principles of American Government",
+      "question": "What founding document said the American colonies were free from Britain?",
+      "answers": [
+        "Declaration of Independence"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 10,
+      "section": "AMERICAN GOVERNMENT - Principles of American Government",
+      "question": "Name two important ideas from the Declaration of Independence and the U.S. Constitution.",
+      "answers": [
+        "Equality",
+        "Liberty",
+        "Social contract",
+        "Natural rights",
+        "Limited government",
+        "Self-government"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 11,
+      "section": "AMERICAN GOVERNMENT - Principles of American Government",
+      "question": "The words \"Life, Liberty, and the pursuit of Happiness\" are in what founding document?",
+      "answers": [
+        "Declaration of Independence"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 12,
+      "section": "AMERICAN GOVERNMENT - Principles of American Government",
+      "question": "What is the economic system of the United States?",
+      "answers": [
+        "Capitalism",
+        "Free market economy"
+      ],
+      "isRequiredFor65Plus": true,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 13,
+      "section": "AMERICAN GOVERNMENT - Principles of American Government",
+      "question": "What is the rule of law?",
+      "answers": [
+        "Everyone must follow the law.",
+        "Leaders must obey the law.",
+        "Government must obey the law.",
+        "No one is above the law."
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 14,
+      "section": "AMERICAN GOVERNMENT - Principles of American Government",
+      "question": "Many documents influenced the U.S. Constitution. Name one.",
+      "answers": [
+        "Declaration of Independence",
+        "Articles of Confederation",
+        "Federalist Papers",
+        "Anti-Federalist Papers",
+        "Virginia Declaration of Rights",
+        "Fundamental Orders of Connecticut",
+        "Mayflower Compact",
+        "Iroquois Great Law of Peace"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 15,
+      "section": "AMERICAN GOVERNMENT - Principles of American Government",
+      "question": "There are three branches of government. Why?",
+      "answers": [
+        "So one part does not become too powerful",
+        "Checks and balances",
+        "Separation of powers"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 16,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "Name the three branches of government.",
+      "answers": [
+        "Legislative, executive, and judicial",
+        "Congress, president, and the courts"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 17,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "The President of the United States is in charge of which branch of government?",
+      "answers": [
+        "Executive branch"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 18,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "What part of the federal government writes laws?",
+      "answers": [
+        "(U.S.) Congress",
+        "(U.S. or national) legislature",
+        "Legislative branch"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 19,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "What are the two parts of the U.S. Congress?",
+      "answers": [
+        "Senate and House (of Representatives)"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 20,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "Name one power of the U.S. Congress.",
+      "answers": [
+        "Writes laws",
+        "Declares war",
+        "Makes the federal budget"
+      ],
+      "isRequiredFor65Plus": true,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 21,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "How many U.S. senators are there?",
+      "answers": [
+        "One hundred (100)"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 22,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "How long is a term for a U.S. senator?",
+      "answers": [
+        "Six (6) years"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 23,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "Who is one of your state's U.S. senators now? (Add the name of your state or territory to the answer)",
+      "answers": [
+        "Alabama: [Tommy Tuberville, Katie Boyd Britt]\nAlaska: [Lisa Murkowski, Dan Sullivan]\nArizona: [Mark Kelly, Ruben Gallego]\nArkansas: [John Boozman, Tom Cotton]\nCalifornia: [Alex Padilla, Adam Schiff]\nColorado: [Michael Bennet, John W. Hickenlooper]\nConnecticut: [Richard Blumenthal, Chris Murphy]\nDelaware: [Chris Coons, Lisa Blunt Rochester]\nFlorida: [Rick Scott, Ashley Moody]\nGeorgia: [Jon Ossoff, Raphael Warnock]\nHawaii: [Mazie Hirono, Brian Schatz]\nIdaho: [Mike Crapo, Jim Risch]\nIllinois: [Dick Durbin, Tammy Duckworth]\nIndiana: [Todd Young, Jim Banks]\nIowa: [Chuck Grassley, Joni Ernst]\nKansas: [Jerry Moran, Roger Marshall]\nKentucky: [Mitch McConnell, Rand Paul]\nLouisiana: [Bill Cassidy, John Kennedy]\nMaine: [Susan Collins, Angus King]\nMaryland: [Chris Van Hollen, Angela Alsobrooks]\nMassachusetts: [Elizabeth Warren, Ed Markey]\nMichigan: [Gary Peters, Elissa Slotkin]\nMinnesota: [Amy Klobuchar, Tina Smith]\nMississippi: [Roger Wicker, Cindy Hyde-Smith]\nMissouri: [Josh Hawley, Eric Schmitt]\nMontana: [Steve Daines, Tim Sheehy]\nNebraska: [Deb Fischer, Pete Ricketts]\nNevada: [Catherine Cortez Masto, Jacky Rosen]\nNew Hampshire: [Jeanne Shaheen, Maggie Hassan]\nNew Jersey: [Cory Booker, Andy Kim]\nNew Mexico: [Martin Heinrich, Ben Ray Luj\u00e1n]\nNew York: [Chuck Schumer, Kirsten Gillibrand]\nNorth Carolina: [Thom Tillis, Ted Budd]\nNorth Dakota: [John Hoeven, Kevin Cramer]\nOhio: [Bernie Moreno, John Husted]\nOklahoma: [James Lankford, Markwayne Mullin]\nOregon: [Ron Wyden, Jeff Merkley]\nPennsylvania: [John Fetterman, David McCormick]\nRhode Island: [Jack Reed, Sheldon Whitehouse]\nSouth Carolina: [Lindsey Graham, Tim Scott]\nSouth Dakota: [John Thune, Mike Rounds]\nTennessee: [Marsha Blackburn, Bill Hagerty]\nTexas: [John Cornyn, Ted Cruz]\nUtah: [Mike Lee, John Curtis]\nVermont: [Bernie Sanders, Peter Welch]\nVirginia: [Mark Warner, Tim Kaine]\nWashington: [Patty Murray, Maria Cantwell]\nWest Virginia: [Shelley Moore Capito, Jim Justice]\nWisconsin: [Ron Johnson, Tammy Baldwin]\nWyoming: [John Barrasso, Cynthia M. Lummis]"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": true,
+      "lastTimeUpdated": "2026-01-10T12:56:29.186949"
+    },
+    {
+      "id": 24,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "How many voting members are in the House of Representatives?",
+      "answers": [
+        "Four hundred thirty-five (435)"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 25,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "How long is a term for a member of the House of Representatives?",
+      "answers": [
+        "Two (2) years"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 26,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "Why do U.S. representatives serve shorter terms than U.S. senators?",
+      "answers": [
+        "To more closely follow public opinion"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 27,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "How many senators does each state have?",
+      "answers": [
+        "Two (2)"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 28,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "Why does each state have two senators?",
+      "answers": [
+        "Equal representation (for small states)",
+        "The Great Compromise (Connecticut Compromise)"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 29,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "Name your U.S. representative. (Add the name of your state or territory to the answer)",
+      "answers": [
+        "Alabama: Barry Moore (1st), Shomari Figures (2nd), Mike Rogers (3rd), Robert Aderholt (4th), Dale Strong (5th), Gary Palmer (6th), Terri Sewell (7th)\nAlaska: Nicholas Begich (At Large)\nAmerican Samoa: Aumua Amata Radewagen (Delegate)\nArizona: David Schweikert (1st), Elijah Crane (2nd), Yassamin Ansari (3rd), Greg Stanton (4th), Andy Biggs (5th), Juan Ciscomani (6th), Adelita Grijalva (7th), Abraham Hamadeh (8th), Paul Gosar (9th)\nArkansas: Eric Crawford (1st), J. Hill (2nd), Steve Womack (3rd), Bruce Westerman (4th)\nCalifornia: Doug LaMalfa (1st), Jared Huffman (2nd), Kevin Kiley (3rd), Mike Thompson (4th), Tom McClintock (5th), Ami Bera (6th), Doris Matsui (7th), John Garamendi (8th), Josh Harder (9th), Mark DeSaulnier (10th), Nancy Pelosi (11th), Lateefah Simon (12th), Adam Gray (13th), Eric Swalwell (14th), Kevin Mullin (15th), Sam Liccardo (16th), Ro Khanna (17th), Zoe Lofgren (18th), Jimmy Panetta (19th), Vince Fong (20th), Jim Costa (21st), David Valadao (22nd), Jay Obernolte (23rd), Salud Carbajal (24th), Raul Ruiz (25th), Julia Brownley (26th), George Whitesides (27th), Judy Chu (28th), Luz Rivas (29th), Laura Friedman (30th), Gilbert Cisneros (31st), Brad Sherman (32nd), Pete Aguilar (33rd), Jimmy Gomez (34th), Norma Torres (35th), Ted Lieu (36th), Sydney Kamlager-Dove (37th), Linda Sanchez (38th), Mark Takano (39th), Young Kim (40th), Ken Calvert (41st), Robert Garcia (42nd), Maxine Waters (43rd), Nanette Barragan (44th), Derek Tran (45th), J. Correa (46th), Dave Min (47th), Darrell Issa (48th), Mike Levin (49th), Scott Peters (50th), Sara Jacobs (51st), Juan Vargas (52nd)\nColorado: Diana DeGette (1st), Joe Neguse (2nd), Jeff Hurd (3rd), Lauren Boebert (4th), Jeff Crank (5th), Jason Crow (6th), Brittany Pettersen (7th), Gabe Evans (8th)\nConnecticut: John Larson (1st), Joe Courtney (2nd), Rosa DeLauro (3rd), James Himes (4th), Jahana Hayes (5th)\nDelaware: Sarah McBride (At Large)\nDistrict of Columbia: Eleanor Norton (Delegate)\nFlorida: Jimmy Patronis (1st), Neal Dunn (2nd), Kat Cammack (3rd), Aaron Bean (4th), John Rutherford (5th), Randy Fine (6th), Cory Mills (7th), Mike Haridopolos (8th), Darren Soto (9th), Maxwell Frost (10th), Daniel Webster (11th), Gus Bilirakis (12th), Anna Paulina Luna (13th), Kathy Castor (14th), Laurel Lee (15th), Vern Buchanan (16th), W. Steube (17th), Scott Franklin (18th), Byron Donalds (19th), Sheila Cherfilus-McCormick (20th), Brian Mast (21st), Lois Frankel (22nd), Jared Moskowitz (23rd), Frederica Wilson (24th), Debbie Wasserman Schultz (25th), Mario Diaz-Balart (26th), Maria Salazar (27th), Carlos Gimenez (28th)\nGeorgia: Earl Carter (1st), Sanford Bishop (2nd), Brian Jack (3rd), Henry Johnson (4th), Nikema Williams (5th), Lucy McBath (6th), Richard McCormick (7th), Austin Scott (8th), Andrew Clyde (9th), Mike Collins (10th), Barry Loudermilk (11th), Rick Allen (12th), David Scott (13th), Marjorie Taylor Greene (14th)\nGuam: James Moylan (Delegate)\nHawaii: Ed Case (1st), Jill Tokuda (2nd)\nIdaho: Russ Fulcher (1st), Michael Simpson (2nd)\nIllinois: Jonathan Jackson (1st), Robin Kelly (2nd), Delia Ramirez (3rd), Jesus Garcia (4th), Mike Quigley (5th), Sean Casten (6th), Danny Davis (7th), Raja Krishnamoorthi (8th), Janice Schakowsky (9th), Bradley Schneider (10th), Bill Foster (11th), Mike Bost (12th), Nikki Budzinski (13th), Lauren Underwood (14th), Mary Miller (15th), Darin LaHood (16th), Eric Sorensen (17th)\nIndiana: Frank Mrvan (1st), Rudy Yakym (2nd), Marlin Stutzman (3rd), James Baird (4th), Victoria Spartz (5th), Jefferson Shreve (6th), Andre Carson (7th), Mark Messmer (8th), Erin Houchin (9th)\nIowa: Mariannette Miller-Meeks (1st), Ashley Hinson (2nd), Zachary Nunn (3rd), Randy Feenstra (4th)\nKansas: Tracey Mann (1st), Derek Schmidt (2nd), Sharice Davids (3rd), Ron Estes (4th)\nKentucky: James Comer (1st), Brett Guthrie (2nd), Morgan McGarvey (3rd), Thomas Massie (4th), Harold Rogers (5th), Andy Barr (6th)\nLouisiana: Steve Scalise (1st), Troy Carter (2nd), Clay Higgins (3rd), Mike Johnson (4th), Julia Letlow (5th), Cleo Fields (6th)\nMaine: Chellie Pingree (1st), Jared Golden (2nd)\nMaryland: Andy Harris (1st), Johnny Olszewski (2nd), Sarah Elfreth (3rd), Glenn Ivey (4th), Steny Hoyer (5th), April McClain Delaney (6th), Kweisi Mfume (7th), Jamie Raskin (8th)\nMassachusetts: Richard Neal (1st), James McGovern (2nd), Lori Trahan (3rd), Jake Auchincloss (4th), Katherine Clark (5th), Seth Moulton (6th), Ayanna Pressley (7th), Stephen Lynch (8th), William Keating (9th)\nMichigan: Jack Bergman (1st), John Moolenaar (2nd), Hillary Scholten (3rd), Bill Huizenga (4th), Tim Walberg (5th), Debbie Dingell (6th), Tom Barrett (7th), Kristen McDonald Rivet (8th), Lisa McClain (9th), John James (10th), Haley Stevens (11th), Rashida Tlaib (12th), Shri Thanedar (13th)\nMinnesota: Brad Finstad (1st), Angie Craig (2nd), Kelly Morrison (3rd), Betty McCollum (4th), Ilhan Omar (5th), Tom Emmer (6th), Michelle Fischbach (7th), Pete Stauber (8th)\nMississippi: Trent Kelly (1st), Bennie Thompson (2nd), Michael Guest (3rd), Mike Ezell (4th)\nMissouri: Wesley Bell (1st), Ann Wagner (2nd), Robert Onder (3rd), Mark Alford (4th), Emanuel Cleaver (5th), Sam Graves (6th), Eric Burlison (7th), Jason Smith (8th)\nMontana: Ryan Zinke (1st), Troy Downing (2nd)\nNebraska: Mike Flood (1st), Don Bacon (2nd), Adrian Smith (3rd)\nNevada: Dina Titus (1st), Mark Amodei (2nd), Susie Lee (3rd), Steven Horsford (4th)\nNew Hampshire: Chris Pappas (1st), Maggie Goodlander (2nd)\nNew Jersey: Donald Norcross (1st), Jefferson Van Drew (2nd), Herbert Conaway (3rd), Christopher Smith (4th), Josh Gottheimer (5th), Frank Pallone (6th), Thomas Kean (7th), Robert Menendez (8th), Nellie Pou (9th), LaMonica McIver (10th), Mikie Sherrill (11th), Bonnie Watson Coleman (12th)\nNew Mexico: Melanie Stansbury (1st), Gabe Vasquez (2nd), Teresa Leger Fernandez (3rd)\nNew York: Nick LaLota (1st), Andrew Garbarino (2nd), Thomas R. Suozzi (3rd), Laura Gillen (4th), Gregory Meeks (5th), Grace Meng (6th), Nydia Velazquez (7th), Hakeem Jeffries (8th), Yvette Clarke (9th), Daniel Goldman (10th), Nicole Malliotakis (11th), Jerrold Nadler (12th), Adriano Espaillat (13th), Alexandria Ocasio-Cortez (15th), George Latimer (16th), Michael Lawler (17th), Patrick Ryan (18th), Josh Riley (19th), Paul Tonko (20th), Elise Stefanik (21st), John Mannion (22nd), Nicholas Langworthy (23rd), Claudia Tenney (24th), Joseph Morelle (25th), Timothy Kennedy (26th)\nNorth Carolina: Donald Davis (1st), Deborah Ross (2nd), Gregory Murphy (3rd), Valerie Foushee (4th), Virginia Foxx (5th), Addison McDowell (6th), David Rouzer (7th), Mark Harris (8th), Richard Hudson (9th), Pat Harrigan (10th), Alma Adams (12th), Brad Knott (13th), Tim Moore (14th)\nNorth Dakota: Julie Fedorchak (At Large)\nNorthern Mariana Islands: Kimberlyn King-Hinds (Delegate)\nOhio: Greg Landsman (1st), David Taylor (2nd), Joyce Beatty (3rd), Jim Jordan (4th), Robert Latta (5th), Michael A. Rulli (6th), Max Miller (7th), Warren Davidson (8th), Marcy Kaptur (9th), Michael Turner (10th), Shontel Brown (11th), Troy Balderson (12th), Emilia Sykes (13th)\nOklahoma: Kevin Hern (1st), Josh Brecheen (2nd), Frank Lucas (3rd), Tom Cole (4th), Stephanie Bice (5th)\nOregon: Suzanne Bonamici (1st), Cliff Bentz (2nd), Maxine Dexter (3rd), Val Hoyle (4th), Janelle Bynum (5th), Andrea Salinas (6th)\nPennsylvania: Brian Fitzpatrick (1st), Brendan Boyle (2nd), Dwight Evans (3rd), Madeleine Dean (4th), Mary Gay Scanlon (5th), Chrissy Houlahan (6th), Ryan Mackenzie (7th), Robert Bresnahan (8th), Daniel Meuser (9th), Scott Perry (10th), Lloyd Smucker (11th), Summer Lee (12th), John Joyce (13th), Guy Reschenthaler (14th), Glenn Thompson (15th), Mike Kelly (16th), Christopher DeLuzio (17th)\nPuerto Rico: Pablo Hernandez (Resident Commissioner)\nRhode Island: Gabe Amo (1st), Seth Magaziner (2nd)\nSouth Carolina: Nancy Mace (1st), Joe Wilson (2nd), Sheri Biggs (3rd), William Timmons (4th), Ralph Norman (5th), James Clyburn (6th), Russell Fry (7th)\nSouth Dakota: Dusty Johnson (At Large)\nTennessee: Diana Harshbarger (1st), Tim Burchett (2nd), Charles Fleischmann (3rd), Scott DesJarlais (4th), Andrew Ogles (5th), John Rose (6th), Matt Van Epps (7th), David Kustoff (8th), Steve Cohen (9th)\nTexas: Nathaniel Moran (1st), Dan Crenshaw (2nd), Keith Self (3rd), Pat Fallon (4th), Lance Gooden (5th), Jake Ellzey (6th), Lizzie Fletcher (7th), Morgan Luttrell (8th), Al Green (9th), Michael McCaul (10th), August Pfluger (11th), Craig Goldman (12th), Ronny Jackson (13th), Randy Weber (14th), Monica De La Cruz (15th), Veronica Escobar (16th), Pete Sessions (17th), Sylvester Turner (18th), Jodey Arrington (19th), Joaquin Castro (20th), Chip Roy (21st), Troy Nehls (22nd), Tony Gonzales (23rd), Beth Van Duyne (24th), Roger Williams (25th), Brandon Gill (26th), Michael Cloud (27th), Henry Cuellar (28th), Sylvia Garcia (29th), Jasmine Crockett (30th), John Carter (31st), Julie Johnson (32nd), Marc Veasey (33rd), Vicente Gonzalez (34th), Greg Casar (35th), Brian Babin (36th), Lloyd Doggett (37th), Wesley Hunt (38th)\nUtah: Blake Moore (1st), Celeste Maloy (2nd), Mike Kennedy (3rd), Burgess Owens (4th)\nVermont: Becca Balint (At Large)\nVirginia: Robert Wittman (1st), Jennifer Kiggans (2nd), Robert Scott (3rd), Jennifer McClellan (4th), John McGuire (5th), Ben Cline (6th), Eugene Vindman (7th), Donald Beyer (8th), H. Griffith (9th), Suhas Subramanyam (10th), James Walkinshaw (11th)\nVirgin Islands: Stacey Plaskett (Delegate)\nWashington: Suzan DelBene (1st), Rick Larsen (2nd), Marie Perez (3rd), Dan Newhouse (4th), Michael Baumgartner (5th), Emily Randall (6th), Pramila Jayapal (7th), Kim Schrier (8th), Adam Smith (9th), Marilyn Strickland (10th)\nWest Virginia: Carol Miller (1st), Riley Moore (2nd)\nWisconsin: Bryan Steil (1st), Mark Pocan (2nd), Derrick Van Orden (3rd), Gwen Moore (4th), Scott Fitzgerald (5th), Glenn Grothman (6th), Thomas Tiffany (7th), Tony Wied (8th)\nWyoming: Harriet Hageman (At Large)"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": true,
+      "lastTimeUpdated": "2026-01-10T12:56:29.186949"
+    },
+    {
+      "id": 30,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "What is the name of the Speaker of the House of Representatives now?",
+      "answers": [
+        "Mike Johnson"
+      ],
+      "isRequiredFor65Plus": true,
+      "isDynamicAnswer": true,
+      "lastTimeUpdated": "2026-01-10T12:56:29.186949"
+    },
+    {
+      "id": 31,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "Who does a U.S. senator represent?",
+      "answers": [
+        "Citizens of their state",
+        "People of their state"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 32,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "Who elects U.S. senators?",
+      "answers": [
+        "Citizens from their state"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 33,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "Who does a member of the House of Representatives represent?",
+      "answers": [
+        "Citizens in their (congressional) district",
+        "Citizens in their district",
+        "People from their (congressional) district",
+        "People in their district"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 34,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "Who elects members of the House of Representatives?",
+      "answers": [
+        "Citizens from their (congressional) district"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 35,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "Some states have more representatives than other states. Why?",
+      "answers": [
+        "(Because of) the state's population",
+        "(Because) they have more people",
+        "(Because) some states have more people"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 36,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "The President of the United States is elected for how many years?",
+      "answers": [
+        "Four (4) years"
+      ],
+      "isRequiredFor65Plus": true,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 37,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "The President of the United States can serve only two terms. Why?",
+      "answers": [
+        "(Because of) the 22nd Amendment",
+        "To keep the president from becoming too powerful"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 38,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "What is the name of the President of the United States now?",
+      "answers": [
+        "Donald J. Trump"
+      ],
+      "isRequiredFor65Plus": true,
+      "isDynamicAnswer": true,
+      "lastTimeUpdated": "2026-01-10T12:56:29.186949"
+    },
+    {
+      "id": 39,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "What is the name of the Vice President of the United States now?",
+      "answers": [
+        "JD Vance"
+      ],
+      "isRequiredFor65Plus": true,
+      "isDynamicAnswer": true,
+      "lastTimeUpdated": "2026-01-10T12:56:29.186949"
+    },
+    {
+      "id": 40,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "If the president can no longer serve, who becomes president?",
+      "answers": [
+        "The Vice President (of the United States)"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 41,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "Name one power of the president.",
+      "answers": [
+        "Signs bills into law",
+        "Vetoes bills",
+        "Enforces laws",
+        "Commander in Chief (of the military)",
+        "Chief diplomat",
+        "Appoints federal judges"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 42,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "Who is Commander in Chief of the U.S. military?",
+      "answers": [
+        "The President (of the United States)"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 43,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "Who signs bills to become laws?",
+      "answers": [
+        "The President (of the United States)"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 44,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "Who vetoes bills?",
+      "answers": [
+        "The President (of the United States)"
+      ],
+      "isRequiredFor65Plus": true,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 45,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "Who appoints federal judges?",
+      "answers": [
+        "The President (of the United States)"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 46,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "The executive branch has many parts. Name one.",
+      "answers": [
+        "President (of the United States)",
+        "Cabinet",
+        "Federal departments and agencies"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 47,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "What does the President's Cabinet do?",
+      "answers": [
+        "Advises the President (of the United States)"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 48,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "What are two Cabinet-level positions?",
+      "answers": [
+        "Attorney General",
+        "Secretary of Agriculture",
+        "Secretary of Commerce",
+        "Secretary of Education",
+        "Secretary of Energy",
+        "Secretary of Health and Human Services",
+        "Secretary of Homeland Security",
+        "Secretary of Housing and Urban Development",
+        "Secretary of the Interior",
+        "Secretary of Labor",
+        "Secretary of State",
+        "Secretary of Transportation",
+        "Secretary of the Treasury",
+        "Secretary of Veterans Affairs",
+        "Secretary of War (Defense)",
+        "Vice-President"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 49,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "Why is the Electoral College important?",
+      "answers": [
+        "It decides who is elected president.",
+        "It provides a compromise between the popular election of the president and congressional selection."
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 50,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "What is one part of the judicial branch?",
+      "answers": [
+        "Supreme Court",
+        "Federal Courts"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 51,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "What does the judicial branch do?",
+      "answers": [
+        "Reviews laws",
+        "Explains laws",
+        "Resolves disputes (disagreements) about the law",
+        "Decides if a law goes against the (U.S.) Constitution"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 52,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "What is the highest court in the United States?",
+      "answers": [
+        "Supreme Court"
+      ],
+      "isRequiredFor65Plus": true,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 53,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "How many seats are on the Supreme Court?",
+      "answers": [
+        "Nine (9)"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 54,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "How many Supreme Court justices are usually needed to decide a case?",
+      "answers": [
+        "Five (5)"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 55,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "How long do Supreme Court justices serve?",
+      "answers": [
+        "(For) life",
+        "Lifetime appointment",
+        "(Until) retirement"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 56,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "Supreme Court justices serve for life. Why?",
+      "answers": [
+        "To be independent (of politics)",
+        "To limit outside (political) influence"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 57,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "Who is the Chief Justice of the United States now?",
+      "answers": [
+        "John Roberts"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": true,
+      "lastTimeUpdated": "2026-01-10T12:56:29.186949"
+    },
+    {
+      "id": 58,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "Name one power that is only for the federal government.",
+      "answers": [
+        "Print paper money",
+        "Mint coins",
+        "Declare war",
+        "Create an army",
+        "Make treaties",
+        "Set foreign policy"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 59,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "Name one power that is only for the states.",
+      "answers": [
+        "Provide schooling and education",
+        "Provide protection (police)",
+        "Provide safety (fire departments)",
+        "Give a driver's license",
+        "Approve zoning and land use"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 60,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "What is the purpose of the 10th Amendment?",
+      "answers": [
+        "(It states that the) powers not given to the federal government belong to the states or to the people."
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 61,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "Who is the governor of your state now? (Add the name of your state or territory to the answer)",
+      "answers": [
+        "Alabama: Kay Ivey\nAlaska: Mike Dunleavy\nArizona: Katie Hobbs\nArkansas: Sarah Huckabee Sanders\nCalifornia: Gavin Newsom\nColorado: Jared Polis\nConnecticut: Ned Lamont\nDelaware: Matt Meyer\nFlorida: Ron DeSantis\nGeorgia: Brian Kemp\nHawaii: Josh Green\nIdaho: Brad Little\nIllinois: J. B. Pritzker\nIndiana: Mike Braun\nIowa: Kim Reynolds\nKansas: Laura Kelly\nKentucky: Andy Beshear\nLouisiana: Jeff Landry\nMaine: Janet Mills\nMaryland: Wes Moore\nMassachusetts: Maura Healey\nMichigan: Gretchen Whitmer\nMinnesota: Tim Walz\nMississippi: Tate Reeves\nMissouri: Mike Kehoe\nMontana: Greg Gianforte\nNebraska: Jim Pillen\nNevada: Joe Lombardo\nNew Hampshire: Kelly Ayotte\nNew Jersey: Phil Murphy\nNew Mexico: Michelle Lujan Grisham\nNew York: Kathy Hochul\nNorth Carolina: Josh Stein\nNorth Dakota: Kelly Armstrong\nOhio: Mike DeWine\nOklahoma: Kevin Stitt\nOregon: Tina Kotek\nPennsylvania: Josh Shapiro\nRhode Island: Dan McKee\nSouth Carolina: Henry McMaster\nSouth Dakota: Larry Rhoden\nTennessee: Bill Lee\nTexas: Greg Abbott\nUtah: Spencer Cox\nVermont: Phil Scott\nVirginia: Glenn Youngkin\nWashington: Bob Ferguson\nWest Virginia: Patrick Morrisey\nWisconsin: Tony Evers\nWyoming: Mark Gordon\nAmerican Samoa: Pula Nikolao Pula\nGuam: Lou Leon Guerrero\nNorthern Mariana Islands: David M. Apatang\nPuerto Rico: Jenniffer Gonz\u00e1lez-Col\u00f3n\nU.S. Virgin Islands: Albert Bryan"
+      ],
+      "isRequiredFor65Plus": true,
+      "isDynamicAnswer": true,
+      "lastTimeUpdated": "2026-01-10T12:56:29.186949"
+    },
+    {
+      "id": 62,
+      "section": "AMERICAN GOVERNMENT - System of Government",
+      "question": "What is the capital of your state? (Add the name of your state or territory to the answer)",
+      "answers": [
+        "Alabama: Montgomery\nAlaska: Juneau\nArizona: Phoenix\nArkansas: Little Rock\nCalifornia: Sacramento\nColorado: Denver\nConnecticut: Hartford\nDelaware: Dover\nFlorida: Tallahassee\nGeorgia: Atlanta\nHawaii: Honolulu\nIdaho: Boise\nIllinois: Springfield\nIndiana: Indianapolis\nIowa: Des Moines\nKansas: Topeka\nKentucky: Frankfort\nLouisiana: Baton Rouge\nMaine: Augusta\nMaryland: Annapolis\nMassachusetts: Boston\nMichigan: Lansing\nMinnesota: Saint Paul\nMississippi: Jackson\nMissouri: Jefferson City\nMontana: Helena\nNebraska: Lincoln\nNevada: Carson City\nNew Hampshire: Concord\nNew Jersey: Trenton\nNew Mexico: Santa Fe\nNew York: Albany\nNorth Carolina: Raleigh\nNorth Dakota: Bismarck\nOhio: Columbus\nOklahoma: Oklahoma City\nOregon: Salem\nPennsylvania: Harrisburg\nRhode Island: Providence\nSouth Carolina: Columbia\nSouth Dakota: Pierre\nTennessee: Nashville\nTexas: Austin\nUtah: Salt Lake City\nVermont: Montpelier\nVirginia: Richmond\nWashington: Olympia\nWest Virginia: Charleston\nWisconsin: Madison\nWyoming: Cheyenne"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": true,
+      "lastTimeUpdated": "2026-01-10T12:56:29.186949"
+    },
+    {
+      "id": 63,
+      "section": "AMERICAN GOVERNMENT - Rights and Responsibilities",
+      "question": "There are four amendments to the U.S. Constitution about who can vote. Describe one of them.",
+      "answers": [
+        "Citizens eighteen (18) and older (can vote).",
+        "You don't have to pay (a poll tax) to vote.",
+        "Any citizen can vote. (Women and men can vote.)",
+        "A male citizen of any race (can vote)."
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 64,
+      "section": "AMERICAN GOVERNMENT - Rights and Responsibilities",
+      "question": "Who can vote in federal elections, run for federal office, and serve on a jury in the United States?",
+      "answers": [
+        "Citizens",
+        "Citizens of the United States",
+        "U.S. citizens"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 65,
+      "section": "AMERICAN GOVERNMENT - Rights and Responsibilities",
+      "question": "What are three rights of everyone living in the United States?",
+      "answers": [
+        "Freedom of expression",
+        "Freedom of speech",
+        "Freedom of assembly",
+        "Freedom to petition the government",
+        "Freedom of religion",
+        "The right to bear arms"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 66,
+      "section": "AMERICAN GOVERNMENT - Rights and Responsibilities",
+      "question": "What do we show loyalty to when we say the Pledge of Allegiance?",
+      "answers": [
+        "The United States",
+        "The flag"
+      ],
+      "isRequiredFor65Plus": true,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 67,
+      "section": "AMERICAN GOVERNMENT - Rights and Responsibilities",
+      "question": "Name two promises that new citizens make in the Oath of Allegiance.",
+      "answers": [
+        "Give up loyalty to other countries",
+        "Defend the (U.S.) Constitution",
+        "Obey the laws of the United States",
+        "Serve in the military (if needed)",
+        "Serve (help, do important work for) the nation (if needed)",
+        "Be loyal to the United States"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 68,
+      "section": "AMERICAN GOVERNMENT - Rights and Responsibilities",
+      "question": "How can people become United States citizens?",
+      "answers": [
+        "Be born in the United States, under the conditions set by the 14th Amendment",
+        "Naturalize",
+        "Derive citizenship (under conditions set by Congress)"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 69,
+      "section": "AMERICAN GOVERNMENT - Rights and Responsibilities",
+      "question": "What are two examples of civic participation in the United States?",
+      "answers": [
+        "Vote",
+        "Run for office",
+        "Join a political party",
+        "Help with a campaign",
+        "Join a civic group",
+        "Join a community group",
+        "Give an elected official your opinion (on an issue)",
+        "Contact elected officials",
+        "Support or oppose an issue or policy",
+        "Write to a newspaper"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 70,
+      "section": "AMERICAN GOVERNMENT - Rights and Responsibilities",
+      "question": "What is one way Americans can serve their country?",
+      "answers": [
+        "Vote",
+        "Pay taxes",
+        "Obey the law",
+        "Serve in the military",
+        "Run for office",
+        "Work for local, state, or federal government"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 71,
+      "section": "AMERICAN GOVERNMENT - Rights and Responsibilities",
+      "question": "Why is it important to pay federal taxes?",
+      "answers": [
+        "Required by law",
+        "All people pay to fund the federal government",
+        "Required by the (U.S.) Constitution (16th Amendment)",
+        "Civic duty"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 72,
+      "section": "AMERICAN GOVERNMENT - Rights and Responsibilities",
+      "question": "It is important for all men age 18 through 25 to register for the Selective Service. Name one reason why.",
+      "answers": [
+        "Required by law",
+        "Civic duty",
+        "Makes the draft fair, if needed"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 73,
+      "section": "AMERICAN HISTORY - Colonial Period and Independence",
+      "question": "The colonists came to America for many reasons. Name one.",
+      "answers": [
+        "Freedom",
+        "Political liberty",
+        "Religious freedom",
+        "Economic opportunity",
+        "Escape persecution"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 74,
+      "section": "AMERICAN HISTORY - Colonial Period and Independence",
+      "question": "Who lived in America before the Europeans arrived?",
+      "answers": [
+        "American Indians",
+        "Native Americans"
+      ],
+      "isRequiredFor65Plus": true,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 75,
+      "section": "AMERICAN HISTORY - Colonial Period and Independence",
+      "question": "What group of people was taken and sold as slaves?",
+      "answers": [
+        "Africans",
+        "People from Africa"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 76,
+      "section": "AMERICAN HISTORY - Colonial Period and Independence",
+      "question": "What war did the Americans fight to win independence from Britain?",
+      "answers": [
+        "American Revolution",
+        "The (American) Revolutionary War",
+        "War for (American) Independence"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 77,
+      "section": "AMERICAN HISTORY - Colonial Period and Independence",
+      "question": "Name one reason why the Americans declared independence from Britain.",
+      "answers": [
+        "High taxes",
+        "Taxation without representation",
+        "British soldiers stayed in Americans' houses (boarding, quartering)",
+        "They did not have self-government",
+        "Boston Massacre",
+        "Boston Tea Party (Tea Act)",
+        "Stamp Act",
+        "Sugar Act",
+        "Townshend Acts",
+        "Intolerable (Coercive) Acts"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 78,
+      "section": "AMERICAN HISTORY - Colonial Period and Independence",
+      "question": "Who wrote the Declaration of Independence?",
+      "answers": [
+        "(Thomas) Jefferson"
+      ],
+      "isRequiredFor65Plus": true,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 79,
+      "section": "AMERICAN HISTORY - Colonial Period and Independence",
+      "question": "When was the Declaration of Independence adopted?",
+      "answers": [
+        "July 4, 1776"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 80,
+      "section": "AMERICAN HISTORY - Colonial Period and Independence",
+      "question": "The American Revolution had many important events. Name one.",
+      "answers": [
+        "(Battle of) Bunker Hill",
+        "Declaration of Independence",
+        "Washington Crossing the Delaware (Battle of Trenton)",
+        "(Battle of) Saratoga",
+        "Valley Forge (Encampment)",
+        "(Battle of) Yorktown (British surrender at Yorktown)"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 81,
+      "section": "AMERICAN HISTORY - Colonial Period and Independence",
+      "question": "There were 13 original states. Name five.",
+      "answers": [
+        "New Hampshire",
+        "Massachusetts",
+        "Rhode Island",
+        "Connecticut",
+        "New York",
+        "New Jersey",
+        "Pennsylvania",
+        "Delaware",
+        "Maryland",
+        "Virginia",
+        "North Carolina",
+        "South Carolina",
+        "Georgia"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 82,
+      "section": "AMERICAN HISTORY - Colonial Period and Independence",
+      "question": "What founding document was written in 1787?",
+      "answers": [
+        "(U.S.) Constitution"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 83,
+      "section": "AMERICAN HISTORY - Colonial Period and Independence",
+      "question": "The Federalist Papers supported the passage of the U.S. Constitution. Name one of the writers.",
+      "answers": [
+        "(James) Madison",
+        "(Alexander) Hamilton",
+        "(John) Jay",
+        "Publius"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 84,
+      "section": "AMERICAN HISTORY - Colonial Period and Independence",
+      "question": "Why were the Federalist Papers important?",
+      "answers": [
+        "They helped people understand the (U.S.) Constitution.",
+        "They supported passing the (U.S.) Constitution."
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 85,
+      "section": "AMERICAN HISTORY - Colonial Period and Independence",
+      "question": "Benjamin Franklin is famous for many things. Name one.",
+      "answers": [
+        "Founded the first free public libraries",
+        "First Postmaster General of the United States",
+        "Helped write the Declaration of Independence",
+        "Inventor",
+        "U.S. diplomat"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 86,
+      "section": "AMERICAN HISTORY - Colonial Period and Independence",
+      "question": "George Washington is famous for many things. Name one.",
+      "answers": [
+        "\"Father of Our Country\"",
+        "First president of the United States",
+        "General of the Continental Army",
+        "President of the Constitutional Convention"
+      ],
+      "isRequiredFor65Plus": true,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 87,
+      "section": "AMERICAN HISTORY - Colonial Period and Independence",
+      "question": "Thomas Jefferson is famous for many things. Name one.",
+      "answers": [
+        "Writer of the Declaration of Independence",
+        "Third president of the United States",
+        "Doubled the size of the United States (Louisiana Purchase)",
+        "First Secretary of State",
+        "Founded the University of Virginia",
+        "Writer of the Virginia Statute on Religious Freedom"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 88,
+      "section": "AMERICAN HISTORY - Colonial Period and Independence",
+      "question": "James Madison is famous for many things. Name one.",
+      "answers": [
+        "\"Father of the Constitution\"",
+        "Fourth president of the United States",
+        "President during the War of 1812",
+        "One of the writers of the Federalist Papers"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 89,
+      "section": "AMERICAN HISTORY - Colonial Period and Independence",
+      "question": "Alexander Hamilton is famous for many things. Name one.",
+      "answers": [
+        "First Secretary of the Treasury",
+        "One of the writers of the Federalist Papers",
+        "Helped establish the First Bank of the United States",
+        "Aide to General George Washington",
+        "Member of the Continental Congress"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 90,
+      "section": "AMERICAN HISTORY - 1800s",
+      "question": "What territory did the United States buy from France in 1803?",
+      "answers": [
+        "Louisiana Territory",
+        "Louisiana"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 91,
+      "section": "AMERICAN HISTORY - 1800s",
+      "question": "Name one war fought by the United States in the 1800s.",
+      "answers": [
+        "War of 1812",
+        "Mexican-American War",
+        "Civil War",
+        "Spanish-American War"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 92,
+      "section": "AMERICAN HISTORY - 1800s",
+      "question": "Name the U.S. war between the North and the South.",
+      "answers": [
+        "The Civil War"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 93,
+      "section": "AMERICAN HISTORY - 1800s",
+      "question": "The Civil War had many important events. Name one.",
+      "answers": [
+        "(Battle of) Fort Sumter",
+        "Emancipation Proclamation",
+        "(Battle of) Vicksburg",
+        "(Battle of) Gettysburg",
+        "Sherman's March",
+        "(Surrender at) Appomattox",
+        "(Battle of) Antietam/Sharpsburg",
+        "Lincoln was assassinated."
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 94,
+      "section": "AMERICAN HISTORY - 1800s",
+      "question": "Abraham Lincoln is famous for many things. Name one.",
+      "answers": [
+        "Freed the slaves (Emancipation Proclamation)",
+        "Saved (or preserved) the Union",
+        "Led the United States during the Civil War",
+        "16th president of the United States",
+        "Delivered the Gettysburg Address"
+      ],
+      "isRequiredFor65Plus": true,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 95,
+      "section": "AMERICAN HISTORY - 1800s",
+      "question": "What did the Emancipation Proclamation do?",
+      "answers": [
+        "Freed the slaves",
+        "Freed slaves in the Confederacy",
+        "Freed slaves in the Confederate states",
+        "Freed slaves in most Southern states"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 96,
+      "section": "AMERICAN HISTORY - 1800s",
+      "question": "What U.S. war ended slavery?",
+      "answers": [
+        "The Civil War"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 97,
+      "section": "AMERICAN HISTORY - 1800s",
+      "question": "What amendment says all persons born or naturalized in the United States, and subject to the jurisdiction thereof, are U.S. citizens?",
+      "answers": [
+        "14th Amendment"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 98,
+      "section": "AMERICAN HISTORY - 1800s",
+      "question": "When did all men get the right to vote?",
+      "answers": [
+        "After the Civil War",
+        "During Reconstruction",
+        "(With the) 15th Amendment",
+        "1870"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 99,
+      "section": "AMERICAN HISTORY - 1800s",
+      "question": "Name one leader of the women's rights movement in the 1800s.",
+      "answers": [
+        "Susan B. Anthony",
+        "Elizabeth Cady Stanton",
+        "Sojourner Truth",
+        "Harriet Tubman",
+        "Lucretia Mott",
+        "Lucy Stone"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 100,
+      "section": "AMERICAN HISTORY - Recent American History",
+      "question": "Name one war fought by the United States in the 1900s.",
+      "answers": [
+        "World War I",
+        "World War II",
+        "Korean War",
+        "Vietnam War",
+        "(Persian) Gulf War"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 101,
+      "section": "AMERICAN HISTORY - Recent American History",
+      "question": "Why did the United States enter World War I?",
+      "answers": [
+        "Because Germany attacked U.S. (civilian) ships",
+        "To support the Allied Powers (England, France, Italy, and Russia)",
+        "To oppose the Central Powers (Germany, Austria-Hungary, the Ottoman Empire, and Bulgaria)"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 102,
+      "section": "AMERICAN HISTORY - Recent American History",
+      "question": "When did all women get the right to vote?",
+      "answers": [
+        "1920",
+        "After World War I",
+        "(With the) 19th Amendment"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 103,
+      "section": "AMERICAN HISTORY - Recent American History",
+      "question": "What was the Great Depression?",
+      "answers": [
+        "Longest economic recession in modern history"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 104,
+      "section": "AMERICAN HISTORY - Recent American History",
+      "question": "When did the Great Depression start?",
+      "answers": [
+        "The Great Crash (1929)",
+        "Stock market crash of 1929"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 105,
+      "section": "AMERICAN HISTORY - Recent American History",
+      "question": "Who was president during the Great Depression and World War II?",
+      "answers": [
+        "(Franklin) Roosevelt"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 106,
+      "section": "AMERICAN HISTORY - Recent American History",
+      "question": "Why did the United States enter World War II?",
+      "answers": [
+        "(Bombing of) Pearl Harbor",
+        "Japanese attacked Pearl Harbor",
+        "To support the Allied Powers (England, France, and Russia)",
+        "To oppose the Axis Powers (Germany, Italy, and Japan)"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 107,
+      "section": "AMERICAN HISTORY - Recent American History",
+      "question": "Dwight Eisenhower is famous for many things. Name one.",
+      "answers": [
+        "General during World War II",
+        "President at the end of (during) the Korean War",
+        "34th president of the United States",
+        "Signed the Federal-Aid Highway Act of 1956 (Created the Interstate System)"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 108,
+      "section": "AMERICAN HISTORY - Recent American History",
+      "question": "Who was the United States' main rival during the Cold War?",
+      "answers": [
+        "Soviet Union",
+        "USSR",
+        "Russia"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 109,
+      "section": "AMERICAN HISTORY - Recent American History",
+      "question": "During the Cold War, what was one main concern of the United States?",
+      "answers": [
+        "Communism",
+        "Nuclear war"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 110,
+      "section": "AMERICAN HISTORY - Recent American History",
+      "question": "Why did the United States enter the Korean War?",
+      "answers": [
+        "To stop the spread of communism"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 111,
+      "section": "AMERICAN HISTORY - Recent American History",
+      "question": "Why did the United States enter the Vietnam War?",
+      "answers": [
+        "To stop the spread of communism"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 112,
+      "section": "AMERICAN HISTORY - Recent American History",
+      "question": "What did the civil rights movement do?",
+      "answers": [
+        "Fought to end racial discrimination"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 113,
+      "section": "AMERICAN HISTORY - Recent American History",
+      "question": "Martin Luther King, Jr. is famous for many things. Name one.",
+      "answers": [
+        "Fought for civil rights",
+        "Worked for equality for all Americans",
+        "Worked to ensure that people would \"not be judged by the color of their skin, but by the content of their character\""
+      ],
+      "isRequiredFor65Plus": true,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 114,
+      "section": "AMERICAN HISTORY - Recent American History",
+      "question": "Why did the United States enter the Persian Gulf War?",
+      "answers": [
+        "To force the Iraqi military from Kuwait"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 115,
+      "section": "AMERICAN HISTORY - Recent American History",
+      "question": "What major event happened on September 11, 2001 in the United States?",
+      "answers": [
+        "Terrorists attacked the United States",
+        "Terrorists took over two planes and crashed them into the World Trade Center in New York City",
+        "Terrorists took over a plane and crashed into the Pentagon in Arlington, Virginia",
+        "Terrorists took over a plane originally aimed at Washington, D.C., and crashed in a field in Pennsylvania"
+      ],
+      "isRequiredFor65Plus": true,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 116,
+      "section": "AMERICAN HISTORY - Recent American History",
+      "question": "Name one U.S. military conflict after the September 11, 2001 attacks.",
+      "answers": [
+        "(Global) War on Terror",
+        "War in Afghanistan",
+        "War in Iraq"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 117,
+      "section": "AMERICAN HISTORY - Recent American History",
+      "question": "Name one American Indian tribe in the United States.",
+      "answers": [
+        "Apache",
+        "Blackfeet",
+        "Cayuga",
+        "Cherokee",
+        "Cheyenne",
+        "Chippewa",
+        "Choctaw",
+        "Creek",
+        "Crow",
+        "Hopi",
+        "Huron",
+        "Inupiat",
+        "Lakota",
+        "Mohawk",
+        "Mohegan",
+        "Navajo",
+        "Oneida",
+        "Onondaga",
+        "Pueblo",
+        "Seminole",
+        "Seneca",
+        "Shawnee",
+        "Sioux",
+        "Teton",
+        "Tuscarora"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 118,
+      "section": "AMERICAN HISTORY - Recent American History",
+      "question": "Name one example of an American innovation.",
+      "answers": [
+        "Light bulb",
+        "Automobile (cars, internal combustion engine)",
+        "Skyscrapers",
+        "Airplane",
+        "Assembly line",
+        "Landing on the moon",
+        "Integrated circuit (IC)"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 119,
+      "section": "SYMBOLS AND HOLIDAYS - Symbols",
+      "question": "What is the capital of the United States?",
+      "answers": [
+        "Washington, D.C."
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 120,
+      "section": "SYMBOLS AND HOLIDAYS - Symbols",
+      "question": "Where is the Statue of Liberty?",
+      "answers": [
+        "New York (Harbor)",
+        "Liberty Island",
+        "New Jersey",
+        "near New York City",
+        "on the Hudson (River)"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 121,
+      "section": "SYMBOLS AND HOLIDAYS - Symbols",
+      "question": "Why does the flag have 13 stripes?",
+      "answers": [
+        "(Because there were) 13 original colonies",
+        "(Because the stripes) represent the original colonies"
+      ],
+      "isRequiredFor65Plus": true,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 122,
+      "section": "SYMBOLS AND HOLIDAYS - Symbols",
+      "question": "Why does the flag have 50 stars?",
+      "answers": [
+        "(Because there is) one star for each state",
+        "(Because) each star represents a state",
+        "(Because there are) 50 states"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 123,
+      "section": "SYMBOLS AND HOLIDAYS - Symbols",
+      "question": "What is the name of the national anthem?",
+      "answers": [
+        "The Star-Spangled Banner"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 124,
+      "section": "SYMBOLS AND HOLIDAYS - Symbols",
+      "question": "The Nation's first motto was \"E Pluribus Unum.\" What does that mean?",
+      "answers": [
+        "Out of many, one",
+        "We all become one"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 125,
+      "section": "SYMBOLS AND HOLIDAYS - Holidays",
+      "question": "What is Independence Day?",
+      "answers": [
+        "A holiday to celebrate U.S. independence (from Britain)",
+        "The country's birthday"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 126,
+      "section": "SYMBOLS AND HOLIDAYS - Holidays",
+      "question": "Name three national U.S. holidays.",
+      "answers": [
+        "New Year's Day",
+        "Martin Luther King, Jr. Day",
+        "Presidents Day (Washington's Birthday)",
+        "Memorial Day",
+        "Juneteenth",
+        "Independence Day",
+        "Labor Day",
+        "Columbus Day",
+        "Veterans Day",
+        "Thanksgiving Day",
+        "Christmas Day"
+      ],
+      "isRequiredFor65Plus": true,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 127,
+      "section": "SYMBOLS AND HOLIDAYS - Holidays",
+      "question": "What is Memorial Day?",
+      "answers": [
+        "A holiday to honor soldiers who died in military service"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    },
+    {
+      "id": 128,
+      "section": "SYMBOLS AND HOLIDAYS - Holidays",
+      "question": "What is Veterans Day?",
+      "answers": [
+        "A holiday to honor people in the (U.S.) military",
+        "A holiday to honor people who have served (in the U.S. military)"
+      ],
+      "isRequiredFor65Plus": false,
+      "isDynamicAnswer": false,
+      "lastTimeUpdated": null
+    }
+  ]
+}

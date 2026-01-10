@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  CircularProgress,
   Container,
   List,
   ListItem,
@@ -10,14 +11,13 @@ import {
 } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 import CheckIcon from "@mui/icons-material/Check";
-import { Question } from "../api";
-import { SubmissionResult, useTest } from "./useTest.ts";
-import theme from "../theme.tsx";
-import ErrorAlert from "./ErrorAlert.tsx";
-import TestInfo from "./TestInfo.tsx";
-import { useState, useCallback } from "react";
-
-const NUMBER_OF_QUESTIONS = 10;
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Question, TestConfig } from "../api";
+import { SubmissionResult, TestSettings, useTest } from "./useTest";
+import theme from "../theme";
+import ErrorAlert from "./ErrorAlert";
+import TestInfo from "./TestInfo";
+import { useState, useCallback, useEffect } from "react";
 
 interface Answer {
   question: Question;
@@ -28,25 +28,47 @@ interface Answer {
 interface TestResultProps {
   answers: Answer[];
   numberOfQuestions: number;
+  passThreshold: number;
 }
 
 const TestResult: React.FC<TestResultProps> = ({
   answers,
   numberOfQuestions,
+  passThreshold,
 }) => {
   const totalCorrect = answers.reduce(
     (prev, curr) => prev + (curr.isCorrect ? 1 : 0),
     0
   );
+  const passed = totalCorrect >= passThreshold;
+
   return (
     <Box sx={{ textAlign: "center" }}>
-      <Typography variant="h5" color="primary" gutterBottom>
-        Test Complete!
+      <Typography
+        variant="h3"
+        fontWeight="bold"
+        gutterBottom
+        color={passed ? "success.main" : "error.main"}
+      >
+        {passed ? "🎉 PASSED!" : "FAILED"}
       </Typography>
-      <Typography variant="h6" gutterBottom>
+      <Typography
+        variant="h5"
+        gutterBottom
+        color={passed ? "success.main" : "error.main"}
+      >
         Score: {totalCorrect}/{numberOfQuestions}
       </Typography>
-      <Typography variant="body1" sx={{ mt: 2 }}>
+      {!passed && (
+        <Typography
+          variant="body1"
+          sx={{ mt: 1 }}
+          color="text.secondary"
+        >
+          You needed {passThreshold} correct to pass
+        </Typography>
+      )}
+      <Typography variant="body2" sx={{ mt: 2 }} color="text.secondary">
         Ready for another round?
         <br />
         Click Try Again for new questions.
@@ -55,30 +77,25 @@ const TestResult: React.FC<TestResultProps> = ({
   );
 };
 
-interface InitialStageProps {
-  startTest: () => Promise<void>;
+interface LoadingStageProps {
+  config: TestConfig;
 }
 
-const InitialStage: React.FC<InitialStageProps> = ({ startTest }) => {
+const LoadingStage: React.FC<LoadingStageProps> = ({ config }) => {
   return (
     <Box
-      sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+      sx={{ display: "flex", flexDirection: "column", alignItems: "center", py: 4 }}
     >
-      <Typography
-        color="primary"
-        align="center"
-        sx={{ mt: { xs: 2, sm: 2, md: 2, lg: 4, xl: 4 } }}
-      >
-        Ready to Test Your Knowledge? <br />
-        Click Start Test to begin.
+      <Typography variant="h6" color="primary" fontWeight="bold" gutterBottom>
+        {config.testType === "2008" ? "2008 Civics Test" : "2025 Civics Test"}
       </Typography>
-      <Button
-        variant="contained"
-        sx={{ mt: { xs: 2, sm: 2, md: 2, lg: 4, xl: 4 } }}
-        onClick={startTest}
-      >
-        Start Test
-      </Button>
+      <Typography variant="body2" color="text.secondary" textAlign="center" mb={3}>
+        {config.questionsAsked} questions • {config.passThreshold} correct to pass
+      </Typography>
+      <CircularProgress sx={{ color: theme.palette.primary.main }} />
+      <Typography sx={{ mt: 2 }} color="text.secondary">
+        Loading questions...
+      </Typography>
     </Box>
   );
 };
@@ -88,6 +105,7 @@ interface RunningStageProps {
   submissionResult: SubmissionResult;
   isSubmitting: boolean;
   question: [number, Question] | undefined;
+  numberOfQuestions: number;
   submit: () => Promise<void>;
   nextQuestion: () => void;
   setAnswer: React.Dispatch<React.SetStateAction<string>>;
@@ -151,7 +169,7 @@ const AnswerDetails: React.FC<{
         <Typography display={"inline"} color="primary">
           Your answer:
         </Typography>
-         <Typography display={"inline"}>{answer}</Typography>
+         <Typography display={"inline"}>{answer}</Typography>
         <List>
           <Typography color="primary">Acceptable answers:</Typography>
           {question[1].answers?.map((a, i) => (
@@ -176,6 +194,7 @@ const RunningStage: React.FC<RunningStageProps> = ({
   submissionResult,
   isSubmitting,
   question,
+  numberOfQuestions,
   submit,
   nextQuestion,
   setAnswer,
@@ -212,7 +231,7 @@ const RunningStage: React.FC<RunningStageProps> = ({
       <Box sx={{ alignSelf: "end" }}>
         <Typography variant="body2" color="textSecondary">
           {question?.[0] !== undefined &&
-            `Question ${question[0] + 1} out of ${NUMBER_OF_QUESTIONS}`}
+            `Question ${question[0] + 1} out of ${numberOfQuestions}`}
         </Typography>
       </Box>
       <Typography align="center" variant="h6" mt={2}>
@@ -275,7 +294,10 @@ const RunningStage: React.FC<RunningStageProps> = ({
 
 interface FinishedStageProps {
   answers: React.MutableRefObject<Answer[]>;
+  numberOfQuestions: number;
+  passThreshold: number;
   restartTest: () => void;
+  onChangeTest: () => void;
 }
 
 const QuestionResult: React.FC<{ answerData: Answer }> = ({ answerData }) => (
@@ -288,7 +310,7 @@ const QuestionResult: React.FC<{ answerData: Answer }> = ({ answerData }) => (
         <Typography variant="body2" color="primary">
           Your answer:
         </Typography>
-         
+         
         <Typography
           variant="body2"
           color={answerData.isCorrect ? "success" : "error"}
@@ -312,7 +334,10 @@ const QuestionResult: React.FC<{ answerData: Answer }> = ({ answerData }) => (
 
 const FinishedStage: React.FC<FinishedStageProps> = ({
   answers,
+  numberOfQuestions,
+  passThreshold,
   restartTest,
+  onChangeTest,
 }) => {
   const [showResults, setShowResults] = useState(false);
 
@@ -326,14 +351,30 @@ const FinishedStage: React.FC<FinishedStageProps> = ({
     >
       <TestResult
         answers={answers.current}
-        numberOfQuestions={NUMBER_OF_QUESTIONS}
+        numberOfQuestions={numberOfQuestions}
+        passThreshold={passThreshold}
       />
-      <Box sx={{ display: "flex", gap: 2, mt: 2, justifyContent: "center" }}>
+      <Box
+        sx={{
+          display: "flex",
+          gap: 2,
+          mt: 2,
+          justifyContent: "center",
+          flexWrap: "wrap",
+        }}
+      >
         <Button variant="contained" onClick={restartTest}>
           Try again
         </Button>
         <Button variant="outlined" onClick={toggleResults}>
           {showResults ? "Hide results" : "See results"}
+        </Button>
+        <Button
+          variant="text"
+          startIcon={<ArrowBackIcon />}
+          onClick={onChangeTest}
+        >
+          Change Test
         </Button>
       </Box>
       <Box
@@ -356,7 +397,18 @@ const FinishedStage: React.FC<FinishedStageProps> = ({
   );
 };
 
-const TestCard: React.FC = () => {
+interface TestCardProps {
+  config: TestConfig;
+  onChangeTest: () => void;
+}
+
+const TestCard: React.FC<TestCardProps> = ({ config, onChangeTest }) => {
+  const settings: TestSettings = {
+    testType: config.testType,
+    numberOfQuestions: config.questionsAsked,
+    passThreshold: config.passThreshold,
+  };
+
   const {
     testState,
     error,
@@ -365,17 +417,26 @@ const TestCard: React.FC = () => {
     isSubmitting,
     question,
     answers,
+    numberOfQuestions,
+    passThreshold,
     startTest,
     submit,
     nextQuestion,
     restartTest,
     setAnswer,
-  } = useTest(NUMBER_OF_QUESTIONS);
+  } = useTest(settings);
+
+  // Auto-start test when component mounts
+  useEffect(() => {
+    if (testState === "INITIAL") {
+      startTest();
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const renderStage = useCallback(() => {
     switch (testState) {
       case "INITIAL":
-        return <InitialStage startTest={startTest} />;
+        return <LoadingStage config={config} />;
       case "RUNNING":
         return (
           <RunningStage
@@ -383,27 +444,39 @@ const TestCard: React.FC = () => {
             submissionResult={submissionResult}
             isSubmitting={isSubmitting}
             question={question}
+            numberOfQuestions={numberOfQuestions}
             submit={submit}
             nextQuestion={nextQuestion}
             setAnswer={setAnswer}
           />
         );
       case "FINISHED":
-        return <FinishedStage answers={answers} restartTest={restartTest} />;
+        return (
+          <FinishedStage
+            answers={answers}
+            numberOfQuestions={numberOfQuestions}
+            passThreshold={passThreshold}
+            restartTest={restartTest}
+            onChangeTest={onChangeTest}
+          />
+        );
       default:
         return null;
     }
   }, [
     testState,
-    startTest,
+    config,
     answer,
     submissionResult,
     isSubmitting,
     question,
+    numberOfQuestions,
+    passThreshold,
     submit,
     nextQuestion,
     answers,
     restartTest,
+    onChangeTest,
     setAnswer,
   ]);
 
@@ -425,8 +498,19 @@ const TestCard: React.FC = () => {
         mb: { xs: 5, sm: 8, md: 10, lg: 12, xl: 15 },
       }}
     >
+      {testState === "RUNNING" && (
+        <Button
+          variant="text"
+          size="small"
+          startIcon={<ArrowBackIcon />}
+          onClick={onChangeTest}
+          sx={{ alignSelf: "flex-start", mb: 1 }}
+        >
+          Change Test
+        </Button>
+      )}
       {renderStage()}
-      <TestInfo />
+      <TestInfo testType={config.testType} />
     </Container>
   );
 };

@@ -1,7 +1,7 @@
 import asyncio
 import logging
 from random import sample
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from dotenv import load_dotenv
@@ -9,7 +9,7 @@ import os
 from pydantic import BaseModel
 from src.Dependencies import get_gemini_client, get_questions_service
 from src.LLMClient import LLMClient
-from src.QuestionsService import QuestionsService
+from src.QuestionsService import QuestionsService, TestType
 from typing import Annotated
 from contextlib import asynccontextmanager
 
@@ -82,20 +82,33 @@ if PRODUCTION and os.path.isdir("client/dist"):
     app.mount("/static", StaticFiles(directory="client/dist", html=True), name="static")
 
 
+@app.get("/api/test-configs")
+def get_test_configs(
+    questions_service: Annotated[QuestionsService, Depends(get_questions_service)],
+):
+    """Return all available test configurations."""
+    logging.info("Retrieving test configurations")
+    return {"configs": questions_service.get_test_configs()}
+
+
 @app.get("/api/questions")
 def read_questions(
     n: int,
     questions_service: Annotated[QuestionsService, Depends(get_questions_service)],
+    test_type: Annotated[TestType, Query(alias="testType")] = TestType.TEST_2008,
 ):
-    all_questions = questions_service.get_all_questions()
+    """Get n random questions for a specific test type."""
+    all_questions = questions_service.get_all_questions(test_type)
     if len(all_questions) < n:
         logging.warning(
-            "Requested number of questions (%d) exceeds available questions (%d)",
+            "Requested number of questions (%d) exceeds available questions (%d) for test type %s",
             n,
             len(all_questions),
+            test_type.value,
         )
+        n = len(all_questions)
     selected_questions = sample(all_questions, n)
-    logging.info("Returning %d questions", n)
+    logging.info("Returning %d questions for test type %s", n, test_type.value)
     return {"questions": selected_questions}
 
 
@@ -103,18 +116,23 @@ def read_questions(
 def read_question(
     question_id: int,
     questions_service: Annotated[QuestionsService, Depends(get_questions_service)],
+    test_type: Annotated[TestType, Query(alias="testType")] = TestType.TEST_2008,
 ):
+    """Get a specific question by ID for a specific test type."""
     try:
         if question_id == -1:
-            all_questions = questions_service.get_all_questions()
+            all_questions = questions_service.get_all_questions(test_type)
             if not all_questions:
-                logging.error("No questions available")
+                logging.error("No questions available for test type %s", test_type.value)
                 raise HTTPException(status_code=404, detail="No questions available")
             question = sample(all_questions, 1)[0]
         else:
-            question = questions_service.get_question_by_id(question_id)
-        logging.info("Returning question with id %d", question_id)
+            question = questions_service.get_question_by_id(test_type, question_id)
+        logging.info("Returning question with id %d for test type %s", question_id, test_type.value)
         return question
+    except IndexError as e:
+        logging.exception("Question not found: %s", str(e))
+        raise HTTPException(status_code=404, detail=str(e))
     except Exception as e:
         logging.exception("Error retrieving question with id %d", question_id)
         if isinstance(e, HTTPException):
@@ -128,8 +146,10 @@ async def submit_answer(
     answer: Answer,
     questions_service: Annotated[QuestionsService, Depends(get_questions_service)],
     gemini_client: Annotated[LLMClient, Depends(get_gemini_client)],
+    test_type: Annotated[TestType, Query(alias="testType")] = TestType.TEST_2008,
 ):
-    question = questions_service.get_question_by_id(question_id)
+    """Submit an answer for evaluation."""
+    question = questions_service.get_question_by_id(test_type, question_id)
     prompt = f"""
         I will provide you with a question, correct answers to that question, and user's answer to that question. You should tell if user's answer is correct.
         
@@ -146,7 +166,7 @@ async def submit_answer(
         
         Reply only with the word "Correct" for a correct user's answer or the word "Incorrect" for an incorrect user's answer.
         """
-    logging.info("Submitting answer for question id %d", question_id)
+    logging.info("Submitting answer for question id %d (test type: %s)", question_id, test_type.value)
     try:
         result = await gemini_client.completion(prompt)
     except Exception as e:
@@ -167,6 +187,8 @@ async def submit_answer(
 @app.get("/api/dynamic-questions")
 def get_dynamic_questions(
     questions_service: Annotated[QuestionsService, Depends(get_questions_service)],
+    test_type: Annotated[TestType, Query(alias="testType")] = TestType.TEST_2008,
 ):
-    logging.info("Retrieving dynamic questions")
-    return {"questions": questions_service.get_dynamic_questions()}
+    """Get all dynamic questions for a specific test type."""
+    logging.info("Retrieving dynamic questions for test type %s", test_type.value)
+    return {"questions": questions_service.get_dynamic_questions(test_type)}

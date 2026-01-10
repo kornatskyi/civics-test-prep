@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { getNRandomQuestion, Question, submitAnswer } from "../api";
+import { getNRandomQuestion, Question, submitAnswer, TestType } from "../api";
 
 type TestState = "INITIAL" | "RUNNING" | "FINISHED";
 
@@ -15,7 +15,15 @@ export enum SubmissionResult {
   INCORRECT,
 }
 
-export function useTest(NUMBER_OF_QUESTIONS: number) {
+export interface TestSettings {
+  testType: TestType;
+  numberOfQuestions: number;
+  passThreshold: number;
+}
+
+export function useTest(settings: TestSettings) {
+  const { testType, numberOfQuestions, passThreshold } = settings;
+  
   const [testState, setTestState] = useState<TestState>("INITIAL");
   const [error, setError] = useState("");
   const [answer, setAnswer] = useState("");
@@ -31,11 +39,12 @@ export function useTest(NUMBER_OF_QUESTIONS: number) {
 
   async function startTest() {
     setError("");
+    answers.current = [];
     try {
-      const questions = await getNRandomQuestion(NUMBER_OF_QUESTIONS);
-      if (questions.length !== NUMBER_OF_QUESTIONS) {
+      const questions = await getNRandomQuestion(numberOfQuestions, testType);
+      if (questions.length !== numberOfQuestions) {
         setError(
-          `Expected ${NUMBER_OF_QUESTIONS} questions but got ${questions.length}`
+          `Expected ${numberOfQuestions} questions but got ${questions.length}`
         );
         return;
       }
@@ -54,7 +63,7 @@ export function useTest(NUMBER_OF_QUESTIONS: number) {
 
     setIsSubmitting(true);
     try {
-      const correct = await submitAnswer(question[1].id, answer);
+      const correct = await submitAnswer(question[1].id, answer, testType);
       setSubmissionResult(
         correct === true ? SubmissionResult.CORRECT : SubmissionResult.INCORRECT
       );
@@ -93,6 +102,17 @@ export function useTest(NUMBER_OF_QUESTIONS: number) {
     startTest();
   }
 
+  function resetToInitial() {
+    answers.current = [];
+    setTestState("INITIAL");
+    setAnswer("");
+    setSubmissionResult(SubmissionResult.UNKNOWN);
+  }
+
+  // Calculate if passed based on current answers
+  const correctCount = answers.current.filter((a) => a.isCorrect).length;
+  const passed = correctCount >= passThreshold;
+
   return {
     testState,
     error,
@@ -101,10 +121,15 @@ export function useTest(NUMBER_OF_QUESTIONS: number) {
     isSubmitting,
     question,
     answers,
+    numberOfQuestions,
+    passThreshold,
+    correctCount,
+    passed,
     startTest,
     submit,
     nextQuestion,
     restartTest,
+    resetToInitial,
     setAnswer,
   };
 }
