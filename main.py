@@ -31,13 +31,16 @@ load_dotenv()
 
 # Task do update questions periodically
 async def scheduled_dynamic_questions_update_task(questions_service: QuestionsService):
+    update_interval_days = 30
     while True:
         logging.info("Running scheduled task to update dynamic questions")
         try:
-            await questions_service.update_dynamic_questions()
+            await questions_service.update_dynamic_questions(update_interval_days)
         except Exception as e:
             logging.exception(f"Error updating dynamic questions. Error message: {e}")
-        await asyncio.sleep(7 * 24 * 60 * 60)  # run this task every 7 days
+        await asyncio.sleep(
+            (update_interval_days + 1) * 24 * 60 * 60
+        )  # run this task every 31 days
 
 
 class Answer(BaseModel):
