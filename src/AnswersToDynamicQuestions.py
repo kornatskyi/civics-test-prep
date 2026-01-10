@@ -30,9 +30,11 @@ async def get_governor_by_state(llm_client: LLMClient):
 
 Please read through it and compose a list of mapping each U.S. state or territory
 to the name of its current governor, in the format:
-  Alabama: Kay Ivey
-  Alaska: Mike Dunleavy
+  Alabama: FirstName LastName
+  Alaska: FirstName LastName
   ...
+
+IMPORTANT: Use "FirstName LastName" format (e.g., "Kay Ivey"), NOT "LastName, FirstName" format.
 If a territory does not have a governor or is not listed, omit it or note "N/A".
 """
 
@@ -79,9 +81,11 @@ async def get_senators_by_state(llm_client: LLMClient):
 {clean_html}
 
 Using the information, produce a list of mapping of the form e.g.:
-    Alabama: [Senator Name 1, Senator Name 2]
-    Alaska: [Senator Name 1, Senator Name 2]
+    Alabama: [FirstName LastName, FirstName LastName]
+    Alaska: [FirstName LastName, FirstName LastName]
     ...
+
+IMPORTANT: Use "FirstName LastName" format (e.g., "Tommy Tuberville"), NOT "LastName, FirstName" format.
 For territories (or areas without senators), either exclude them or set their value to "No Senators".
 Output only the list of mappings nothing else, no formatting except new line character after each entry
 """
@@ -121,7 +125,9 @@ async def get_representative(llm_client: LLMClient):
 Please parse the list of U.S. Representatives by state.
 Return your answer as a plain text list, mapping each state to its representatives in this format:
 
-State Name: Representative Name (District #), Representative Name (District #), ...
+State Name: FirstName LastName (District #), FirstName LastName (District #), ...
+
+IMPORTANT: Use "FirstName LastName" format (e.g., "Pramila Jayapal"), NOT "LastName, FirstName" format.
 
 If a state has only one representative, label it as "At Large" instead of a district number.
 Include U.S. territories and D.C. if applicable. If a territory has no representative, return it with "None".

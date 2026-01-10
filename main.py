@@ -128,7 +128,15 @@ async def submit_answer(
 ):
     question = questions_service.get_question_by_id(question_id)
     prompt = f"""
-        I will provide you with a question, correct answers to that question, and user's answer to that question. You should tell if user's answer is correct. It might not match exactly the actual answers but you still should understand what the user means from the context and be able to judge whether the answer is correct or incorrect. But be careful because some users' answers might be tricky; they still should match very closely to the actual answers and can't be too vague.
+        I will provide you with a question, correct answers to that question, and user's answer to that question. You should tell if user's answer is correct.
+        
+        Guidelines:
+        - The answer doesn't need to match exactly - understand what the user means from context
+        - For names of people: accept minor misspellings, different name orders (FirstName LastName vs LastName FirstName), and partial matches if the person is clearly identifiable
+        - For questions about representatives/senators/governors: if the user names a correct person for ANY state/district, mark it correct (since the question asks about "your" state)
+        - Be lenient with spelling variations but strict about the actual content being correct
+        - The answer can't be too vague or generic
+        
         Question: {question.question}
         Actual answers: {question.answers}
         User's answer: {answer.answer}
