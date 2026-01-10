@@ -1,6 +1,11 @@
 import requests
 from bs4 import BeautifulSoup
-from src.LLMClient import LLMClient, GEMINI1_5_FLASH
+from src.LLMClient import LLMClient, GEMINI_FLASH
+
+# Headers to avoid 403 blocks from Wikipedia and other sites
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+}
 
 
 async def get_governor_by_state(llm_client: LLMClient):
@@ -8,7 +13,7 @@ async def get_governor_by_state(llm_client: LLMClient):
     Who is the Governor of your state now?
     """
     url = "https://simple.wikipedia.org/wiki/List_of_current_United_States_governors"
-    response = requests.get(url)
+    response = requests.get(url, headers=HEADERS)
     if response.status_code != 200:
         raise ValueError(f"Unable to fetch governors list. HTTP {response.status_code}")
 
@@ -31,7 +36,7 @@ to the name of its current governor, in the format:
 If a territory does not have a governor or is not listed, omit it or note "N/A".
 """
 
-    governors = await llm_client.completion(prompt=prompt, model=GEMINI1_5_FLASH)
+    governors = await llm_client.completion(prompt=prompt, model=GEMINI_FLASH)
     return governors
 
 
@@ -49,7 +54,7 @@ async def get_senators_by_state(llm_client: LLMClient):
 
     # Attempt to fetch the page
     try:
-        response = requests.get(url)
+        response = requests.get(url, headers=HEADERS)
         if response.status_code == 404:
             # Specifically handle 404
             return {
@@ -80,7 +85,7 @@ Using the information, produce a list of mapping of the form e.g.:
 For territories (or areas without senators), either exclude them or set their value to "No Senators".
 Output only the list of mappings nothing else, no formatting except new line character after each entry
 """
-    senators = await llm_client.completion(prompt=prompt, model=GEMINI1_5_FLASH)
+    senators = await llm_client.completion(prompt=prompt, model=GEMINI_FLASH)
     return senators
 
 
@@ -94,7 +99,7 @@ async def get_representative(llm_client: LLMClient):
     """
     url = "https://www.house.gov/representatives"
     try:
-        response = requests.get(url)
+        response = requests.get(url, headers=HEADERS)
         if response.status_code != 200:
             raise ValueError(
                 f"HTTP error {response.status_code} while fetching representatives list."
@@ -123,7 +128,7 @@ Include U.S. territories and D.C. if applicable. If a territory has no represent
 """
 
     representatives_list = await llm_client.completion(
-        prompt=prompt, model=GEMINI1_5_FLASH
+        prompt=prompt, model=GEMINI_FLASH
     )
     return representatives_list
 
@@ -135,7 +140,7 @@ async def get_president(llm_client: LLMClient):
     """
     url = "https://www.whitehouse.gov/administration/"
     try:
-        response = requests.get(url)
+        response = requests.get(url, headers=HEADERS)
         if response.status_code != 200:
             raise ValueError(
                 f"HTTP error {response.status_code} while fetching White House info."
@@ -154,7 +159,7 @@ async def get_president(llm_client: LLMClient):
 Identify the current President of the United States by name only (e.g. "Joe Biden").
 Return just the name as plain text.
 """
-    president_name = await llm_client.completion(prompt=prompt, model=GEMINI1_5_FLASH)
+    president_name = await llm_client.completion(prompt=prompt, model=GEMINI_FLASH)
     return president_name
 
 
@@ -165,7 +170,7 @@ async def get_vice_president(llm_client: LLMClient):
     """
     url = "https://www.whitehouse.gov/administration/"
     try:
-        response = requests.get(url)
+        response = requests.get(url, headers=HEADERS)
         if response.status_code != 200:
             raise ValueError(
                 f"HTTP error {response.status_code} while fetching White House info."
@@ -185,7 +190,7 @@ Identify the current Vice President of the United States by name only (e.g. "Kam
 Return just the name as plain text.
 """
     vice_president_name = await llm_client.completion(
-        prompt=prompt, model=GEMINI1_5_FLASH
+        prompt=prompt, model=GEMINI_FLASH
     )
     return vice_president_name
 
@@ -198,7 +203,7 @@ async def get_supreme_court_justice_count(llm_client: LLMClient) -> int:
     """
     url = "https://simple.wikipedia.org/wiki/Supreme_Court_of_the_United_States"
     try:
-        response = requests.get(url)
+        response = requests.get(url, headers=HEADERS)
         if response.status_code != 200:
             raise ValueError(
                 f"HTTP error {response.status_code} while fetching SCOTUS info."
@@ -217,7 +222,7 @@ async def get_supreme_court_justice_count(llm_client: LLMClient) -> int:
 Based on the page content, how many justices currently serve on the Supreme Court?
 Return only the integer count.
 """
-    result_str = await llm_client.completion(prompt=prompt, model=GEMINI1_5_FLASH)
+    result_str = await llm_client.completion(prompt=prompt, model=GEMINI_FLASH)
 
     # You might want to convert the result to an integer carefully:
     try:
@@ -235,7 +240,7 @@ async def get_chief_justice(llm_client: LLMClient):
     """
     url = "https://simple.wikipedia.org/wiki/Supreme_Court_of_the_United_States"
     try:
-        response = requests.get(url)
+        response = requests.get(url, headers=HEADERS)
         if response.status_code != 200:
             raise ValueError(
                 f"HTTP error {response.status_code} while fetching SCOTUS info."
@@ -255,7 +260,7 @@ Please find the name of the current Chief Justice of the United States Supreme C
 Return just the name as plain text.
 """
     chief_justice_name = await llm_client.completion(
-        prompt=prompt, model=GEMINI1_5_FLASH
+        prompt=prompt, model=GEMINI_FLASH
     )
     return chief_justice_name
 
@@ -270,7 +275,7 @@ async def get_state_capital(llm_client: LLMClient):
     """
     url = "https://simple.wikipedia.org/wiki/List_of_U.S._state_capitals"
     try:
-        response = requests.get(url)
+        response = requests.get(url, headers=HEADERS)
         if response.status_code != 200:
             raise ValueError(
                 f"HTTP error {response.status_code} while fetching state capitals."
@@ -293,7 +298,7 @@ State Name: Capital City
 Include U.S. territories if they are listed (e.g., "Puerto Rico: San Juan").
 """
 
-    capitals_list = await llm_client.completion(prompt=prompt, model=GEMINI1_5_FLASH)
+    capitals_list = await llm_client.completion(prompt=prompt, model=GEMINI_FLASH)
     return capitals_list
 
 
@@ -306,7 +311,7 @@ async def get_president_party(llm_client: LLMClient):
     """
     url = "https://www.whitehouse.gov/administration/"
     try:
-        response = requests.get(url)
+        response = requests.get(url, headers=HEADERS)
         if response.status_code != 200:
             raise ValueError(
                 f"HTTP error {response.status_code} while fetching White House info."
@@ -325,7 +330,7 @@ async def get_president_party(llm_client: LLMClient):
 Identify the current President's political party (e.g. "Democratic Party" or "Republican Party").
 Return just the party name as plain text, like "Democratic" or "Republican".
 """
-    party = await llm_client.completion(prompt=prompt, model=GEMINI1_5_FLASH)
+    party = await llm_client.completion(prompt=prompt, model=GEMINI_FLASH)
     return party
 
 
@@ -336,7 +341,7 @@ async def get_speaker_of_the_house(llm_client: LLMClient):
     """
     url = "https://simple.wikipedia.org/wiki/Speaker_of_the_United_States_House_of_Representatives"
     try:
-        response = requests.get(url)
+        response = requests.get(url, headers=HEADERS)
         if response.status_code != 200:
             raise ValueError(
                 f"HTTP error {response.status_code} while fetching Speaker info."
@@ -355,5 +360,5 @@ async def get_speaker_of_the_house(llm_client: LLMClient):
 Identify the current Speaker of the United States House of Representatives.
 Return only the name as plain text.
 """
-    speaker = await llm_client.completion(prompt=prompt, model=GEMINI1_5_FLASH)
+    speaker = await llm_client.completion(prompt=prompt, model=GEMINI_FLASH)
     return speaker

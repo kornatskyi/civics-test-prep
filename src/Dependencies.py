@@ -9,8 +9,8 @@ def get_questions_service():
     return questions_service
 
 
-llama_client = LLMClient()
+gemini_client = LLMClient()
 
 
-def get_LLMClient_service():
-    return llama_client
+def get_gemini_client():
+    return gemini_client

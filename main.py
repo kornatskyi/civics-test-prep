@@ -7,7 +7,7 @@ from fastapi.staticfiles import StaticFiles
 from dotenv import load_dotenv
 import os
 from pydantic import BaseModel
-from src.Dependencies import get_LLMClient_service, get_questions_service
+from src.Dependencies import get_gemini_client, get_questions_service
 from src.LLMClient import LLMClient
 from src.QuestionsService import QuestionsService
 from typing import Annotated
@@ -75,7 +75,7 @@ app.add_middleware(
 # Get PRODUCTION value from environment variables
 PRODUCTION = os.getenv("PRODUCTION", "False").lower() == "true"
 
-if PRODUCTION:
+if PRODUCTION and os.path.isdir("client/dist"):
     app.mount("/static", StaticFiles(directory="client/dist", html=True), name="static")
 
 
@@ -124,7 +124,7 @@ async def submit_answer(
     question_id: int,
     answer: Answer,
     questions_service: Annotated[QuestionsService, Depends(get_questions_service)],
-    llama_client: Annotated[LLMClient, Depends(get_LLMClient_service)],
+    gemini_client: Annotated[LLMClient, Depends(get_gemini_client)],
 ):
     question = questions_service.get_question_by_id(question_id)
     prompt = f"""
@@ -137,7 +137,7 @@ async def submit_answer(
         """
     logging.info("Submitting answer for question id %d", question_id)
     try:
-        result = await llama_client.completion(prompt)
+        result = await gemini_client.completion(prompt)
     except Exception as e:
         logging.exception(
             f"Error processing answer for question id %d. Error message: {e}",

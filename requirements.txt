@@ -1,6 +1,6 @@
 fastapi
 uvicorn
 python-dotenv
-groq
+google-genai
 bs4
-google-generativeai
+requests
