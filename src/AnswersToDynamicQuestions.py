@@ -1,6 +1,10 @@
 import requests
 from bs4 import BeautifulSoup
 from src.LLMClient import LLMClient, GEMINI_FLASH
+from typing import Callable, Coroutine, Any
+
+# Type alias for dynamic question fetcher functions
+DynamicQuestionFetcher = Callable[[LLMClient], Coroutine[Any, Any, str]]
 
 # Headers to avoid 403 blocks from Wikipedia and other sites
 HEADERS = {
@@ -8,7 +12,7 @@ HEADERS = {
 }
 
 
-async def get_governor_by_state(llm_client: LLMClient):
+async def get_governor_by_state(llm_client: LLMClient) -> str:
     """
     Who is the Governor of your state now?
     """
@@ -42,7 +46,7 @@ If a territory does not have a governor or is not listed, omit it or note "N/A".
     return governors
 
 
-async def get_senators_by_state(llm_client: LLMClient):
+async def get_senators_by_state(llm_client: LLMClient) -> str:
     """
     Retrieves the names of the U.S. Senators for each state.
     Uses en.wikipedia.org as a reference for the current listing.
@@ -58,10 +62,7 @@ async def get_senators_by_state(llm_client: LLMClient):
     try:
         response = requests.get(url, headers=HEADERS)
         if response.status_code == 404:
-            # Specifically handle 404
-            return {
-                "Error": "No senators found (404). Possibly a territory without representation."
-            }
+            raise ValueError("No senators found (404). Possibly a territory without representation.")
         if response.status_code != 200:
             raise ValueError(
                 f"HTTP error {response.status_code} while fetching senators list."
@@ -93,7 +94,7 @@ Output only the list of mappings nothing else, no formatting except new line cha
     return senators
 
 
-async def get_representative(llm_client: LLMClient):
+async def get_representative(llm_client: LLMClient) -> str:
     """
     Retrieves the names of all U.S. Representatives, grouped by state (and district if applicable).
     Uses house.gov as a reliable source (via https://www.house.gov/representatives).
@@ -139,7 +140,7 @@ Include U.S. territories and D.C. if applicable. If a territory has no represent
     return representatives_list
 
 
-async def get_president(llm_client: LLMClient):
+async def get_president(llm_client: LLMClient) -> str:
     """
     Retrieves the name of the current U.S. President.
     Uses https://www.whitehouse.gov/administration/ as the data source.
@@ -169,7 +170,7 @@ Return just the name as plain text.
     return president_name
 
 
-async def get_vice_president(llm_client: LLMClient):
+async def get_vice_president(llm_client: LLMClient) -> str:
     """
     Retrieves the name of the current U.S. Vice President.
     Uses https://www.whitehouse.gov/administration/ as the data source.
@@ -201,11 +202,11 @@ Return just the name as plain text.
     return vice_president_name
 
 
-async def get_supreme_court_justice_count(llm_client: LLMClient) -> int:
+async def get_supreme_court_justice_count(llm_client: LLMClient) -> str:
     """
     Retrieves the current number of justices on the Supreme Court
     from https://simple.wikipedia.org/wiki/Supreme_Court_of_the_United_States.
-    Returns the count as an integer.
+    Returns the count as a string.
     """
     url = "https://simple.wikipedia.org/wiki/Supreme_Court_of_the_United_States"
     try:
@@ -230,15 +231,12 @@ Return only the integer count.
 """
     result_str = await llm_client.completion(prompt=prompt, model=GEMINI_FLASH)
 
-    # You might want to convert the result to an integer carefully:
-    try:
-        justice_count = int("".join(filter(str.isdigit, result_str)))
-    except ValueError:
-        justice_count = -1  # or some error indicator
-    return justice_count
+    # Extract just the number from the response
+    digits = "".join(filter(str.isdigit, result_str))
+    return digits if digits else result_str.strip()
 
 
-async def get_chief_justice(llm_client: LLMClient):
+async def get_chief_justice(llm_client: LLMClient) -> str:
     """
     Retrieves the name of the current Chief Justice of the Supreme Court
     from https://simple.wikipedia.org/wiki/Supreme_Court_of_the_United_States.
@@ -271,7 +269,7 @@ Return just the name as plain text.
     return chief_justice_name
 
 
-async def get_state_capital(llm_client: LLMClient):
+async def get_state_capital(llm_client: LLMClient) -> str:
     """
     Retrieves the capital cities of all U.S. states.
     Uses https://simple.wikipedia.org/wiki/List_of_U.S._state_capitals as the data source.
@@ -308,7 +306,7 @@ Include U.S. territories if they are listed (e.g., "Puerto Rico: San Juan").
     return capitals_list
 
 
-async def get_president_party(llm_client: LLMClient):
+async def get_president_party(llm_client: LLMClient) -> str:
     """
     Retrieves the political party of the current U.S. President using
     https://www.whitehouse.gov/administration/ as the data source.
@@ -340,7 +338,7 @@ Return just the party name as plain text, like "Democratic" or "Republican".
     return party
 
 
-async def get_speaker_of_the_house(llm_client: LLMClient):
+async def get_speaker_of_the_house(llm_client: LLMClient) -> str:
     """
     Retrieves the name of the current Speaker of the House from:
     https://simple.wikipedia.org/wiki/Speaker_of_the_United_States_House_of_Representatives

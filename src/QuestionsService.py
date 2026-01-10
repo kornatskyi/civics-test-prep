@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 from typing import List, Dict, Any
 from src.LLMClient import LLMClient
 from src.AnswersToDynamicQuestions import (
+    DynamicQuestionFetcher,
     get_governor_by_state,
     get_senators_by_state,
     get_representative,
@@ -89,7 +90,7 @@ class QuestionsService:
         logger.info("Loaded %d questions.", len(self.questions))
 
         # Mapping from question ID to the function that retrieves the latest data.
-        self.dynamic_question_map = {
+        self.dynamic_question_map: Dict[int, DynamicQuestionFetcher] = {
             43: get_governor_by_state,  # "Who is the Governor of your state now?"
             20: get_senators_by_state,  # "Who is one of your state's U.S. Senators now?"
             23: get_representative,  # "Name your U.S. Representative."
@@ -163,11 +164,7 @@ class QuestionsService:
 
                 try:
                     raw_result = await func(self.llm_client)
-                    updated_answer = (
-                        raw_result.strip()
-                        if isinstance(raw_result, str)
-                        else str(raw_result)
-                    )
+                    updated_answer = raw_result.strip()
                     question.answers = [updated_answer]
                     question.last_time_updated = now.isoformat()
                     logger.info(
