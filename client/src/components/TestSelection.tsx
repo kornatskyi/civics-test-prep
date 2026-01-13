@@ -46,7 +46,6 @@ const TestCard: React.FC<TestCardProps> = ({
         <Box
           sx={{
             position: "absolute",
-            top: -12,
             left: "50%",
             transform: "translateX(-50%)",
             backgroundColor: theme.palette.primary.main,
@@ -67,7 +66,7 @@ const TestCard: React.FC<TestCardProps> = ({
           flexDirection: "column",
           alignItems: "center",
           textAlign: "center",
-          p: 3,
+          p: 4,
         }}
       >
         <Typography variant="h5" color="primary" fontWeight="bold" gutterBottom>
