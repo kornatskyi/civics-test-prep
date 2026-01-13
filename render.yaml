@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: civics-test-prep
+    runtime: python
+    buildCommand: ./build.sh
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PRODUCTION
+        value: "true"
+      - key: GEMINI_API_KEY
+        sync: false  # Set manually in dashboard
+      - key: PYTHON_VERSION
+        value: "3.11"

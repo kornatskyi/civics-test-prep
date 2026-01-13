@@ -4,6 +4,7 @@ from random import sample
 from fastapi import FastAPI, Depends, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from dotenv import load_dotenv
 import os
 from pydantic import BaseModel
@@ -77,9 +78,7 @@ app.add_middleware(
 
 # Get PRODUCTION value from environment variables
 PRODUCTION = os.getenv("PRODUCTION", "False").lower() == "true"
-
-if PRODUCTION and os.path.isdir("client/dist"):
-    app.mount("/static", StaticFiles(directory="client/dist", html=True), name="static")
+STATIC_DIR = "client/dist"
 
 
 @app.get("/api/test-configs")
@@ -192,3 +191,21 @@ def get_dynamic_questions(
     """Get all dynamic questions for a specific test type."""
     logging.info("Retrieving dynamic questions for test type %s", test_type.value)
     return {"questions": questions_service.get_dynamic_questions(test_type)}
+
+
+# Serve static frontend files in production
+# This must be mounted AFTER all API routes to ensure API routes take precedence
+if PRODUCTION and os.path.isdir(STATIC_DIR):
+    # Mount static assets (js, css, images, etc.)
+    app.mount("/assets", StaticFiles(directory=f"{STATIC_DIR}/assets"), name="assets")
+    
+    # Serve index.html for the root path and any non-API paths (SPA catch-all)
+    @app.get("/{full_path:path}")
+    async def serve_spa(full_path: str):
+        """Serve the SPA for all non-API routes."""
+        # Check if it's a static file that exists
+        file_path = os.path.join(STATIC_DIR, full_path)
+        if os.path.isfile(file_path):
+            return FileResponse(file_path)
+        # Otherwise serve index.html for SPA client-side routing
+        return FileResponse(os.path.join(STATIC_DIR, "index.html"))
