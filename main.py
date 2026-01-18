@@ -159,6 +159,7 @@ async def submit_answer(
         - For questions about representatives/senators/governors: if the user names a correct person for ANY state/district, mark it correct (since the question asks about "your" state)
         - Be lenient with spelling variations but strict about the actual content being correct
         - The answer can't be too vague or generic
+        - You should only compare the user answer to the Actual answers
         
         Question: {question.question}
         Actual answers: {question.answers}
