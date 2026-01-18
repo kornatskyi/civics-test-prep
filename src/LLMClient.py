@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-GEMINI_FLASH = "gemini-3-flash-preview"
+GEMINI_FLASH = "gemini-2.5-flash"
 
 
 class LLMClient:

@@ -122,12 +122,18 @@ def read_question(
         if question_id == -1:
             all_questions = questions_service.get_all_questions(test_type)
             if not all_questions:
-                logging.error("No questions available for test type %s", test_type.value)
+                logging.error(
+                    "No questions available for test type %s", test_type.value
+                )
                 raise HTTPException(status_code=404, detail="No questions available")
             question = sample(all_questions, 1)[0]
         else:
             question = questions_service.get_question_by_id(test_type, question_id)
-        logging.info("Returning question with id %d for test type %s", question_id, test_type.value)
+        logging.info(
+            "Returning question with id %d for test type %s",
+            question_id,
+            test_type.value,
+        )
         return question
     except IndexError as e:
         logging.exception("Question not found: %s", str(e))
@@ -159,7 +165,9 @@ async def submit_answer(
         - For questions about representatives/senators/governors: if the user names a correct person for ANY state/district, mark it correct (since the question asks about "your" state)
         - Be lenient with spelling variations but strict about the actual content being correct
         - The answer can't be too vague or generic
-        - You should only compare the user answer to the Actual answers
+        - You should only compare the users answer to the Actual answers
+        - You should judge in what cases the user provided enough information for the answer to be considered correct, and when it's not enough
+        - You should judge the answer the same way an average officer on the naturalization interview would judge it
         
         Question: {question.question}
         Actual answers: {question.answers}
@@ -167,7 +175,11 @@ async def submit_answer(
         
         Reply only with the word "Correct" for a correct user's answer or the word "Incorrect" for an incorrect user's answer.
         """
-    logging.info("Submitting answer for question id %d (test type: %s)", question_id, test_type.value)
+    logging.info(
+        "Submitting answer for question id %d (test type: %s)",
+        question_id,
+        test_type.value,
+    )
     try:
         result = await gemini_client.completion(prompt)
     except Exception as e:
@@ -200,7 +212,7 @@ def get_dynamic_questions(
 if PRODUCTION and os.path.isdir(STATIC_DIR):
     # Mount static assets (js, css, images, etc.)
     app.mount("/assets", StaticFiles(directory=f"{STATIC_DIR}/assets"), name="assets")
-    
+
     # Serve index.html for the root path and any non-API paths (SPA catch-all)
     @app.get("/{full_path:path}")
     async def serve_spa(full_path: str):
