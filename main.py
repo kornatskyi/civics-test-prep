@@ -153,6 +153,7 @@ async def submit_answer(
         I will provide you with a question, correct answers to that question, and user's answer to that question. You should tell if user's answer is correct.
         
         Guidelines:
+        - The user's answer must not contain any incorrect information. If the user provides a list of items, all items in that list must be correct.
         - The answer doesn't need to match exactly - understand what the user means from context
         - For names of people: accept minor misspellings, different name orders (FirstName LastName vs LastName FirstName), and partial matches if the person is clearly identifiable
         - For questions about representatives/senators/governors: if the user names a correct person for ANY state/district, mark it correct (since the question asks about "your" state)
