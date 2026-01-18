@@ -2,6 +2,8 @@
 
 This is a web application designed to help users prepare for the U.S. Civics Test. It features a modern, interactive interface, AI-powered answer evaluation, and automatic updates for questions with dynamic answers.
 
+Try it here [civics-test-prep.onrender.com](https://civics-test-prep.onrender.com/)
+
 ## 🌟 Features
 
 - **Two Test Versions**: Supports both the 2008 and 2025 versions of the U.S. Civics Test.
