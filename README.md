@@ -1,121 +1,105 @@
-# U.S. Citizenship Test Practice App
+# U.S. Civics Test Prep
 
-An interactive web application to help users prepare for the U.S. Citizenship Test, featuring AI-powered answer verification and dynamic question updates.
+This is a web application designed to help users prepare for the U.S. Civics Test. It features a modern, interactive interface, AI-powered answer evaluation, and automatic updates for questions with dynamic answers.
 
 ## 🌟 Features
 
-- **Interactive Quiz Interface**: Take practice tests with 10 random questions from the official USCIS test bank
-- **AI-Powered Answer Verification**: Uses LLM (Large Language Models) to intelligently evaluate user answers beyond exact matching
-- **Dynamic Questions**: Automatically updates answers for time-sensitive questions (e.g., "Who is the current President?")
-- **Responsive Design**: Works seamlessly across desktop and mobile devices
-- **Real-time Feedback**: Immediate response validation with detailed explanations
-- **Progress Tracking**: Track your progress through the test with a clear indicator
+- **Two Test Versions**: Supports both the 2008 and 2025 versions of the U.S. Civics Test.
+- **Interactive Quizzes**: Users can take practice quizzes with a random selection of questions.
+- **AI-Powered Answer Grading**: Utilizes a Google Gemini LLM to intelligently grade user answers, allowing for variations in phrasing and spelling.
+- **Dynamic Question Updates**: Automatically scrapes reliable web sources (like Wikipedia and government websites) to update answers to questions that change over time (e.g., "What is the name of the President of the United States now?").
+- **Responsive Design**: The application is fully responsive and works on both desktop and mobile devices.
 
-## 🛠 Technology Stack
+## 🛠️ Technology Stack
 
-### Frontend
-- React with TypeScript
-- Material-UI (MUI) for component design
-- Vite for build tooling and development server
-
-### Backend
-- FastAPI (Python)
-- Google Gemini and Groq AI for answer verification
-- Async task scheduling for dynamic question updates
+- **Frontend**:
+  - React
+  - TypeScript
+  - Vite
+  - Material-UI (MUI)
+- **Backend**:
+  - Python
+  - FastAPI
+  - Google Gemini (for answer grading and data extraction)
 
 ## 🚀 Getting Started
 
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+
 ### Prerequisites
-- Python 3.8+
+
+- Python 3.11+
 - Node.js 18+
-- API keys for Gemini and Groq AI
+- A Google Gemini API key
 
-### Installation
+### Installation & Setup
 
-1. Clone the repository
-```bash
-git clone https://github.com/yourusername/citizenship-test-app.git
-cd citizenship-test-app
-```
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/your-username/civics-test-prep.git
+    cd civics-test-prep
+    ```
 
-2. Set up the backend
-```bash
-# Create and activate virtual environment (optional but recommended)
-python -m venv venv
-source venv/bin/activate  # On Windows: .\venv\Scripts\activate
+2.  **Configure Environment Variables:**
+    Create a `.env` file in the root of the project and add your Gemini API key:
+    ```
+    GEMINI_API_KEY=your_api_key_here
+    ```
 
-# Install dependencies
-pip install -r requirements.txt
+3.  **Backend Setup:**
+    It is recommended to use a virtual environment for the Python dependencies.
+    ```bash
+    # Create and activate a virtual environment
+    python -m venv .venv
+    source .venv/bin/activate  # On Windows use `.venv\Scripts\activate`
 
-# Create .env file with your API keys
-cp .env.example .env
-```
+    # Install Python dependencies
+    pip install -r requirements.txt
+    ```
 
-3. Set up the frontend
-```bash
-cd client
-npm install
-```
+4.  **Frontend Setup:**
+    ```bash
+    cd client
+    npm install
+    ```
 
 ### Running the Application
 
-1. Start the backend server
-```bash
-uvicorn main:app --host 0.0.0.0 --port 8080
-# or
-fastapi dev
-```
+1.  **Start the Backend Server:**
+    Navigate to the root of the project and run:
+    ```bash
+    uvicorn main:app --reload
+    ```
+    The backend will be running at `http://localhost:8000`.
 
-2. Start the frontend development server
-```bash
-cd client
-npm run dev
-```
+2.  **Start the Frontend Development Server:**
+    In a separate terminal, navigate to the `client` directory and run:
+    ```bash
+    npm run dev
+    ```
+    The frontend development server will be running at `http://localhost:5173`. The application will be accessible at this address. API requests will be proxied to the backend server.
 
-The application will be available at `http://localhost:5173`
+## 📦 Deployment
 
-## 🌐 API Endpoints
+This project is configured for deployment on [Render](https://render.com/). The `render.yaml` file defines the services and build commands.
 
-- `GET /api/questions?n={number}` - Get n random questions
-- `GET /api/questions/{id}` - Get a specific question
-- `POST /api/submit-answer/{id}` - Submit an answer for verification
-- `GET /api/dynamic-questions` - Get questions with dynamic answers
+The `build.sh` script handles the build process:
+1.  Installs frontend dependencies (`npm install` in the `client` directory).
+2.  Builds the frontend for production (`npm run build` in the `client` directory).
+3.  Installs backend dependencies (`pip install -r requirements.txt`).
 
-## 🧠 Key Features Implementation
+The `startCommand` in `render.yaml` starts the application using `uvicorn`.
 
-### AI-Powered Answer Verification
-The application uses LLMs to verify answers contextually, allowing for variations in correct answers while maintaining accuracy. For example:
+## 🤖 API Endpoints
 
-```python
-prompt = f"""
-    Question: {question}
-    Actual answers: {correct_answers}
-    User's answer: {user_answer}
-    
-    Reply only with "Correct" or "Incorrect"
-"""
-```
+The backend exposes the following API endpoints:
 
-### Dynamic Question Updates
-Questions with time-sensitive answers (e.g., current political figures) are automatically updated through scheduled tasks:
+-   `GET /api/test-configs`: Returns the available test configurations (2008 and 2025).
+-   `GET /api/questions?n={number_of_questions}&testType={test_type}`: Returns a specified number of random questions for a given test type.
+-   `GET /api/questions/{question_id}?testType={test_type}`: Returns a specific question by its ID.
+-   `POST /api/submit-answer/{question_id}?testType={test_type}`: Submits a user's answer for grading.
+-   `GET /api/dynamic-questions?testType={test_type}`: Returns a list of questions with dynamically updated answers.
 
-```python
-async def scheduled_dynamic_questions_update_task():
-    while True:
-        await questions_service.update_dynamic_questions()
-        await asyncio.sleep(7 * 24 * 60 * 60)  # Weekly updates
-```
+## ⚖️ License
 
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 🙏 Acknowledgments
-
-- USCIS for providing the official citizenship test questions
-- The FastAPI and React communities for excellent documentation
-- Material-UI team for the component library
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
