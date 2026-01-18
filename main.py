@@ -145,6 +145,23 @@ def read_question(
         raise HTTPException(status_code=500, detail="Error retrieving question")
 
 
+# System instruction for answer evaluation - used as LLM system prompt
+ANSWER_EVALUATION_SYSTEM_INSTRUCTION = """You are an evaluator for U.S. civics test answers. You will be given a question, the correct answers, and a user's answer. You must determine if the user's answer is correct.
+
+Guidelines:
+- The user's answer must not contain any incorrect information. If the user provides a list of items, all items in that list must be correct.
+- The answer doesn't need to match exactly - understand what the user means from context
+- For names of people: accept minor misspellings, different name orders (FirstName LastName vs LastName FirstName), and partial matches if the person is clearly identifiable
+- For questions about representatives/senators/governors: if the user names a correct person for ANY state/district, mark it correct (since the question asks about "your" state)
+- Be lenient with spelling variations but strict about the actual content being correct
+- The answer can't be too vague or generic
+- You should only compare the users answer to the Actual answers
+- You should judge in what cases the user provided enough information for the answer to be considered correct, and when it's not enough
+- You should judge the answer the same way an average officer on the naturalization interview would judge it
+
+Reply only with the word "Correct" for a correct user's answer or the word "Incorrect" for an incorrect user's answer."""
+
+
 @app.post("/api/submit-answer/{question_id}")
 async def submit_answer(
     question_id: int,
@@ -155,33 +172,18 @@ async def submit_answer(
 ):
     """Submit an answer for evaluation."""
     question = questions_service.get_question_by_id(test_type, question_id)
-    prompt = f"""
-        I will provide you with a question, correct answers to that question, and user's answer to that question. You should tell if user's answer is correct.
-        
-        Guidelines:
-        - The user's answer must not contain any incorrect information. If the user provides a list of items, all items in that list must be correct.
-        - The answer doesn't need to match exactly - understand what the user means from context
-        - For names of people: accept minor misspellings, different name orders (FirstName LastName vs LastName FirstName), and partial matches if the person is clearly identifiable
-        - For questions about representatives/senators/governors: if the user names a correct person for ANY state/district, mark it correct (since the question asks about "your" state)
-        - Be lenient with spelling variations but strict about the actual content being correct
-        - The answer can't be too vague or generic
-        - You should only compare the users answer to the Actual answers
-        - You should judge in what cases the user provided enough information for the answer to be considered correct, and when it's not enough
-        - You should judge the answer the same way an average officer on the naturalization interview would judge it
-        
-        Question: {question.question}
-        Actual answers: {question.answers}
-        User's answer: {answer.answer}
-        
-        Reply only with the word "Correct" for a correct user's answer or the word "Incorrect" for an incorrect user's answer.
-        """
+    prompt = f"""Question: {question.question}
+Actual answers: {question.answers}
+User's answer: {answer.answer}"""
     logging.info(
         "Submitting answer for question id %d (test type: %s)",
         question_id,
         test_type.value,
     )
     try:
-        result = await gemini_client.completion(prompt)
+        result = await gemini_client.completion(
+            prompt, system_instruction=ANSWER_EVALUATION_SYSTEM_INSTRUCTION
+        )
     except Exception as e:
         logging.exception(
             f"Error processing answer for question id %d. Error message: {e}",
