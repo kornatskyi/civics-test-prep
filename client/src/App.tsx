@@ -4,7 +4,6 @@ import background from "./assets/charles-duck-unitas-hPq1nLfLgBY-unsplash.jpg";
 import Header from "./components/Header";
 import TestCard from "./components/TestCard";
 import TestSelection from "./components/TestSelection";
-import Footer from "./components/Footer";
 import { getTestConfigs, TestConfig, TestType } from "./api";
 import theme from "./theme";
 
@@ -113,7 +112,6 @@ function App() {
       >
         <Header />
         {renderContent()}
-        <Footer />
       </Container>
     </Box>
   );
