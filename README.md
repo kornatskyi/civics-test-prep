@@ -2,7 +2,7 @@
 
 This is a web application designed to help users prepare for the U.S. Civics Test. It features a modern, interactive interface, AI-powered answer evaluation, and automatic updates for questions with dynamic answers.
 
-Access it on [civics-test-prep-1.onrender.com][civics-test-prep-1.onrender.com] (it's deployed to a free tier instance, so it has cold start, the first request will take a minute or so for the service to stand up)
+Access it on [civics-test-prep-1.onrender.com](civics-test-prep-1.onrender.com) (it's deployed to a free tier instance, so it has cold start, the first request will take a minute or so for the service to stand up)
 
 ## 🌟 Features
 
