@@ -1,3 +1,4 @@
+import os
 import requests
 from bs4 import BeautifulSoup
 from src.LLMClient import LLMClient, GEMINI_FLASH
@@ -11,6 +12,15 @@ HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 }
 
+MAX_PAGE_CONTEXT_CHARS = int(os.getenv("MAX_PAGE_CONTEXT_CHARS", "18000"))
+
+
+def extract_page_context(soup: BeautifulSoup, max_chars: int = MAX_PAGE_CONTEXT_CHARS) -> str:
+    for tag in soup(["script", "style", "noscript", "meta"]):
+        tag.decompose()
+    page_text = " ".join(soup.stripped_strings)
+    return page_text[:max_chars]
+
 
 async def get_governor_by_state(llm_client: LLMClient) -> str:
     """
@@ -23,11 +33,7 @@ async def get_governor_by_state(llm_client: LLMClient) -> str:
 
     # Parse the HTML
     soup = BeautifulSoup(response.text, "html.parser")
-    # Remove <script> and <style> tags
-    for tag in soup(["script", "style"]):
-        tag.extract()
-
-    clean_html = soup.prettify()
+    clean_html = extract_page_context(soup)
 
     prompt = f"""Here is the Wikipedia page with the current state and territories governors:
 {clean_html}
@@ -72,10 +78,7 @@ async def get_senators_by_state(llm_client: LLMClient) -> str:
 
     # Parse the HTML
     soup = BeautifulSoup(response.text, "html.parser")
-    for script in soup(["script", "style", "noscript", "meta"]):
-        script.decompose()  # Remove scripts and styles
-
-    clean_html = soup.prettify()
+    clean_html = extract_page_context(soup)
 
     # Send to LLM
     prompt = f"""Below is the Wikipedia page listing all current U.S. Senators:
@@ -114,11 +117,7 @@ async def get_representative(llm_client: LLMClient) -> str:
 
     # Parse the HTML
     soup = BeautifulSoup(response.text, "html.parser")
-    # Remove <script> and <style> tags
-    for tag in soup(["script", "style"]):
-        tag.extract()
-
-    clean_html = soup.prettify()
+    clean_html = extract_page_context(soup)
 
     prompt = f"""Below is HTML content from {url} listing current U.S. Representatives:
 {clean_html}
@@ -156,9 +155,7 @@ async def get_president(llm_client: LLMClient) -> str:
         raise ValueError(f"Request to fetch president info failed: {str(e)}")
 
     soup = BeautifulSoup(response.text, "html.parser")
-    for tag in soup(["script", "style"]):
-        tag.extract()
-    clean_html = soup.prettify()
+    clean_html = extract_page_context(soup)
 
     prompt = f"""Below is the HTML content from the White House administration page:
 {clean_html}
@@ -186,9 +183,7 @@ async def get_vice_president(llm_client: LLMClient) -> str:
         raise ValueError(f"Request to fetch vice president info failed: {str(e)}")
 
     soup = BeautifulSoup(response.text, "html.parser")
-    for tag in soup(["script", "style"]):
-        tag.extract()
-    clean_html = soup.prettify()
+    clean_html = extract_page_context(soup)
 
     prompt = f"""Below is the HTML content from the White House administration page:
 {clean_html}
@@ -219,9 +214,7 @@ async def get_supreme_court_justice_count(llm_client: LLMClient) -> str:
         raise ValueError(f"Request to fetch SCOTUS info failed: {str(e)}")
 
     soup = BeautifulSoup(response.text, "html.parser")
-    for tag in soup(["script", "style"]):
-        tag.extract()
-    clean_html = soup.prettify()
+    clean_html = extract_page_context(soup)
 
     prompt = f"""Below is the HTML from Simple English Wikipedia about the Supreme Court of the United States:
 {clean_html}
@@ -253,9 +246,7 @@ async def get_chief_justice(llm_client: LLMClient) -> str:
         raise ValueError(f"Request to fetch SCOTUS info failed: {str(e)}")
 
     soup = BeautifulSoup(response.text, "html.parser")
-    for tag in soup(["script", "style"]):
-        tag.extract()
-    clean_html = soup.prettify()
+    clean_html = extract_page_context(soup)
 
     prompt = f"""Below is the HTML from Simple English Wikipedia about the Supreme Court of the United States:
 {clean_html}
@@ -288,9 +279,7 @@ async def get_state_capital(llm_client: LLMClient) -> str:
         raise ValueError(f"Request to fetch state capitals failed: {str(e)}")
 
     soup = BeautifulSoup(response.text, "html.parser")
-    for tag in soup(["script", "style"]):
-        tag.extract()
-    clean_html = soup.prettify()
+    clean_html = extract_page_context(soup)
 
     prompt = f"""Below is the HTML from {url} listing all U.S. state capitals:
 {clean_html}
@@ -324,9 +313,7 @@ async def get_president_party(llm_client: LLMClient) -> str:
         raise ValueError(f"Request to fetch president's party failed: {str(e)}")
 
     soup = BeautifulSoup(response.text, "html.parser")
-    for tag in soup(["script", "style"]):
-        tag.extract()
-    clean_html = soup.prettify()
+    clean_html = extract_page_context(soup)
 
     prompt = f"""Below is the HTML content from the White House administration page:
 {clean_html}
@@ -354,9 +341,7 @@ async def get_speaker_of_the_house(llm_client: LLMClient) -> str:
         raise ValueError(f"Request to fetch Speaker info failed: {str(e)}")
 
     soup = BeautifulSoup(response.text, "html.parser")
-    for tag in soup(["script", "style"]):
-        tag.extract()
-    clean_html = soup.prettify()
+    clean_html = extract_page_context(soup)
 
     prompt = f"""Below is the HTML from Simple English Wikipedia about the Speaker of the House:
 {clean_html}

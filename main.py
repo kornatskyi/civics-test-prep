@@ -29,10 +29,20 @@ logging.basicConfig(
 # Load environment variables
 load_dotenv()
 
+DYNAMIC_UPDATE_INTERVAL_DAYS = int(os.getenv("DYNAMIC_UPDATE_INTERVAL_DAYS", "30"))
+ENABLE_DYNAMIC_QUESTION_UPDATES = (
+    os.getenv("ENABLE_DYNAMIC_QUESTION_UPDATES", "false").lower() == "true"
+)
+RUN_DYNAMIC_UPDATE_ON_STARTUP = (
+    os.getenv("RUN_DYNAMIC_UPDATE_ON_STARTUP", "false").lower() == "true"
+)
+
 
 # Task do update questions periodically
 async def scheduled_dynamic_questions_update_task(questions_service: QuestionsService):
-    update_interval_days = 30
+    update_interval_days = DYNAMIC_UPDATE_INTERVAL_DAYS
+    if not RUN_DYNAMIC_UPDATE_ON_STARTUP:
+        await asyncio.sleep(update_interval_days * 24 * 60 * 60)
     while True:
         logging.info("Running scheduled task to update dynamic questions")
         try:
@@ -52,9 +62,13 @@ class Answer(BaseModel):
 async def lifespan(app: FastAPI):
     logging.info("Application startup: initializing services")
     questions_service: QuestionsService = get_questions_service()
-    background_task = asyncio.create_task(
-        scheduled_dynamic_questions_update_task(questions_service)
-    )
+    background_task: asyncio.Task[None] | None = None
+    if ENABLE_DYNAMIC_QUESTION_UPDATES:
+        background_task = asyncio.create_task(
+            scheduled_dynamic_questions_update_task(questions_service)
+        )
+    else:
+        logging.info("Dynamic question background updates are disabled")
     try:
         yield
     finally:
@@ -182,7 +196,9 @@ User's answer: {answer.answer}"""
     )
     try:
         result = await gemini_client.completion(
-            prompt, system_instruction=ANSWER_EVALUATION_SYSTEM_INSTRUCTION
+            prompt,
+            system_instruction=ANSWER_EVALUATION_SYSTEM_INSTRUCTION,
+            max_output_tokens=8,
         )
     except Exception as e:
         logging.exception(
