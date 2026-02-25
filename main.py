@@ -198,7 +198,7 @@ User's answer: {answer.answer}"""
         result = await gemini_client.completion(
             prompt,
             system_instruction=ANSWER_EVALUATION_SYSTEM_INSTRUCTION,
-            max_output_tokens=8,
+            max_output_tokens=512,
         )
     except Exception as e:
         logging.exception(
